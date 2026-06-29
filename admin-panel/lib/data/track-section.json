@@ -1,0 +1,185 @@
+{
+  "tagline": "Tracking Solutions",
+  "heading": "What we track",
+  "description": "From fixed assets and fleet to patients, documents, and wildlife — as industry pioneers, we were among the first to deliver tracking for almost everything that needs visibility.",
+  "cta_button": {
+    "text": "Get a tracking consultation",
+    "link": "/contact"
+  },
+  "stats": [
+    {
+      "value": "20+",
+      "label": "Use cases"
+    },
+    {
+      "value": "10+",
+      "label": "Industries"
+    },
+    {
+      "value": "24/7",
+      "label": "Visibility"
+    }
+  ],
+  "items": [
+    {
+      "title": "Fixed Assets",
+      "category": "Enterprise",
+      "description": "Track machinery, equipment, and capital assets with real-time location and lifecycle visibility.",
+      "media_id": null,
+      "image_alt": "Fixed assets in office environment",
+      "image_src": "/assets-images/assets_tracking.jpeg"
+    },
+    {
+      "title": "Finished Goods",
+      "category": "Inventory",
+      "description": "Monitor finished products across warehouses, dispatch zones, and distribution channels.",
+      "media_id": null,
+      "image_alt": "Finished goods in warehouse",
+      "image_src": "/assets-images/finished_goods_tracking.jpg.jpeg"
+    },
+    {
+      "title": "Leased Assets",
+      "category": "Enterprise",
+      "description": "Manage leased equipment with accurate custody, usage, and return tracking across sites.",
+      "media_id": null,
+      "image_alt": "Leased assets documentation",
+      "image_src": "/assets-images/leased_assets.jpeg"
+    },
+    {
+      "title": "Tools",
+      "category": "Operations",
+      "description": "Prevent tool loss and downtime with check-in, check-out, and site-level tool tracking.",
+      "media_id": null,
+      "image_alt": "Industrial tools on workbench",
+      "image_src": "/assets-images/tracking_tools.jpg.jpeg"
+    },
+    {
+      "title": "Parts & Consumables",
+      "category": "Inventory",
+      "description": "Track spare parts and consumables to reduce stockouts and optimize replenishment cycles.",
+      "media_id": null,
+      "image_alt": "Parts and consumables storage",
+      "image_src": "/assets-images/parts_consumables.jpeg"
+    },
+    {
+      "title": "Raw Material",
+      "category": "Manufacturing",
+      "description": "Gain visibility into raw material movement from intake to production and storage.",
+      "media_id": null,
+      "image_alt": "Raw materials in factory",
+      "image_src": "/assets-images/raw_materials.jpg.jpeg"
+    },
+    {
+      "title": "Marketing Assets–kiosks etc",
+      "category": "Retail",
+      "description": "Track kiosks, displays, and promotional assets deployed across retail and field locations.",
+      "media_id": null,
+      "image_alt": "Marketing kiosk in retail space",
+      "image_src": "/assets-images/marketing_assets.jpg.jpeg"
+    },
+    {
+      "title": "Fleet/ Vehicle Tracking",
+      "category": "Logistics",
+      "description": "Live fleet visibility for route optimization, utilization, and vehicle accountability.",
+      "media_id": null,
+      "image_alt": "Fleet vehicles on road",
+      "image_src": "/assets-images/vehicle_tracking.jpg.jpeg"
+    },
+    {
+      "title": "Deliveries",
+      "category": "Logistics",
+      "description": "End-to-end delivery tracking from dispatch to proof of delivery and customer handoff.",
+      "media_id": null,
+      "image_alt": "Delivery packages",
+      "image_src": "/assets-images/delivery_tracking.jpg.jpeg"
+    },
+    {
+      "title": "Military Equipment",
+      "category": "Defense",
+      "description": "Secure tracking for defense equipment with audit trails and controlled access visibility.",
+      "media_id": null,
+      "image_alt": "Military equipment storage",
+      "image_src": "/assets-images/military_equipment.jpg.jpeg"
+    },
+    {
+      "title": "Document Tracking",
+      "category": "Compliance",
+      "description": "Track critical documents through custody chains, approvals, and secure storage locations.",
+      "media_id": null,
+      "image_alt": "Document tracking files",
+      "image_src": "/assets-images/document_tracking.jpg.jpeg"
+    },
+    {
+      "title": "Employee Tracking",
+      "category": "Workforce",
+      "description": "Improve workforce safety and coordination with location-aware employee visibility on site.",
+      "media_id": null,
+      "image_alt": "Employees collaborating at work",
+      "image_src": "/assets-images/employee_tracking.jpg.jpeg"
+    },
+    {
+      "title": "Patient Tracking",
+      "category": "Healthcare",
+      "description": "Support healthcare operations with patient flow, equipment, and care-area tracking.",
+      "media_id": null,
+      "image_alt": "Patient care in hospital",
+      "image_src": "/assets-images/patient_tracking.jpeg"
+    },
+    {
+      "title": "Artwork Tracking",
+      "category": "Culture",
+      "description": "Protect high-value artwork with movement logs, storage visibility, and exhibition tracking.",
+      "media_id": null,
+      "image_alt": "Artwork in gallery",
+      "image_src": "/assets-images/artwork_tracking.jpeg"
+    },
+    {
+      "title": "Immigration Tracking",
+      "category": "Government",
+      "description": "Streamline immigration-related asset and document tracking across checkpoints and offices.",
+      "media_id": null,
+      "image_alt": "Immigration and travel checkpoint",
+      "image_src": "/assets-images/immigration_tracking.jpg.jpeg"
+    },
+    {
+      "title": "Landbank Tracking",
+      "category": "Real Estate",
+      "description": "Monitor land parcels, site assets, and field resources across large landbank portfolios.",
+      "media_id": null,
+      "image_alt": "Landbank aerial view",
+      "image_src": "/assets-images/landbank_tracking.jpeg"
+    },
+    {
+      "title": "Supply Chain Tracking",
+      "category": "Logistics",
+      "description": "Connect suppliers, warehouses, and distribution nodes with unified supply chain visibility.",
+      "media_id": null,
+      "image_alt": "Supply chain logistics hub",
+      "image_src": "https://images.unsplash.com/photo-1553413077-190dd305871c?auto=format&fit=crop&w=600&q=80"
+    },
+    {
+      "title": "Personal Tracker",
+      "category": "Safety",
+      "description": "Lightweight personal tracking for field staff, lone workers, and mobile personnel.",
+      "media_id": null,
+      "image_alt": "Personal tracker on mobile device",
+      "image_src": "/assets-images/personal___tracking.jpg.jpeg"
+    },
+    {
+      "title": "Key Tracker",
+      "category": "Security",
+      "description": "Track keys and access credentials with issue logs, returns, and custody accountability.",
+      "media_id": null,
+      "image_alt": "Keys for access tracking",
+      "image_src": "/assets-images/key_tracker.jpeg"
+    },
+    {
+      "title": "Animal Migration Tracking",
+      "category": "Wildlife",
+      "description": "Monitor wildlife movement patterns with long-range tagging for research and conservation.",
+      "media_id": null,
+      "image_alt": "Animal migration in nature",
+      "image_src": "/assets-images/animal_migration_tracker.jpeg"
+    }
+  ]
+}

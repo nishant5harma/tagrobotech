@@ -1,0 +1,62 @@
+{
+  "tagline": "Footprints Software",
+  "heading": "Your command centre for asset intelligence",
+  "description": "In-house software customised for each client — designed with consumer need analysis to deliver practical tracking, visibility, and control from one dashboard.",
+  "tags": [
+    "9 modules",
+    "ERP integration",
+    "Live dashboards"
+  ],
+  "capabilities_label": "Platform capabilities",
+  "capabilities_badge": "All included",
+  "dashboard_media_id": null,
+  "dashboard_image_src": "/assets-images/laptop.png",
+  "dashboard_image_alt": "Footprints asset tracking dashboard by Tag Robo Tech",
+  "features": [
+    {
+      "title": "Item visibility & tracking",
+      "description": "You can view geo location where asset was last traced.",
+      "icon": "map-pin"
+    },
+    {
+      "title": "Auto reconciliation",
+      "description": "Reconciliation can be done between book data and physical count.",
+      "icon": "refresh"
+    },
+    {
+      "title": "Utilization monitoring",
+      "description": "You can identify unutilized assets.",
+      "icon": "activity"
+    },
+    {
+      "title": "Physical condition monitoring",
+      "description": "Not working assets can be identified.",
+      "icon": "wrench"
+    },
+    {
+      "title": "Maintenance log",
+      "description": "Check on maintenance records.",
+      "icon": "clipboard"
+    },
+    {
+      "title": "Incident management",
+      "description": "Log of past breakdown can be retrieved including repair details.",
+      "icon": "alert"
+    },
+    {
+      "title": "Location mapping",
+      "description": "Current location of item can be traced.",
+      "icon": "map"
+    },
+    {
+      "title": "Manual retrieval",
+      "description": "If you wish to retrieve any data point such as machine manual, this can be done very conveniently.",
+      "icon": "file"
+    },
+    {
+      "title": "Integration",
+      "description": "With your ERP via API.",
+      "icon": "plug"
+    }
+  ]
+}

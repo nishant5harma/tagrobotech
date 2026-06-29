@@ -1,0 +1,23 @@
+{
+  "tagline": "Who We Are",
+  "heading": "Built on field reality, not presentation slides",
+  "paragraphs": [
+    "Tag RoBo Tech designs solutions by leveraging the core strengths of different types of tags, robotics, and technology.",
+    "Over the last 13 years, we have implemented solutions to track assets, inventory, finished goods, tools, fleet, delivery, consumables, employees, documentation, and remote sites."
+  ],
+  "image_media_id": null,
+  "image_src": "/assets-images/employee_tracking.jpg.jpeg",
+  "image_alt": "Experienced field team and execution",
+  "features": [
+    {
+      "tagline": "Ground Team",
+      "description": "We identify, reconcile, gather data, tag, and monitor the underlying ecosystem with experienced execution teams.",
+      "style": "white"
+    },
+    {
+      "tagline": "Cost Effective",
+      "description": "Our solutions help clients achieve well beyond compliance while keeping execution practical and commercially sound.",
+      "style": "muted"
+    }
+  ]
+}

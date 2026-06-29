@@ -1,0 +1,57 @@
+{
+  "label": "Resources",
+  "intro_tagline": "RESOURCES",
+  "intro_description": "Explore guides, case studies, and insights on asset tracking, RFID, robotics, and operational intelligence.",
+  "featured": {
+    "tagline": "FEATURED",
+    "title": "Why enterprises trust Tag RoBo Tech for RFID asset tracking",
+    "image_media_id": null,
+    "image_src": "/assets-images/laptop.png",
+    "page_slug": null,
+    "href": "/resources/rfid-asset-tracking"
+  },
+  "columns": [
+    {
+      "title": "BY INDUSTRY",
+      "subtitle": "Tracking solutions across sectors",
+      "items": [
+        { "label": "Manufacturing", "page_slug": "manufacturing", "href": null },
+        { "label": "Healthcare", "page_slug": "healthcare", "href": null },
+        { "label": "Retail", "page_slug": "retail", "href": null },
+        { "label": "Logistics & Supply Chain", "page_slug": "logistics-supply-chain", "href": null },
+        { "label": "Banking & Finance", "page_slug": "banking-finance", "href": null },
+        { "label": "Pharma & MedTech", "page_slug": "pharma-medtech", "href": null },
+        { "label": "Automobile", "page_slug": "automobile", "href": null },
+        { "label": "Aviation", "page_slug": "aviation", "href": null },
+        { "label": "Hospitality", "page_slug": "hospitality", "href": null },
+        { "label": "Government", "page_slug": "government", "href": null },
+        { "label": "Education", "page_slug": "education", "href": null },
+        { "label": "Real Estate", "page_slug": "real-estate", "href": null }
+      ]
+    },
+    {
+      "title": "BY USE CASE",
+      "subtitle": "Solutions for every tracking need",
+      "items": [
+        { "label": "RFID Asset Tracking", "page_slug": "rfid-asset-tracking", "href": null },
+        { "label": "IT Asset Tracking", "page_slug": "it-asset-tracking", "href": null },
+        { "label": "Inventory Control", "page_slug": "inventory-control", "href": null },
+        { "label": "Fleet Management", "page_slug": "fleet-management", "href": null },
+        { "label": "Physical Verification", "page_slug": "physical-verification", "href": null },
+        { "label": "ERP Integration", "page_slug": "erp-integration", "href": null }
+      ]
+    },
+    {
+      "title": "BY TECHNOLOGY",
+      "subtitle": "Tags, robotics, and software platforms",
+      "items": [
+        { "label": "RFID Solutions", "page_slug": "rfid-solutions", "href": null },
+        { "label": "BLE & IoT Tracking", "page_slug": "ble-iot-tracking", "href": null },
+        { "label": "GPS & Fleet", "page_slug": "gps-fleet", "href": null },
+        { "label": "Robotics Verification", "page_slug": "robotics-verification", "href": null },
+        { "label": "Footprints Software", "page_slug": "footprints-software", "href": null },
+        { "label": "NFC & Beacon", "page_slug": "nfc-beacon", "href": null }
+      ]
+    }
+  ]
+}

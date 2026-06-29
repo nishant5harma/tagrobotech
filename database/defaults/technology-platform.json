@@ -1,0 +1,38 @@
+{
+  "tagline": "Technology Platform",
+  "heading": "Our Team has Delivered Projects Across Following",
+  "heading_accent": "Technology Platforms",
+  "description": "A flexible platform mix lets us build the right tracking stack for movement, proximity, read-range, and operational intelligence.",
+  "items": [
+    {
+      "name": "GPS",
+      "description": "GPS devices are fitted to track via network of satellites. Most suited for items which are on the move.",
+      "icon": "gps"
+    },
+    {
+      "name": "Bluetooth",
+      "description": "Bluetooth devices are fitted to identify location via radio transmission. Most suited for items within certain premises/ blue tooth range.",
+      "icon": "bluetooth"
+    },
+    {
+      "name": "RFID",
+      "description": "RFID Tag transit data via radio frequency and most suited for factories, offices, items within read range of upto 10~15Mtrs.",
+      "icon": "rfid"
+    },
+    {
+      "name": "NFC",
+      "description": "NFC expands upon the models of High-frequency RFID and transforms the constraints of its working recurrence into a remarkable component of near-field communication.",
+      "icon": "nfc"
+    },
+    {
+      "name": "QR Code",
+      "description": "Quick Response Codes can hold larger information and have better readability.",
+      "icon": "qr_code"
+    },
+    {
+      "name": "Bar Code",
+      "description": "Simplest form of data storage in machine readable form.",
+      "icon": "barcode"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "tagline": "Our Clients",
+  "heading": "Companies we",
+  "heading_accent": "collaborate",
+  "heading_suffix": "with",
+  "description": "Trusted by leading enterprises across retail, healthcare, media, manufacturing, and more.",
+  "cta_button": {
+    "text": "View all clients",
+    "link": "/clients"
+  },
+  "items": []
+}

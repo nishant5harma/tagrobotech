@@ -1,0 +1,52 @@
+{
+  "tagline": "Our Journey",
+  "heading": "A story told through capability, scale, and execution",
+  "description": "From barcode and RFID-led compliance to intelligence-rich, robotics-enabled operations, each phase of the journey added depth to what we deliver.",
+  "items": [
+    {
+      "year": "2013",
+      "title": "Started with tracking, built for trust",
+      "description": "Headquartered in Gurgaon, we began with barcode and RFID-led asset and inventory tracking to help businesses meet compliance requirements with confidence.",
+      "image_media_id": null,
+      "image_src": "/assets-images/assets_tracking.jpeg",
+      "image_alt": "Early asset tracking solutions",
+      "image_fit": "cover"
+    },
+    {
+      "year": "2017",
+      "title": "Scaled across sectors and sites",
+      "description": "Our implementation footprint expanded across industries and locations, building the field execution teams and partner network needed to deliver tracking at enterprise scale.",
+      "image_media_id": null,
+      "image_src": "/assets-images/employee_tracking.jpg.jpeg",
+      "image_alt": "Field teams scaling tracking operations",
+      "image_fit": "cover"
+    },
+    {
+      "year": "2018",
+      "title": "Moved from audits to intelligence",
+      "description": "What started as physical verification evolved into meaningful insights, richer ground-level data, and systems that guide operations instead of just recording them.",
+      "image_media_id": null,
+      "image_src": "/assets-images/delivery_tracking.jpg.jpeg",
+      "image_alt": "Tracking intelligence across operations",
+      "image_fit": "cover"
+    },
+    {
+      "year": "2020",
+      "title": "Software became the command layer",
+      "description": "In-house platforms connected RFID, GPS, BLE, and field data into unified dashboards with ERP-ready integration for clients who needed more than point solutions.",
+      "image_media_id": null,
+      "image_src": "/assets-images/vehicle_tracking.jpg.jpeg",
+      "image_alt": "Integrated tracking software platform",
+      "image_fit": "cover"
+    },
+    {
+      "year": "2023",
+      "title": "Automating scale with robotics",
+      "description": "We combined modern tag technologies with robotics-led verification so clients can reconcile millions of quantities in hours—not months—across complex physical environments.",
+      "image_media_id": null,
+      "image_src": "/assets-images/laptop.png",
+      "image_alt": "Modern Tag RoBo Tech software and automation stack",
+      "image_fit": "contain"
+    }
+  ]
+}

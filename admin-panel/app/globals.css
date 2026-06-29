@@ -1,0 +1,234 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --background: #eef0f6;
+  --foreground: #2b2e5d;
+  --navy: #2b2e5d;
+  --navy-deep: #1e213f;
+  --navy-mid: #3d4270;
+  --orange: #f15a24;
+  --orange-hover: #d94e1f;
+  --orange-soft: #fff1eb;
+  --card: #ffffff;
+  --border: #dde1ec;
+  --muted: #6b7289;
+  --surface: #ffffff;
+  --surface-muted: #f4f6fb;
+  --text-primary: #2b2e5d;
+  --text-muted: #6b7289;
+  --text-placeholder: #9aa3b8;
+  --page-bg: #eef0f6;
+  --form-bg: #ffffff;
+  --form-border: #dde1ec;
+  --input-bg: #f8f9fc;
+  --error-bg: #fff1eb;
+  --error-border: #f5c4b8;
+  --error-text: #c2410c;
+  --panel-bg: #2b2e5d;
+  --panel-gradient-from: #2b2e5d;
+  --panel-gradient-via: #252847;
+  --panel-gradient-to: #1e213f;
+  --sidebar-bg: #ffffff;
+  --sidebar-border: #dde1ec;
+  --sidebar-text: #4a5070;
+  --sidebar-text-muted: #6b7289;
+  --sidebar-text-hover: #2b2e5d;
+  --sidebar-hover-bg: #f4f6fb;
+  --sidebar-active-bg: #fff1eb;
+  --sidebar-active-text: #c44f1f;
+  --sidebar-label: #9aa3b8;
+  --sidebar-glow: rgb(241 90 36 / 0.06);
+}
+
+.dark {
+  --background: #151829;
+  --foreground: #eef0f6;
+  --card: #1e213f;
+  --border: #2f3352;
+  --muted: #9a9cab;
+  --surface: #1e213f;
+  --surface-muted: #252847;
+  --text-primary: #eef0f6;
+  --text-muted: #9a9cab;
+  --text-placeholder: #8b8da8;
+  --page-bg: #151829;
+  --form-bg: #1e213f;
+  --form-border: #2f3352;
+  --input-bg: #252847;
+  --orange-soft: #3a2218;
+  --error-bg: #3a2218;
+  --error-border: #6b3d2a;
+  --error-text: #f59e6e;
+  --panel-bg: #151829;
+  --panel-gradient-from: #151829;
+  --panel-gradient-via: #1a1d35;
+  --panel-gradient-to: #1e213f;
+  --sidebar-bg: #14172a;
+  --sidebar-border: rgb(255 255 255 / 0.06);
+  --sidebar-text: #8b8fa8;
+  --sidebar-text-muted: #6e728a;
+  --sidebar-text-hover: #c8cad8;
+  --sidebar-hover-bg: rgb(255 255 255 / 0.04);
+  --sidebar-active-bg: rgb(196 79 31 / 0.15);
+  --sidebar-active-text: #d4846a;
+  --sidebar-label: #5c6078;
+  --sidebar-glow: rgb(196 79 31 / 0.08);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-navy: var(--navy);
+  --color-navy-deep: var(--navy-deep);
+  --color-orange: var(--orange);
+  --color-orange-soft: var(--orange-soft);
+  --color-card: var(--card);
+  --color-border: var(--border);
+  --color-muted: var(--muted);
+  --font-sans: var(--font-dm-sans), system-ui, sans-serif;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease;
+}
+
+@keyframes login-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes login-blob {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(10px, -8px) scale(1.04);
+  }
+}
+
+@keyframes dash-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+.login-fade-up {
+  animation: login-fade-up 0.7s ease-out both;
+}
+
+.login-blob {
+  animation: login-blob 20s ease-in-out infinite;
+}
+
+.dash-float {
+  animation: dash-float 5s ease-in-out infinite;
+}
+
+.login-input {
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.login-input:focus {
+  border-color: var(--orange);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--orange) 18%, transparent);
+  outline: none;
+}
+
+.login-ambient {
+  display: none;
+}
+
+.dark .login-ambient {
+  display: block;
+  background:
+    radial-gradient(ellipse 55% 45% at 18% 42%, rgb(241 90 36 / 0.09), transparent 70%),
+    radial-gradient(ellipse 50% 40% at 82% 58%, rgb(43 46 93 / 0.14), transparent 70%),
+    radial-gradient(ellipse 80% 60% at 50% 100%, rgb(43 46 93 / 0.08), transparent 60%);
+}
+
+.dashboard-ambient {
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 60% 50% at 100% 0%, rgb(241 90 36 / 0.07), transparent 55%),
+    radial-gradient(ellipse 50% 40% at 0% 100%, rgb(43 46 93 / 0.06), transparent 55%);
+}
+
+.dark .dashboard-ambient {
+  background:
+    radial-gradient(ellipse 55% 45% at 90% 5%, rgb(196 79 31 / 0.05), transparent 50%),
+    radial-gradient(ellipse 45% 40% at 5% 95%, rgb(43 46 93 / 0.2), transparent 55%);
+}
+
+.dark .dashboard-hero {
+  background: linear-gradient(135deg, #1a1d35 0%, #1e213f 50%, #181b30 100%);
+  box-shadow: 0 8px 24px -8px rgb(0 0 0 / 0.4);
+}
+
+.dark .dashboard-hero-glow {
+  background: rgb(196 79 31 / 0.1);
+}
+
+.stat-card {
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px -8px rgb(43 46 93 / 0.15);
+}
+
+.dark .stat-card:hover {
+  box-shadow: 0 12px 28px -8px rgb(0 0 0 / 0.35);
+}
+
+.admin-nav-link {
+  color: var(--sidebar-text);
+}
+
+.admin-nav-link:hover {
+  background: var(--sidebar-hover-bg);
+  color: var(--sidebar-text-hover);
+}
+
+.admin-nav-link--active {
+  background: var(--sidebar-active-bg);
+  color: var(--sidebar-active-text);
+}
+
+.admin-nav-link--active:hover {
+  background: var(--sidebar-active-bg);
+  color: var(--sidebar-active-text);
+}
+
+.admin-logout-btn {
+  color: var(--sidebar-text-muted);
+}
+
+.admin-logout-btn:hover {
+  background: var(--sidebar-hover-bg);
+  color: var(--sidebar-text-hover);
+}

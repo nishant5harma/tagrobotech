@@ -1,0 +1,46 @@
+{
+  "label": "Features",
+  "intro_tagline": "FEATURES",
+  "intro_description": "Explore the platform capabilities that power enterprise asset tracking — from multi-technology tags to robotics-led verification and ERP-ready software.",
+  "featured": {
+    "tagline": "HIGHLIGHT",
+    "title": "Footprints — your command centre for asset intelligence",
+    "image_media_id": null,
+    "image_src": "/assets-images/laptop.png",
+    "page_slug": "footprints-software",
+    "href": null
+  },
+  "columns": [
+    {
+      "title": "TRACKING TECHNOLOGIES",
+      "subtitle": "Tags and devices for every environment",
+      "items": [
+        { "label": "RFID Tracking", "page_slug": "rfid-tracking", "href": null },
+        { "label": "BLE & IoT", "page_slug": "ble-iot", "href": null },
+        { "label": "GPS & Fleet", "page_slug": "gps-fleet", "href": null },
+        { "label": "NFC & Beacon", "page_slug": "nfc-beacon", "href": null },
+        { "label": "Hybrid Devices", "page_slug": "hybrid-devices", "href": null }
+      ]
+    },
+    {
+      "title": "PLATFORM",
+      "subtitle": "Software and operational intelligence",
+      "items": [
+        { "label": "Footprints Software", "page_slug": "footprints-software", "href": null },
+        { "label": "Live Dashboards", "page_slug": "live-dashboards", "href": null },
+        { "label": "ERP Integration", "page_slug": "erp-integration", "href": null },
+        { "label": "Alerts & Workflows", "page_slug": "alerts-workflows", "href": null }
+      ]
+    },
+    {
+      "title": "EXECUTION",
+      "subtitle": "Field-ready delivery at scale",
+      "items": [
+        { "label": "Robotics Verification", "page_slug": "robotics-verification", "href": null },
+        { "label": "Physical Verification", "page_slug": "physical-verification", "href": null },
+        { "label": "Reconciliation", "page_slug": "reconciliation", "href": null },
+        { "label": "Multi-site Rollout", "page_slug": "multi-site-rollout", "href": null }
+      ]
+    }
+  ]
+}
