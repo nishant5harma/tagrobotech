@@ -1,0 +1,56 @@
+name: Deploy to AWS EC2
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Deploy to production
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Deploy over SSH
+        uses: appleboy/ssh-action@v1.2.2
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script_stop: true
+          command_timeout: 30m
+          script: |
+            set -euo pipefail
+            APP_DIR="/home/ubuntu/tagrobotech"
+            mkdir -p "$APP_DIR"
+            cd "$APP_DIR"
+
+            if [ ! -d .git ]; then
+              git clone https://github.com/nishant5harma/tagrobotech.git .
+            fi
+
+            git remote set-url origin https://github.com/nishant5harma/tagrobotech.git
+            git fetch origin main
+            git reset --hard origin/main
+
+            chmod +x deploy/update.sh deploy/install.sh
+            ./deploy/update.sh
+
+      - name: Verify deployment
+        uses: appleboy/ssh-action@v1.2.2
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            curl -sf http://127.0.0.1:4000/api/health
+            echo ""
+            sudo systemctl is-active tagrobotech-backend tagrobotech-frontend tagrobotech-admin nginx

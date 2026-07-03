@@ -1,0 +1,16 @@
+{
+  "tagline": "Ready to deploy",
+  "heading": "Footprints grows with your operations — customised, connected, and audit-ready.",
+  "description": "Pair Footprints with our field teams, tagging tools, and services for a complete tracking stack from physical verification to live dashboards.",
+  "primary_button": {
+    "text": "Book a Footprints demo",
+    "link": "/contact"
+  },
+  "secondary_button": {
+    "text": "View our services",
+    "link": "/services"
+  },
+  "image_media_id": null,
+  "image_src": "/assets-images/laptop.png",
+  "image_alt": "Footprints asset tracking dashboard by Tag RoBo Tech"
+}

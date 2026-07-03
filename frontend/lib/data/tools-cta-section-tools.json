@@ -1,0 +1,13 @@
+{
+  "tagline": "Need the right tool?",
+  "heading": "We match technology to your site, budget, and compliance requirements.",
+  "description": "Beyond these five flagship tools, our global partner network gives access to 100+ scanning, tagging, and automation technologies — deployed and integrated by Tag RoBo Tech field teams.",
+  "primary_button": {
+    "text": "Explore our services",
+    "link": "/services"
+  },
+  "secondary_button": {
+    "text": "Request a consultation",
+    "link": "/contact"
+  }
+}

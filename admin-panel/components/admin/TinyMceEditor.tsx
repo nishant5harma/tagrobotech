@@ -28,9 +28,9 @@ export default function TinyMceEditor({
           id={id}
           value={value}
           onEditorChange={onChange}
+          licenseKey="gpl"
           tinymceScriptSrc="/tinymce/tinymce.min.js"
           init={{
-            license_key: "gpl",
             height: minHeight,
             menubar: "file edit view insert format table tools",
             branding: false,

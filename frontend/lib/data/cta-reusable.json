@@ -1,0 +1,13 @@
+{
+  "heading": "Book Your Consultation Now",
+  "description": "See how finance leaders manage their assets with Tag RoBo Tech",
+  "button": {
+    "text": "Schedule a Free Demo",
+    "link": "/contact"
+  },
+  "show_trust_badges": true,
+  "ratings": [
+    { "value": "4.8" },
+    { "value": "5.0" }
+  ]
+}

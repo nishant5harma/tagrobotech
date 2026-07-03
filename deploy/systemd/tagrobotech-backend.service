@@ -1,0 +1,18 @@
+[Unit]
+Description=TagRobotech CMS Backend API
+After=network-online.target mysql.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=ubuntu
+Group=ubuntu
+WorkingDirectory=/home/ubuntu/tagrobotech/backend
+EnvironmentFile=/home/ubuntu/tagrobotech/backend/.env
+Environment=NODE_ENV=production
+ExecStart=/usr/bin/node src/index.js
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

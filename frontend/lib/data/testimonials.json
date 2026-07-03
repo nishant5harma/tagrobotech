@@ -1,0 +1,66 @@
+{
+  "tagline": "Client Voices",
+  "heading": "What our clients",
+  "heading_accent": "say about us",
+  "description": "As industry pioneers, we've earned the trust of enterprise teams for reliable tracking, tailored software, and support that scales with their operations.",
+  "stats": [
+    {
+      "value": "4.9/5",
+      "label": "Client satisfaction"
+    },
+    {
+      "value": "500+",
+      "label": "Projects delivered"
+    },
+    {
+      "value": "10+",
+      "label": "Years of trust"
+    }
+  ],
+  "items": [
+    {
+      "id": "max-healthcare",
+      "quote": "Patient and equipment tracking in a hospital environment demands precision. Their team understood our compliance needs and built a system our staff actually enjoys using every day.",
+      "author": "Dr. Kavita Nair",
+      "role": "Hospital Administrator",
+      "company": "Max Healthcare",
+      "rating": 5,
+      "highlight": "Healthcare-grade accuracy",
+      "media_id": null,
+      "company_logo_src": "/images/max.png"
+    },
+    {
+      "id": "mahindra",
+      "quote": "Tag RoBo Tech transformed how we track fleet and fixed assets across plants. Real-time visibility cut audit time by 60% and gave our operations team confidence they never had before.",
+      "author": "Rajesh Mehta",
+      "role": "Head of Operations",
+      "company": "Mahindra",
+      "rating": 5,
+      "highlight": "60% faster audits",
+      "media_id": null,
+      "company_logo_src": "/images/mahindra.png"
+    },
+    {
+      "id": "flipkart",
+      "quote": "From warehouse pallets to high-value equipment, their RFID and GPS stack scaled with us. Footprints software became our single source of truth for asset movement and accountability.",
+      "author": "Priya Sharma",
+      "role": "Supply Chain Director",
+      "company": "Flipkart",
+      "rating": 5,
+      "highlight": "End-to-end visibility",
+      "media_id": null,
+      "company_logo_src": "/images/flipkart.png"
+    },
+    {
+      "id": "tata-capital",
+      "quote": "We needed enterprise-grade tracking without disrupting daily workflows. Tag RoBo delivered a tailored solution — deployment was smooth, support is responsive, and accuracy has been outstanding.",
+      "author": "Anil Verma",
+      "role": "IT Infrastructure Lead",
+      "company": "Tata Capital",
+      "rating": 5,
+      "highlight": "Enterprise-ready rollout",
+      "media_id": null,
+      "company_logo_src": "/images/tata__capital__logo.png"
+    }
+  ]
+}

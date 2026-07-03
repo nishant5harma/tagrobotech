@@ -1,0 +1,30 @@
+{
+  "tagline": "What We Deliver",
+  "heading": "End-to-end execution, from tags to reconciled truth",
+  "description": "By introducing robotics in our portfolio, we automated business processes such as physical verification and reconciliations. Clients can verify and reconcile millions of quantities in hours instead of months.",
+  "image_media_id": null,
+  "image_src": "/assets-images/landbank_tracking.jpeg",
+  "image_alt": "Cross-site field intelligence",
+  "capabilities": [
+    {
+      "title": "Multi-technology stack",
+      "description": "RFID, NFC, Bluetooth, Beacon, GPS, hybrid devices, and software journeys designed around the real use case.",
+      "icon": "wifi"
+    },
+    {
+      "title": "Operational intelligence",
+      "description": "We capture movement, conditions, and field behavior so clients can act on insights, not just location.",
+      "icon": "database"
+    },
+    {
+      "title": "Robotics-led verification",
+      "description": "Business processes like physical verification and reconciliation can now happen at a scale and speed that was not previously practical.",
+      "icon": "bot"
+    },
+    {
+      "title": "ERP-ready integration",
+      "description": "Our application layer syncs cleanly with ERP systems, enabling seamless data transfer and more reliable reporting.",
+      "icon": "shield-check"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+[Unit]
+Description=TagRobotech Public Frontend (Next.js)
+After=network-online.target tagrobotech-backend.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=ubuntu
+Group=ubuntu
+WorkingDirectory=/home/ubuntu/tagrobotech/frontend
+Environment=NODE_ENV=production
+Environment=PORT=3000
+Environment=API_PROXY_URL=http://127.0.0.1:4000
+ExecStart=/usr/bin/npm run start
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

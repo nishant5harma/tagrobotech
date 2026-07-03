@@ -1,0 +1,28 @@
+{
+  "breadcrumbs": [
+    { "label": "Home", "href": "/" },
+    { "label": "Solutions", "href": "/solutions" },
+    { "label": "Manufacturing", "href": null }
+  ],
+  "heading": "Optimize Manufacturing Efficiency with Smart Asset Management",
+  "description": "Empower your plants with real-time asset visibility, predictive maintenance, and effortless compliance across production lines boosting uptime and throughput.",
+  "primary_button": {
+    "text": "Schedule a free demo",
+    "link": "/contact"
+  },
+  "secondary_button": {
+    "text": "Get started for free",
+    "link": "/contact"
+  },
+  "stats": [
+    { "value": "45%", "label": "Downtime Reduction" },
+    { "value": "+30%", "label": "Maintenance Efficiency" },
+    { "value": "2X", "label": "Audit Speed" }
+  ],
+  "desktop_image_media_id": null,
+  "desktop_image_src": "/assets-images/laptop.png",
+  "desktop_image_alt": "Footprints asset tracking dashboard on desktop",
+  "mobile_image_media_id": null,
+  "mobile_image_src": "/assets-images/laptop.png",
+  "mobile_image_alt": "Footprints mobile asset dashboard"
+}

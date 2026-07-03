@@ -1,0 +1,18 @@
+{
+  "tagline": "About Us",
+  "heading": "Designing the",
+  "heading_accent": "future",
+  "heading_suffix": "of tracking",
+  "description": "Tag RoBo Tech turns physical movement into business intelligence with tags, robotics, software, and field execution built for real-world complexity.",
+  "primary_button": {
+    "text": "Talk to our team",
+    "link": "/contact"
+  },
+  "secondary_button": {
+    "text": "Contact Us: 9319013339",
+    "link": "tel:+919319013339"
+  },
+  "image_media_id": null,
+  "image_src": "/assets-images/laptop.png",
+  "image_alt": "Footprints asset tracking dashboard by Tag Robo Tech"
+}
