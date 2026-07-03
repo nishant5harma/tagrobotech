@@ -19,13 +19,31 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Validate GitHub secrets
+        run: |
+          missing=0
+          if [ -z "${{ secrets.EC2_HOST }}" ]; then
+            echo "::error::Missing secret EC2_HOST. Add it in GitHub → Settings → Secrets and variables → Actions"
+            missing=1
+          fi
+          if [ -z "${{ secrets.EC2_USER }}" ]; then
+            echo "::error::Missing secret EC2_USER (use: ubuntu)"
+            missing=1
+          fi
+          if [ -z "${{ secrets.EC2_SSH_KEY }}" ]; then
+            echo "::error::Missing secret EC2_SSH_KEY. Paste the full tagrobotech.pem file contents"
+            missing=1
+          fi
+          if [ "$missing" -eq 1 ]; then
+            exit 1
+          fi
+
       - name: Deploy over SSH
         uses: appleboy/ssh-action@v1.2.2
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
-          script_stop: true
           command_timeout: 30m
           script: |
             set -euo pipefail
@@ -44,13 +62,7 @@ jobs:
             chmod +x deploy/update.sh deploy/install.sh
             ./deploy/update.sh
 
-      - name: Verify deployment
-        uses: appleboy/ssh-action@v1.2.2
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USER }}
-          key: ${{ secrets.EC2_SSH_KEY }}
-          script: |
+            echo "==> Verifying deployment..."
             curl -sf http://127.0.0.1:4000/api/health
             echo ""
             sudo systemctl is-active tagrobotech-backend tagrobotech-frontend tagrobotech-admin nginx

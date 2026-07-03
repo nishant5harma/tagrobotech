@@ -4,6 +4,8 @@ Pushing to `main` runs `.github/workflows/deploy.yml` and updates the live EC2 s
 
 ## One-time GitHub secrets
 
+**The deploy will fail with `missing server host` until these are added.**
+
 In your repo: **Settings → Secrets and variables → Actions → New repository secret**
 
 | Secret | Value |
