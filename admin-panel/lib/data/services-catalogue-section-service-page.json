@@ -1,0 +1,415 @@
+{
+  "tagline": "All services",
+  "heading": "20 professional tracking services",
+  "description": "Every solution below includes field reconciliation, suitable tagging technology, and software integration where required.",
+  "categories": [
+    { "key": "enterprise", "label": "Enterprise" },
+    { "key": "inventory", "label": "Inventory" },
+    { "key": "logistics", "label": "Logistics" },
+    { "key": "people", "label": "People & safety" },
+    { "key": "specialized", "label": "Specialized" }
+  ],
+  "services": [
+    {
+      "number": "01",
+      "category_key": "enterprise",
+      "category_label": "Enterprise",
+      "summary_label": "Enterprise asset tracking and reconciliation",
+      "title": "Asset Tracking",
+      "short_description": "Reconcile fixed assets as per books versus what is physically present at plants, corporate offices, warehouses, and third-party sites.",
+      "image_media_id": null,
+      "image_src": "/assets-images/asset_tracking.jpeg",
+      "image_alt": "Asset Tracking",
+      "link": "/services/asset-tracking",
+      "tags": ["RFID", "ERP sync", "Compliance"],
+      "highlights": [
+        "Covers plant & machinery, IT assets, office equipment, furniture & fixtures, dies & moulds, vehicles, and more.",
+        "Affix tags (bar code, QR code, RFID, NFC, GPS) based on suitability and budget; tag data is updated in the Fixed Asset Register.",
+        "Implement software and ERP integration to enable automated reconciliations going forward.",
+        "Supports corporate governance requirements — systematic asset reconciliation with 100% verification within a three-year span."
+      ],
+      "enquire_text": "Enquire about Asset Tracking",
+      "enquire_link": "/contact"
+    },
+    {
+      "number": "02",
+      "category_key": "enterprise",
+      "category_label": "Enterprise",
+      "summary_label": "Leased asset verification",
+      "title": "Leased Assets",
+      "short_description": "For organizations that lease assets to third-party customers, our team verifies assets on site and affixes geo tags for remote verification.",
+      "image_media_id": null,
+      "image_src": "/assets-images/leased_assets.jpeg",
+      "image_alt": "Leased Assets",
+      "link": "/services/leased-assets",
+      "tags": ["Geo tags", "Site visits"],
+      "highlights": [
+        "On-ground site visits to confirm asset existence and condition.",
+        "Geo-enabled tagging for continuous remote monitoring after verification.",
+        "Supports asset-leasing businesses that need custody visibility across customer locations."
+      ],
+      "enquire_text": "Enquire about Leased Assets",
+      "enquire_link": "/contact"
+    },
+    {
+      "number": "03",
+      "category_key": "enterprise",
+      "category_label": "Enterprise",
+      "summary_label": "Marketing assets and kiosk tracking",
+      "title": "Marketing Assets",
+      "short_description": "Physically verify marketing and branding assets — including kiosks and premium signages — across dispersed locations and reconcile records.",
+      "image_media_id": null,
+      "image_src": "/assets-images/marketing_assets.jpeg",
+      "image_alt": "Marketing Assets",
+      "link": "/services/marketing-assets",
+      "tags": ["Kiosks", "Signage"],
+      "highlights": [
+        "Some marketing assets are extremely expensive; physical existence must be confirmed on site.",
+        "Reconciliation of deployed branding assets across retail, field, and partner locations.",
+        "Affix tags for remote monitoring after verification is complete."
+      ],
+      "enquire_text": "Enquire about Marketing Assets",
+      "enquire_link": "/contact"
+    },
+    {
+      "number": "04",
+      "category_key": "enterprise",
+      "category_label": "Enterprise",
+      "summary_label": "Landbank and field area tracking",
+      "title": "Landbank Tracking",
+      "short_description": "Precise land-bank area measurement for agriculture — because exact farming is impossible without knowing the real acreage.",
+      "image_media_id": null,
+      "image_src": "/assets-images/landbank_tracking.jpeg",
+      "image_alt": "Landbank Tracking",
+      "link": "/services/landbank-tracking",
+      "tags": ["Agriculture", "GPS"],
+      "highlights": [
+        "Measure arable land by traversing boundaries with a mobile GPS area-measurement application.",
+        "Create electronic field maps from satellite imagery inside the system interface.",
+        "Partner-led orthophoto plans using drones to determine field area with high accuracy."
+      ],
+      "enquire_text": "Enquire about Landbank Tracking",
+      "enquire_link": "/contact"
+    },
+    {
+      "number": "05",
+      "category_key": "inventory",
+      "category_label": "Inventory",
+      "summary_label": "Finished goods inventory tracking",
+      "title": "Finished Goods Tracking",
+      "short_description": "Reconcile finished goods inventory as per books versus physical stock across factories, retail outlets, warehouses, and third-party sites.",
+      "image_media_id": null,
+      "image_src": "/assets-images/finished_goods.jpeg",
+      "image_alt": "Finished Goods Tracking",
+      "link": "/services/finished-goods-tracking",
+      "tags": ["Manufacturing", "Retail"],
+      "highlights": [
+        "Affix bar code, QR code, RFID, NFC, or GPS tags depending on what is most suitable and within budget.",
+        "Implement software and ERP integration for automated reconciliations in future cycles.",
+        "Ideal for manufacturing and retail environments with high-volume finished goods movement."
+      ],
+      "enquire_text": "Enquire about Finished Goods Tracking",
+      "enquire_link": "/contact"
+    },
+    {
+      "number": "06",
+      "category_key": "inventory",
+      "category_label": "Inventory",
+      "summary_label": "Industrial tools tracking",
+      "title": "Tools Tracking",
+      "short_description": "Track tools issued to ancillaries and third parties for production activities with verified custody and remote visibility.",
+      "image_media_id": null,
+      "image_src": "/assets-images/tools_tracking.jpeg",
+      "image_alt": "Tools Tracking",
+      "link": "/services/tools-tracking",
+      "tags": ["Geo tags", "Vendor sites"],
+      "highlights": [
+        "Our team verifies tools on site and affixes geo tags for future remote verification.",
+        "Reduces loss and ambiguity when tools move across vendor and production locations.",
+        "Supports accountability for high-value or shared tooling across the supply chain."
+      ],
+      "enquire_text": "Enquire about Tools Tracking",
+      "enquire_link": "/contact"
+    },
+    {
+      "number": "07",
+      "category_key": "inventory",
+      "category_label": "Inventory",
+      "summary_label": "Parts and consumables tracking",
+      "title": "Parts & Consumables",
+      "short_description": "Reconcile high-volume parts and consumables between books and physical quantities, then tag items for accurate consumption tracking.",
+      "image_media_id": null,
+      "image_src": "/assets-images/parts_consumables.jpeg",
+      "image_alt": "Parts and Consumables",
+      "link": "/services/parts-consumables",
+      "tags": ["Consumption", "Reconciliation"],
+      "highlights": [
+        "Quantity reconciliation between ledger records and on-ground stock.",
+        "Tagging of parts and consumables to improve consumption accuracy over time.",
+        "Helps reduce write-offs, stockouts, and untracked usage across facilities."
+      ],
+      "enquire_text": "Enquire about Parts & Consumables",
+      "enquire_link": "/contact"
+    },
+    {
+      "number": "08",
+      "category_key": "inventory",
+      "category_label": "Inventory",
+      "summary_label": "Raw material inventory tracking",
+      "title": "Raw Material",
+      "short_description": "Reconcile large volumes of raw material between books and what is physically present across storage and production locations.",
+      "image_media_id": null,
+      "image_src": "/assets-images/raw_material.jpeg",
+      "image_alt": "Raw Material",
+      "link": "/services/raw-material",
+      "tags": ["Manufacturing", "Inventory"],
+      "highlights": [
+        "Handles high-volume raw material inventories with structured physical verification.",
+        "Bridges the gap between accounting records and warehouse or yard-level reality.",
+        "Foundation for tighter production planning and inventory control."
+      ],
+      "enquire_text": "Enquire about Raw Material",
+      "enquire_link": "/contact"
+    },
+    {
+      "number": "09",
+      "category_key": "logistics",
+      "category_label": "Logistics",
+      "summary_label": "Fleet and vehicle GPS tracking",
+      "title": "Fleet / Vehicle Tracking",
+      "short_description": "GPS devices fitted in vehicles for route intelligence, driver safety, fuel monitoring, and real-time fleet visibility.",
+      "image_media_id": null,
+      "image_src": "/assets-images/fleet_tracking.jpeg",
+      "image_alt": "Fleet Tracking",
+      "link": "/services/fleet-tracking",
+      "tags": ["GPS", "Fleet ops"],
+      "highlights": [
+        "Pick less congested routes and monitor or control vehicle speed.",
+        "Exact vehicle location, breakdown alerts, and assistance workflows.",
+        "Vehicle stock handover status, driver health alerts, fuel tracking, and fitness alerts."
+      ],
+      "enquire_text": "Enquire about Fleet / Vehicle Tracking",
+      "enquire_link": "/contact"
+    },
+    {
+      "number": "10",
+      "category_key": "logistics",
+      "category_label": "Logistics",
+      "summary_label": "Courier and delivery tracking",
+      "title": "Deliveries",
+      "short_description": "Localize packages and parcels during sorting and delivery to verify movement, source, and estimated arrival windows.",
+      "image_media_id": null,
+      "image_src": "/assets-images/deliveries.jpeg",
+      "image_alt": "Deliveries",
+      "link": "/services/deliveries",
+      "tags": ["Last mile", "Real-time"],
+      "highlights": [
+        "Customers receive route details, delivery status, estimated delivery date, and time.",
+        "Bar code systems combined with our application enable real-time delivery tracking.",
+        "Improves last-mile transparency for courier and logistics operations."
+      ],
+      "enquire_text": "Enquire about Deliveries",
+      "enquire_link": "/contact"
+    },
+    {
+      "number": "11",
+      "category_key": "logistics",
+      "category_label": "Logistics",
+      "summary_label": "Supply chain and warehouse RFID tracking",
+      "title": "Supply Chain Tracking",
+      "short_description": "RFID tags on containers and goods eliminate manual scanning bottlenecks and reduce human error in warehouse movement.",
+      "image_media_id": null,
+      "image_src": "/assets-images/supply_chain.jpeg",
+      "image_alt": "Supply Chain Tracking",
+      "link": "/services/supply-chain-tracking",
+      "tags": ["Warehouse", "RFID"],
+      "highlights": [
+        "Goods are automatically read as they pass readers — no barcode scan per item required.",
+        "Saves hours previously lost searching for missing materials when tracking is skipped.",
+        "Reduces data-entry errors every time inventory is added, moved, or updated."
+      ],
+      "enquire_text": "Enquire about Supply Chain Tracking",
+      "enquire_link": "/contact"
+    },
+    {
+      "number": "12",
+      "category_key": "people",
+      "category_label": "People",
+      "summary_label": "Employee RTLS and badge tracking",
+      "title": "Employee Tracking",
+      "short_description": "Real-time employee tracking using active RFID and Bluetooth Low Energy beacon technology on rechargeable ID badges.",
+      "image_media_id": null,
+      "image_src": "/assets-images/employee_tracking.jpeg",
+      "image_alt": "Employee Tracking",
+      "link": "/services/employee-tracking",
+      "tags": ["BLE", "RTLS"],
+      "highlights": [
+        "Badges may include panic buttons and motion sensors for safety-critical environments.",
+        "Receivers and RTLS anchors installed across the work area track badge movement.",
+        "Supports workforce coordination, safety, and site-level personnel visibility."
+      ],
+      "enquire_text": "Enquire about Employee Tracking",
+      "enquire_link": "/contact"
+    },
+    {
+      "number": "13",
+      "category_key": "people",
+      "category_label": "People",
+      "summary_label": "Healthcare patient tracking",
+      "title": "Patient Tracking",
+      "short_description": "RFID solutions for healthcare — improving patient safety, identification, inventory control, and staff coordination.",
+      "image_media_id": null,
+      "image_src": "/assets-images/patient_tracking.jpeg",
+      "image_alt": "Patient Tracking",
+      "link": "/services/patient-tracking",
+      "tags": ["Healthcare", "RFID"],
+      "highlights": [
+        "Patient identification and anti-counterfeiting across care workflows.",
+        "Inventory management and tracking of healthcare staff movement where required.",
+        "Supports hospitals and care facilities focused on safety and operational efficiency."
+      ],
+      "enquire_text": "Enquire about Patient Tracking",
+      "enquire_link": "/contact"
+    },
+    {
+      "number": "14",
+      "category_key": "people",
+      "category_label": "People",
+      "summary_label": "Personal GPS tracker device",
+      "title": "Personal Tracker",
+      "short_description": "Personal trackers monitor people or pets through compact devices such as pocket chips or bracelets.",
+      "image_media_id": null,
+      "image_src": "/assets-images/personal_tracker.jpeg",
+      "image_alt": "Personal Tracker",
+      "link": "/services/personal-tracker",
+      "tags": ["Safety", "Wearables"],
+      "highlights": [
+        "Devices are activated after deployment and followed remotely by authorized users.",
+        "Suitable for lone workers, family safety, and pet monitoring use cases.",
+        "Lightweight form factors designed for everyday carry or wear."
+      ],
+      "enquire_text": "Enquire about Personal Tracker",
+      "enquire_link": "/contact"
+    },
+    {
+      "number": "15",
+      "category_key": "specialized",
+      "category_label": "Specialized",
+      "summary_label": "Military equipment tracking",
+      "title": "Military Equipment",
+      "short_description": "Defense-grade asset tracking across a highly mobile supply chain that demands comprehensive oversight and auditability.",
+      "image_media_id": null,
+      "image_src": "/assets-images/military_equipment.jpeg",
+      "image_alt": "Military Equipment",
+      "link": "/services/military-equipment",
+      "tags": ["Defense", "Geo tags"],
+      "highlights": [
+        "Mobility is a key differentiator in military applications — constant movement throughout the chain.",
+        "Geo tags affixed on defence assets for real-time location monitoring.",
+        "Designed for organizations that require rigorous asset visibility under demanding conditions."
+      ],
+      "enquire_text": "Enquire about Military Equipment",
+      "enquire_link": "/contact"
+    },
+    {
+      "number": "16",
+      "category_key": "specialized",
+      "category_label": "Specialized",
+      "summary_label": "RFID document and file tracking",
+      "title": "Document Tracking",
+      "short_description": "RFID file tracking systems that reduce time spent managing hundreds or thousands of files in enterprise workplaces.",
+      "image_media_id": null,
+      "image_src": "/assets-images/document_tracking.jpeg",
+      "image_alt": "Document Tracking",
+      "link": "/services/document-tracking",
+      "tags": ["RFID", "Files"],
+      "highlights": [
+        "EPC numbers are associated with file metadata such as name, contents, and custody.",
+        "Search by name or number in software, then locate files with an RFID handheld reader.",
+        "Works with dedicated file-management software or structured Excel-based workflows."
+      ],
+      "enquire_text": "Enquire about Document Tracking",
+      "enquire_link": "/contact"
+    },
+    {
+      "number": "17",
+      "category_key": "specialized",
+      "category_label": "Specialized",
+      "summary_label": "Artwork and gallery asset tracking",
+      "title": "Artwork Tracking",
+      "short_description": "RFID art tracking with camera integration for real-time asset management and built-in theft deterrent monitoring.",
+      "image_media_id": null,
+      "image_src": "/assets-images/artwork_tracking.jpeg",
+      "image_alt": "Artwork Tracking",
+      "link": "/services/artwork-tracking",
+      "tags": ["Galleries", "Security"],
+      "highlights": [
+        "Artwork and high-value assets monitored on display, in storage, during transfer, or after sale.",
+        "Authorities are quickly alerted to tampering or unauthorized movement.",
+        "Designed for galleries, museums, and collectors managing valuable collections."
+      ],
+      "enquire_text": "Enquire about Artwork Tracking",
+      "enquire_link": "/contact"
+    },
+    {
+      "number": "18",
+      "category_key": "specialized",
+      "category_label": "Specialized",
+      "summary_label": "Immigration document tracking",
+      "title": "Immigration Tracking",
+      "short_description": "Secure document tracking as governments modernize immigration systems beyond paper-only passports and visas.",
+      "image_media_id": null,
+      "image_src": "/assets-images/immigration_tracking.jpeg",
+      "image_alt": "Immigration Tracking",
+      "link": "/services/immigration-tracking",
+      "tags": ["Government", "RFID"],
+      "highlights": [
+        "Addresses forgery risks that allow illegal travel, residence, and unregulated work.",
+        "RFID memory chips embedded in documents are a defining method in modern border systems.",
+        "Supports agencies reforming immigration and migration verification infrastructure."
+      ],
+      "enquire_text": "Enquire about Immigration Tracking",
+      "enquire_link": "/contact"
+    },
+    {
+      "number": "19",
+      "category_key": "specialized",
+      "category_label": "Specialized",
+      "summary_label": "Bluetooth key tracker",
+      "title": "Key Tracker",
+      "short_description": "Compact Bluetooth tag trackers for keys, spectacles, wallets, flash drives, and everyday objects.",
+      "image_media_id": null,
+      "image_src": "/assets-images/key_tracker.jpeg",
+      "image_alt": "Key Tracker",
+      "link": "/services/key-tracker",
+      "tags": ["Bluetooth", "Consumer"],
+      "highlights": [
+        "Avoid searching throughout the house — locate tagged items from a mobile app.",
+        "Trackers are coin-sized and easily clipped or stuck onto daily essentials.",
+        "Ideal for homes, offices, and shared facilities with high object mobility."
+      ],
+      "enquire_text": "Enquire about Key Tracker",
+      "enquire_link": "/contact"
+    },
+    {
+      "number": "20",
+      "category_key": "specialized",
+      "category_label": "Specialized",
+      "summary_label": "Wildlife migration satellite tracking",
+      "title": "Animal Migration Tracking",
+      "short_description": "Satellite telemetry for wildlife research — tracking animal movement for extended periods without repeated capture.",
+      "image_media_id": null,
+      "image_src": "/assets-images/animal_migration.jpeg",
+      "image_alt": "Animal Migration Tracking",
+      "link": "/services/animal-migration-tracking",
+      "tags": ["Wildlife", "Satellite"],
+      "highlights": [
+        "Platform Transmitter Terminals (PTTs) attached externally or surgically implanted after capture.",
+        "PTTs communicate via radio signals to orbiting satellites for latitude and longitude fixes.",
+        "Widely used Argos satellite system receives signals when satellites are within PTT range."
+      ],
+      "enquire_text": "Enquire about Animal Migration Tracking",
+      "enquire_link": "/contact"
+    }
+  ]
+}

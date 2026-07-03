@@ -1,0 +1,38 @@
+{
+  "eyebrow": "Software",
+  "heading": "Footprints",
+  "description": "We have an in-house software called Footprints, customised for each client based on their on-ground needs. The application has been designed with consumer need analysis.",
+  "badges": [
+    { "label": "9 modules" },
+    { "label": "ERP via API" },
+    { "label": "Client-customised" }
+  ],
+  "primary_button": {
+    "text": "Request a demo",
+    "link": "/contact"
+  },
+  "secondary_button": {
+    "text": "9319013339",
+    "link": "tel:9319013339"
+  },
+  "image_media_id": null,
+  "image_src": "/assets-images/laptop.png",
+  "image_alt": "Footprints asset tracking dashboard by Tag RoBo Tech",
+  "value_props": [
+    {
+      "number": "01",
+      "title": "Customised per client",
+      "description": "Every deployment is shaped around your sites, assets, and operational workflows — not a one-size-fits-all template."
+    },
+    {
+      "number": "02",
+      "title": "Need-led design",
+      "description": "Built from consumer need analysis so teams get practical visibility, not cluttered dashboards."
+    },
+    {
+      "number": "03",
+      "title": "ERP-connected",
+      "description": "Seamless integration with your ERP via API for reconciled, audit-ready data flows."
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "eyebrow": "Tools",
+  "heading": "Tools that track?",
+  "description": "We have more than 100 tools and technologies from across the globe to help deliver your tracking requirements. Some of our flagship deployment tools are highlighted below.",
+  "stats": [
+    {
+      "value": "100+",
+      "label": "Tools & technologies worldwide"
+    },
+    {
+      "value": "05",
+      "label": "Flagship tools highlighted below"
+    }
+  ],
+  "primary_button": {
+    "text": "Talk to our team",
+    "link": "/contact"
+  },
+  "secondary_button": {
+    "text": "Contact Us: 9319013339",
+    "link": "tel:9319013339"
+  },
+  "tagline_below": "RFID to mobile — tools matched to your site and budget.",
+  "tool_pills": [
+    {
+      "title": "Drone Scanning",
+      "image_media_id": null,
+      "image_src": "/assets-images/drone_scanning.jpeg",
+      "image_alt": "Drone scanning inventory in a warehouse",
+      "anchor": "drone-scanning"
+    },
+    {
+      "title": "Robotic Scanning",
+      "image_media_id": null,
+      "image_src": "/assets-images/robotic_scanning.jpeg",
+      "image_alt": "Robotic scanning in a retail environment",
+      "anchor": "robotic-scanning"
+    },
+    {
+      "title": "RFID Fixed Readers",
+      "image_media_id": null,
+      "image_src": "/assets-images/rfid_fixed_readers.jpeg",
+      "image_alt": "RFID fixed reader at a warehouse entry point",
+      "anchor": "rfid-fixed-readers"
+    },
+    {
+      "title": "RFID Handheld Readers",
+      "image_media_id": null,
+      "image_src": "/assets-images/rfid_handheld_readers.jpeg",
+      "image_alt": "RFID handheld reader for asset verification",
+      "anchor": "rfid-handheld-readers"
+    },
+    {
+      "title": "Mobile Tag Scanning",
+      "image_media_id": null,
+      "image_src": "/assets-images/mobile_tag_scanning.jpeg",
+      "image_alt": "Mobile tag scanning application",
+      "anchor": "mobile-tag-scanning"
+    }
+  ]
+}

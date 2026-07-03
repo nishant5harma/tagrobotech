@@ -21,4 +21,18 @@ CREATE TABLE IF NOT EXISTS clients (
     CONSTRAINT fk_clients_media FOREIGN KEY (media_id) REFERENCES media(id) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-CREATE INDEX idx_clients_sort ON clients(sort_order, created_at);
+SET @idx_clients_sort_exists := (
+  SELECT COUNT(*)
+  FROM information_schema.statistics
+  WHERE table_schema = DATABASE()
+    AND table_name = 'clients'
+    AND index_name = 'idx_clients_sort'
+);
+SET @idx_clients_sort_sql := IF(
+  @idx_clients_sort_exists = 0,
+  'CREATE INDEX idx_clients_sort ON clients(sort_order, created_at)',
+  'SELECT 1'
+);
+PREPARE idx_clients_sort_stmt FROM @idx_clients_sort_sql;
+EXECUTE idx_clients_sort_stmt;
+DEALLOCATE PREPARE idx_clients_sort_stmt;

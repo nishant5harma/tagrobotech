@@ -1,0 +1,12 @@
+{
+  "heading": "Why Choose Tag RoBo Tech?",
+  "description": "Tag RoBo Tech's asset discovery and tracking solutions, including RFID, BLE, IoT, and agentless methods, provide a comprehensive and flexible approach to managing your assets. Our platform is designed to meet the unique needs of your organization, delivering reliable and efficient asset management.",
+  "primary_button": {
+    "text": "Get Started for Free",
+    "link": "/contact"
+  },
+  "secondary_button": {
+    "text": "Schedule a Free Demo",
+    "link": "/contact"
+  }
+}

@@ -6,6 +6,15 @@ import { normalizeSlug } from "../lib/slug.js";
 import { defaultSectionData } from "../lib/sections.js";
 
 const router = Router();
+const PAGE_TYPES = new Set([
+  "page",
+  "resource",
+  "feature",
+  "solution",
+  "service",
+  "blog",
+  "case_study",
+]);
 
 function parseSectionRow(row) {
   if (!row || typeof row.data !== "string") return row;
@@ -28,16 +37,60 @@ function parseSeoRow(row) {
   return row;
 }
 
+function parsePageRow(row) {
+  if (!row) return row;
+  return {
+    ...row,
+    published_at: row.published_at ?? null,
+  };
+}
+
+function sanitizeText(value) {
+  if (value === undefined) return undefined;
+  if (value === null) return null;
+  const normalized = String(value).trim();
+  return normalized || null;
+}
+
+function sanitizePageType(value) {
+  const pageType = String(value ?? "page").trim();
+  if (!PAGE_TYPES.has(pageType)) return null;
+  return pageType;
+}
+
+function sanitizeHtmlContent(value) {
+  return String(value ?? "")
+    .replace(/<script[\s\S]*?>[\s\S]*?<\/script>/gi, "")
+    .replace(/\son\w+="[^"]*"/gi, "")
+    .replace(/\son\w+='[^']*'/gi, "")
+    .replace(/javascript:/gi, "");
+}
+
+function sanitizeSectionData(sectionType, data) {
+  if (!data || typeof data !== "object") return data;
+
+  if (sectionType === "rich_text" || sectionType === "article_body") {
+    return {
+      ...data,
+      heading: sanitizeText(data.heading) ?? "",
+      content: sanitizeHtmlContent(data.content),
+    };
+  }
+
+  return data;
+}
+
 router.use(requireAuth);
 
 router.get("/", async (_req, res) => {
   try {
     const result = await pool.query(
-      `SELECT id, title, slug, page_type, status, sort_order, created_at, updated_at
+      `SELECT id, title, slug, page_type, status, excerpt, featured_image_id, published_at,
+              author_name, client_name, industry, sort_order, created_at, updated_at
        FROM pages
        ORDER BY sort_order ASC, title ASC`
     );
-    res.json({ pages: result.rows });
+    res.json({ pages: result.rows.map(parsePageRow) });
   } catch (error) {
     console.error("Pages list error:", error);
     res.status(500).json({ error: "Failed to load pages" });
@@ -45,7 +98,18 @@ router.get("/", async (_req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  const { title, slug, page_type = "page", status = "draft" } = req.body;
+  const {
+    title,
+    slug,
+    page_type = "page",
+    status = "draft",
+    excerpt,
+    featured_image_id,
+    published_at,
+    author_name,
+    client_name,
+    industry,
+  } = req.body;
 
   if (!title?.trim() || !slug?.trim()) {
     return res.status(400).json({ error: "Title and slug are required" });
@@ -54,6 +118,11 @@ router.post("/", async (req, res) => {
   const normalizedSlug = normalizeSlug(slug);
   if (!normalizedSlug) {
     return res.status(400).json({ error: "Invalid slug" });
+  }
+
+  const normalizedPageType = sanitizePageType(page_type);
+  if (!normalizedPageType) {
+    return res.status(400).json({ error: "Invalid page type" });
   }
 
   const pageId = crypto.randomUUID();
@@ -65,9 +134,24 @@ router.post("/", async (req, res) => {
     }
 
     await pool.query(
-      `INSERT INTO pages (id, title, slug, page_type, status)
-       VALUES (?, ?, ?, ?, ?)`,
-      [pageId, title.trim(), normalizedSlug, page_type, status]
+      `INSERT INTO pages (
+        id, title, slug, page_type, status, excerpt, featured_image_id, published_at,
+        author_name, client_name, industry
+      )
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      [
+        pageId,
+        title.trim(),
+        normalizedSlug,
+        normalizedPageType,
+        status || "draft",
+        sanitizeText(excerpt) ?? null,
+        featured_image_id || null,
+        published_at || null,
+        sanitizeText(author_name) ?? null,
+        sanitizeText(client_name) ?? null,
+        sanitizeText(industry) ?? null,
+      ]
     );
 
     await pool.query(
@@ -77,7 +161,7 @@ router.post("/", async (req, res) => {
     );
 
     const result = await pool.query(`SELECT * FROM pages WHERE id = ?`, [pageId]);
-    res.status(201).json({ page: result.rows[0] });
+    res.status(201).json({ page: parsePageRow(result.rows[0]) });
   } catch (error) {
     console.error("Create page error:", error);
     res.status(500).json({ error: "Failed to create page" });
@@ -87,7 +171,7 @@ router.post("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const pageResult = await pool.query(`SELECT * FROM pages WHERE id = ?`, [req.params.id]);
-    const page = pageResult.rows[0];
+    const page = parsePageRow(pageResult.rows[0]);
 
     if (!page) {
       return res.status(404).json({ error: "Page not found" });
@@ -202,7 +286,19 @@ router.put("/:id/seo", async (req, res) => {
 });
 
 router.put("/:id", async (req, res) => {
-  const { title, slug, page_type, status, sort_order } = req.body;
+  const {
+    title,
+    slug,
+    page_type,
+    status,
+    sort_order,
+    excerpt,
+    featured_image_id,
+    published_at,
+    author_name,
+    client_name,
+    industry,
+  } = req.body;
 
   try {
     const pageResult = await pool.query(`SELECT * FROM pages WHERE id = ?`, [req.params.id]);
@@ -233,12 +329,40 @@ router.put("/:id", async (req, res) => {
       values.push(normalizedSlug);
     }
     if (page_type !== undefined) {
+      const normalizedPageType = sanitizePageType(page_type);
+      if (!normalizedPageType) {
+        return res.status(400).json({ error: "Invalid page type" });
+      }
       updates.push("page_type = ?");
-      values.push(page_type);
+      values.push(normalizedPageType);
     }
     if (status !== undefined) {
       updates.push("status = ?");
       values.push(status);
+    }
+    if (excerpt !== undefined) {
+      updates.push("excerpt = ?");
+      values.push(sanitizeText(excerpt));
+    }
+    if (featured_image_id !== undefined) {
+      updates.push("featured_image_id = ?");
+      values.push(featured_image_id || null);
+    }
+    if (published_at !== undefined) {
+      updates.push("published_at = ?");
+      values.push(published_at || null);
+    }
+    if (author_name !== undefined) {
+      updates.push("author_name = ?");
+      values.push(sanitizeText(author_name));
+    }
+    if (client_name !== undefined) {
+      updates.push("client_name = ?");
+      values.push(sanitizeText(client_name));
+    }
+    if (industry !== undefined) {
+      updates.push("industry = ?");
+      values.push(sanitizeText(industry));
     }
     if (sort_order !== undefined) {
       updates.push("sort_order = ?");
@@ -253,7 +377,7 @@ router.put("/:id", async (req, res) => {
     await pool.query(`UPDATE pages SET ${updates.join(", ")} WHERE id = ?`, values);
 
     const result = await pool.query(`SELECT * FROM pages WHERE id = ?`, [req.params.id]);
-    res.json({ page: result.rows[0] });
+    res.json({ page: parsePageRow(result.rows[0]) });
   } catch (error) {
     console.error("Update page error:", error);
     res.status(500).json({ error: "Failed to update page" });
@@ -296,7 +420,7 @@ router.post("/:id/sections", async (req, res) => {
       pos = Number(maxPos.rows[0].max_pos) + 1;
     }
 
-    const sectionData = data ?? defaultSectionData(section_type);
+    const sectionData = sanitizeSectionData(section_type, data ?? defaultSectionData(section_type));
     const sectionId = crypto.randomUUID();
 
     await pool.query(
@@ -400,7 +524,7 @@ router.put("/:id/sections/:sectionId", async (req, res) => {
     }
     if (data !== undefined) {
       updates.push("data = ?");
-      values.push(JSON.stringify(data));
+      values.push(JSON.stringify(sanitizeSectionData(section_type ?? existing.rows[0].section_type, data)));
     }
 
     if (updates.length === 0) {

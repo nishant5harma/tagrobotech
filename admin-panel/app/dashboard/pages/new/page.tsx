@@ -20,6 +20,7 @@ export default function NewPagePage() {
   const router = useRouter();
   const [title, setTitle] = useState("");
   const [slug, setSlug] = useState("");
+  const [pageType, setPageType] = useState("page");
   const [slugTouched, setSlugTouched] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -43,7 +44,7 @@ export default function NewPagePage() {
     }
 
     try {
-      const { page } = await createPage(token, { title, slug });
+      const { page } = await createPage(token, { title, slug, page_type: pageType });
       router.push(`/dashboard/pages/${page.id}`);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to create page");
@@ -63,13 +64,33 @@ export default function NewPagePage() {
 
       <div className="mb-8">
         <h1 className="text-2xl font-semibold tracking-tight text-foreground">Add Page</h1>
-        <p className="mt-1 text-sm text-muted">Enter a name and URL slug for the new page.</p>
+        <p className="mt-1 text-sm text-muted">Choose a content type, then enter a name and URL slug.</p>
       </div>
 
       <form
         onSubmit={handleSubmit}
         className="space-y-5 rounded-2xl border border-border bg-card p-6 shadow-sm"
       >
+        <div className="space-y-2">
+          <label htmlFor="page-type" className="block text-sm font-medium text-foreground">
+            Content type
+          </label>
+          <select
+            id="page-type"
+            value={pageType}
+            onChange={(e) => setPageType(e.target.value)}
+            className="login-input w-full rounded-xl border border-[var(--form-border)] bg-[var(--input-bg)] px-4 py-3 text-sm"
+          >
+            <option value="page">Page</option>
+            <option value="resource">Resource</option>
+            <option value="feature">Feature</option>
+            <option value="solution">Solution</option>
+            <option value="service">Service</option>
+            <option value="blog">Blog</option>
+            <option value="case_study">Case Study</option>
+          </select>
+        </div>
+
         <div className="space-y-2">
           <label htmlFor="title" className="block text-sm font-medium text-foreground">
             Page name

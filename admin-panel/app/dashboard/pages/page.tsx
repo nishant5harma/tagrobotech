@@ -12,6 +12,7 @@ export default function PagesPage() {
   const router = useRouter();
   const [pages, setPages] = useState<PageRow[]>([]);
   const [loading, setLoading] = useState(true);
+  const [filter, setFilter] = useState("all");
 
   useEffect(() => {
     const token = getStoredToken();
@@ -24,6 +25,9 @@ export default function PagesPage() {
       .then((data) => setPages(data.pages))
       .finally(() => setLoading(false));
   }, [router]);
+
+  const filteredPages =
+    filter === "all" ? pages : pages.filter((page) => page.page_type === filter);
 
   return (
     <div className="mx-auto max-w-6xl">
@@ -47,12 +51,28 @@ export default function PagesPage() {
             <FileText className="h-4 w-4 text-[var(--orange)]" />
             <h2 className="font-semibold text-foreground">All Pages</h2>
           </div>
-          <span className="text-sm text-muted">{pages.length} total</span>
+          <div className="flex items-center gap-3">
+            <select
+              value={filter}
+              onChange={(e) => setFilter(e.target.value)}
+              className="login-input rounded-lg border border-[var(--form-border)] bg-[var(--input-bg)] px-3 py-2 text-xs"
+            >
+              <option value="all">All types</option>
+              <option value="blog">Blogs</option>
+              <option value="case_study">Case studies</option>
+              <option value="service">Services</option>
+              <option value="solution">Solutions</option>
+              <option value="feature">Features</option>
+              <option value="resource">Resources</option>
+              <option value="page">Pages</option>
+            </select>
+            <span className="text-sm text-muted">{filteredPages.length} total</span>
+          </div>
         </div>
 
         {loading ? (
           <p className="px-6 py-8 text-sm text-muted">Loading pages...</p>
-        ) : pages.length === 0 ? (
+        ) : filteredPages.length === 0 ? (
           <div className="px-6 py-12 text-center">
             <p className="text-sm text-muted">No pages yet.</p>
             <Link
@@ -75,7 +95,7 @@ export default function PagesPage() {
                 </tr>
               </thead>
               <tbody>
-                {pages.map((page) => (
+                {filteredPages.map((page) => (
                   <tr
                     key={page.id}
                     className="border-t border-border transition hover:bg-[var(--surface-muted)]/50"

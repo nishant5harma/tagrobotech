@@ -1,0 +1,13 @@
+{
+  "tagline": "End-to-end execution",
+  "heading": "We verify on site, tag intelligently, integrate with ERP, and monitor continuously.",
+  "description": "Tag RoBo Tech has implemented solutions to track assets, inventory, finished goods, tools, fleet, delivery, consumables, employees, documentation, and remote sites — almost everything that needs to be tracked.",
+  "primary_button": {
+    "text": "About Tag RoBo Tech",
+    "link": "/about"
+  },
+  "secondary_button": {
+    "text": "Request a consultation",
+    "link": "/contact"
+  }
+}

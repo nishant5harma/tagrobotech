@@ -1,0 +1,85 @@
+{
+  "eyebrow": "Our Services",
+  "heading": "What do we help to track?",
+  "description": "Tag RoBo Tech delivers end-to-end tracking across assets, inventory, fleet, people, documents, and specialized use cases — with on-ground verification, tagging, software, and ERP integration.",
+  "primary_button": {
+    "text": "Talk to our team",
+    "link": "/contact"
+  },
+  "secondary_button": {
+    "text": "Contact Us: 9319013339",
+    "link": "tel:9319013339"
+  },
+  "featured_items": [
+    {
+      "summary_label": "Enterprise asset tracking and reconciliation",
+      "title": "Asset Tracking",
+      "image_media_id": null,
+      "image_src": "/assets-images/asset_tracking.jpeg",
+      "image_alt": "Asset Tracking",
+      "link": "/services/asset-tracking"
+    },
+    {
+      "summary_label": "Finished goods inventory tracking",
+      "title": "Finished Goods Tracking",
+      "image_media_id": null,
+      "image_src": "/assets-images/finished_goods.jpeg",
+      "image_alt": "Finished Goods Tracking",
+      "link": "/services/finished-goods-tracking"
+    },
+    {
+      "summary_label": "Leased asset verification",
+      "title": "Leased Assets",
+      "image_media_id": null,
+      "image_src": "/assets-images/leased_assets.jpeg",
+      "image_alt": "Leased Assets",
+      "link": "/services/leased-assets"
+    },
+    {
+      "summary_label": "Industrial tools tracking",
+      "title": "Tools Tracking",
+      "image_media_id": null,
+      "image_src": "/assets-images/tools_tracking.jpeg",
+      "image_alt": "Tools Tracking",
+      "link": "/services/tools-tracking"
+    },
+    {
+      "summary_label": "Parts and consumables tracking",
+      "title": "Parts & Consumables",
+      "image_media_id": null,
+      "image_src": "/assets-images/parts_consumables.jpeg",
+      "image_alt": "Parts and Consumables",
+      "link": "/services/parts-consumables"
+    },
+    {
+      "summary_label": "Raw material inventory tracking",
+      "title": "Raw Material",
+      "image_media_id": null,
+      "image_src": "/assets-images/raw_material.jpeg",
+      "image_alt": "Raw Material",
+      "link": "/services/raw-material"
+    }
+  ],
+  "process_steps": [
+    {
+      "number": "01",
+      "title": "Reconcile",
+      "description": "Books vs physical reality across plants, offices, and sites."
+    },
+    {
+      "number": "02",
+      "title": "Tag",
+      "description": "Bar code, QR, RFID, NFC, or GPS — matched to budget and use case."
+    },
+    {
+      "number": "03",
+      "title": "Integrate",
+      "description": "Software and ERP sync for automated future reconciliations."
+    },
+    {
+      "number": "04",
+      "title": "Monitor",
+      "description": "Live visibility, alerts, and operational intelligence at scale."
+    }
+  ]
+}

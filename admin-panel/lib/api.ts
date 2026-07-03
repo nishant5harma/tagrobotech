@@ -22,6 +22,22 @@ export type DashboardStats = {
   sections: number;
   media: number;
   seo: number;
+  leads?: number;
+};
+
+export type LeadRow = {
+  id: string;
+  form_type: "contact" | "newsletter" | string;
+  name: string | null;
+  email: string;
+  phone: string | null;
+  message: string | null;
+  source_page: string | null;
+  source_label: string | null;
+  status: "new" | "read" | "archived" | string;
+  metadata: Record<string, unknown> | null;
+  created_at: string;
+  updated_at: string;
 };
 
 export type PageRow = {
@@ -30,6 +46,12 @@ export type PageRow = {
   slug: string;
   page_type: string;
   status: string;
+  excerpt: string | null;
+  featured_image_id: string | null;
+  published_at: string | null;
+  author_name: string | null;
+  client_name: string | null;
+  industry: string | null;
   sort_order: number;
   created_at: string;
   updated_at: string;
@@ -124,7 +146,18 @@ export function getPages(token: string) {
 
 export function createPage(
   token: string,
-  body: { title: string; slug: string; page_type?: string; status?: string }
+  body: {
+    title: string;
+    slug: string;
+    page_type?: string;
+    status?: string;
+    excerpt?: string | null;
+    featured_image_id?: string | null;
+    published_at?: string | null;
+    author_name?: string | null;
+    client_name?: string | null;
+    industry?: string | null;
+  }
 ) {
   return apiFetch<{ page: PageRow }>(
     "/api/admin/pages",
@@ -144,7 +177,22 @@ export function getPage(token: string, id: string) {
 export function updatePage(
   token: string,
   id: string,
-  body: Partial<Pick<PageRow, "title" | "slug" | "page_type" | "status" | "sort_order">>
+  body: Partial<
+    Pick<
+      PageRow,
+      | "title"
+      | "slug"
+      | "page_type"
+      | "status"
+      | "sort_order"
+      | "excerpt"
+      | "featured_image_id"
+      | "published_at"
+      | "author_name"
+      | "client_name"
+      | "industry"
+    >
+  >
 ) {
   return apiFetch<{ page: PageRow }>(
     `/api/admin/pages/${id}`,
@@ -303,6 +351,38 @@ export async function updateMegaMenu(
       method: "PUT",
       body: JSON.stringify({ menu }),
     },
+    token
+  );
+}
+
+export function getLeads(
+  token: string,
+  params?: { status?: string; form_type?: string }
+) {
+  const search = new URLSearchParams();
+  if (params?.status) search.set("status", params.status);
+  if (params?.form_type) search.set("form_type", params.form_type);
+  const query = search.toString();
+
+  return apiFetch<{ leads: LeadRow[] }>(
+    `/api/admin/leads${query ? `?${query}` : ""}`,
+    {},
+    token
+  );
+}
+
+export function updateLeadStatus(token: string, id: string, status: LeadRow["status"]) {
+  return apiFetch<{ lead: LeadRow }>(
+    `/api/admin/leads/${id}`,
+    { method: "PATCH", body: JSON.stringify({ status }) },
+    token
+  );
+}
+
+export function deleteLead(token: string, id: string) {
+  return apiFetch<{ message: string }>(
+    `/api/admin/leads/${id}`,
+    { method: "DELETE" },
     token
   );
 }

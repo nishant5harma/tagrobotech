@@ -6,11 +6,14 @@ const router = Router();
 
 router.get("/stats", requireAuth, async (_req, res) => {
   try {
-    const [pages, sections, media, seo] = await Promise.all([
+    const [pages, sections, media, seo, leads] = await Promise.all([
       pool.query("SELECT COUNT(*) AS count FROM pages"),
       pool.query("SELECT COUNT(*) AS count FROM page_sections"),
       pool.query("SELECT COUNT(*) AS count FROM media"),
       pool.query("SELECT COUNT(*) AS count FROM page_seo"),
+      pool.query("SELECT COUNT(*) AS count FROM leads WHERE status = 'new'").catch(() => ({
+        rows: [{ count: 0 }],
+      })),
     ]);
 
     res.json({
@@ -18,6 +21,7 @@ router.get("/stats", requireAuth, async (_req, res) => {
       sections: Number(sections.rows[0].count),
       media: Number(media.rows[0].count),
       seo: Number(seo.rows[0].count),
+      leads: Number(leads.rows[0].count),
     });
   } catch (error) {
     console.error("Dashboard stats error:", error);

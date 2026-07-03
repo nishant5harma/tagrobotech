@@ -1,9 +1,11 @@
 "use client";
 
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { ArrowLeft, Layers, Plus, Save } from "lucide-react";
+import ContentWriterPanel from "@/components/admin/ContentWriterPanel";
+import MediaPicker from "@/components/admin/MediaPicker";
 import SortableSectionsList from "@/components/admin/SortableSectionsList";
 import SectionTypePicker from "@/components/admin/SectionTypePicker";
 import PageSeoEditor from "@/components/admin/PageSeoEditor";
@@ -34,10 +36,17 @@ export default function EditPagePage() {
   const [slug, setSlug] = useState("");
   const [status, setStatus] = useState("draft");
   const [pageType, setPageType] = useState("page");
+  const [excerpt, setExcerpt] = useState("");
+  const [featuredImageId, setFeaturedImageId] = useState<string | null>(null);
+  const [publishedAt, setPublishedAt] = useState("");
+  const [authorName, setAuthorName] = useState("");
+  const [clientName, setClientName] = useState("");
+  const [industry, setIndustry] = useState("");
   const [newSectionType, setNewSectionType] = useState("hero");
   const [loading, setLoading] = useState(true);
   const [savingPage, setSavingPage] = useState(false);
   const [addingSection, setAddingSection] = useState(false);
+  const [creatingWriterSection, setCreatingWriterSection] = useState(false);
   const [reorderingSections, setReorderingSections] = useState(false);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
@@ -57,6 +66,12 @@ export default function EditPagePage() {
     setSlug(data.page.slug);
     setStatus(data.page.status);
     setPageType(data.page.page_type);
+    setExcerpt(data.page.excerpt ?? "");
+    setFeaturedImageId(data.page.featured_image_id ?? null);
+    setPublishedAt(data.page.published_at ? data.page.published_at.slice(0, 16) : "");
+    setAuthorName(data.page.author_name ?? "");
+    setClientName(data.page.client_name ?? "");
+    setIndustry(data.page.industry ?? "");
   }
 
   useEffect(() => {
@@ -80,6 +95,12 @@ export default function EditPagePage() {
         slug,
         status,
         page_type: pageType,
+        excerpt,
+        featured_image_id: featuredImageId,
+        published_at: publishedAt || null,
+        author_name: authorName,
+        client_name: clientName,
+        industry,
       });
       setPage(updated);
       setMessage("Page settings saved.");
@@ -107,6 +128,26 @@ export default function EditPagePage() {
       setError(err instanceof Error ? err.message : "Failed to add section");
     } finally {
       setAddingSection(false);
+    }
+  }
+
+  async function handleCreateWriterSection() {
+    setCreatingWriterSection(true);
+    setError("");
+
+    const token = getStoredToken();
+    if (!token) return;
+
+    try {
+      const { section } = await createSection(token, pageId, {
+        section_type: "article_body",
+      });
+      setSections((prev) => [...prev, section]);
+      setMessage("Writer section created.");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to create writer section");
+    } finally {
+      setCreatingWriterSection(false);
     }
   }
 
@@ -168,6 +209,23 @@ export default function EditPagePage() {
     setMessage("Section deleted.");
   }
 
+  const publicUrl = useMemo(() => {
+    const cleanSlug = slug.replace(/^\//, "");
+    if (pageType === "resource") return `/resources/${cleanSlug}`;
+    if (pageType === "feature") return `/features/${cleanSlug}`;
+    if (pageType === "solution") return `/solutions/${cleanSlug}`;
+    if (pageType === "service") return `/services/${cleanSlug}`;
+    if (pageType === "blog") return `/blog/${cleanSlug}`;
+    if (pageType === "case_study") return `/case-studies/${cleanSlug}`;
+    return slug === "/" ? "/" : `/${cleanSlug}`;
+  }, [pageType, slug]);
+
+  const isBlog = pageType === "blog";
+  const isCaseStudy = pageType === "case_study";
+  const showEditorialFields = isBlog || isCaseStudy;
+  const articleBodySection =
+    sections.find((section) => section.section_type === "article_body") ?? null;
+
   if (loading) {
     return (
       <div className="flex justify-center py-24">
@@ -197,9 +255,7 @@ export default function EditPagePage() {
             <span className="text-xs capitalize text-muted">{pageType}</span>
           </div>
           <h1 className="text-2xl font-semibold tracking-tight text-foreground">{page.title}</h1>
-          <p className="mt-1 text-sm text-muted">
-            Edit page settings and manage content sections.
-          </p>
+          <p className="mt-1 text-sm text-muted">Edit metadata, SEO, and page sections.</p>
         </div>
       </div>
 
@@ -264,23 +320,106 @@ export default function EditPagePage() {
               <option value="solution">Solution</option>
               <option value="service">Service</option>
               <option value="blog">Blog</option>
+              <option value="case_study">Case Study</option>
             </select>
-            {pageType === "resource" && slug ? (
+            {slug ? (
               <p className="text-xs text-muted">
-                Public URL: <code className="text-foreground">/resources/{slug.replace(/^\//, "")}</code>
-              </p>
-            ) : null}
-            {pageType === "feature" && slug ? (
-              <p className="text-xs text-muted">
-                Public URL: <code className="text-foreground">/features/{slug.replace(/^\//, "")}</code>
-              </p>
-            ) : null}
-            {pageType === "solution" && slug ? (
-              <p className="text-xs text-muted">
-                Public URL: <code className="text-foreground">/solutions/{slug.replace(/^\//, "")}</code>
+                Public URL: <code className="text-foreground">{publicUrl}</code>
               </p>
             ) : null}
           </div>
+          <div className="space-y-2 sm:col-span-2">
+            <label className="block text-sm font-medium">Excerpt</label>
+            <textarea
+              value={excerpt}
+              onChange={(e) => setExcerpt(e.target.value)}
+              rows={3}
+              className="login-input w-full rounded-xl border border-[var(--form-border)] bg-[var(--input-bg)] px-4 py-2.5 text-sm"
+              placeholder="Short summary used for archive cards and search snippets."
+            />
+          </div>
+          <div className="space-y-2 sm:col-span-2">
+            <label className="block text-sm font-medium">Featured image</label>
+            <MediaPicker
+              value={featuredImageId}
+              onChange={(mediaId) => setFeaturedImageId(mediaId)}
+              accept="image"
+              label="Pick featured image"
+              defaultGalleryOpen={false}
+            />
+          </div>
+          <div className="space-y-2">
+            <label className="block text-sm font-medium">Published at</label>
+            <input
+              type="datetime-local"
+              value={publishedAt}
+              onChange={(e) => setPublishedAt(e.target.value)}
+              className="login-input w-full rounded-xl border border-[var(--form-border)] bg-[var(--input-bg)] px-4 py-2.5 text-sm"
+            />
+          </div>
+          {showEditorialFields ? (
+            <div className="space-y-2">
+              <label className="block text-sm font-medium">
+                {isBlog ? "Author name" : "Client name"}
+              </label>
+              <input
+                value={isBlog ? authorName : clientName}
+                onChange={(e) => (isBlog ? setAuthorName(e.target.value) : setClientName(e.target.value))}
+                className="login-input w-full rounded-xl border border-[var(--form-border)] bg-[var(--input-bg)] px-4 py-2.5 text-sm"
+                placeholder={isBlog ? "e.g. Tag RoBo Tech Team" : "e.g. Leading Manufacturer"}
+              />
+            </div>
+          ) : null}
+          {isCaseStudy ? (
+            <div className="space-y-2">
+              <label className="block text-sm font-medium">Industry</label>
+              <input
+                value={industry}
+                onChange={(e) => setIndustry(e.target.value)}
+                className="login-input w-full rounded-xl border border-[var(--form-border)] bg-[var(--input-bg)] px-4 py-2.5 text-sm"
+                placeholder="e.g. Manufacturing"
+              />
+            </div>
+          ) : null}
+          {isBlog ? (
+            <div className="space-y-2">
+              <label className="block text-sm font-medium">Industry / topic</label>
+              <input
+                value={industry}
+                onChange={(e) => setIndustry(e.target.value)}
+                className="login-input w-full rounded-xl border border-[var(--form-border)] bg-[var(--input-bg)] px-4 py-2.5 text-sm"
+                placeholder="e.g. RFID, Asset Tracking"
+              />
+            </div>
+          ) : null}
+          {!showEditorialFields ? (
+            <>
+              <div className="space-y-2">
+                <label className="block text-sm font-medium">Author name</label>
+                <input
+                  value={authorName}
+                  onChange={(e) => setAuthorName(e.target.value)}
+                  className="login-input w-full rounded-xl border border-[var(--form-border)] bg-[var(--input-bg)] px-4 py-2.5 text-sm"
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="block text-sm font-medium">Client name</label>
+                <input
+                  value={clientName}
+                  onChange={(e) => setClientName(e.target.value)}
+                  className="login-input w-full rounded-xl border border-[var(--form-border)] bg-[var(--input-bg)] px-4 py-2.5 text-sm"
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="block text-sm font-medium">Industry</label>
+                <input
+                  value={industry}
+                  onChange={(e) => setIndustry(e.target.value)}
+                  className="login-input w-full rounded-xl border border-[var(--form-border)] bg-[var(--input-bg)] px-4 py-2.5 text-sm"
+                />
+              </div>
+            </>
+          ) : null}
         </div>
 
         <button
@@ -299,6 +438,20 @@ export default function EditPagePage() {
         seo={seo}
         onSave={handleSaveSeo}
       />
+
+      {showEditorialFields ? (
+        <ContentWriterPanel
+          pageType={pageType}
+          section={articleBodySection}
+          creating={creatingWriterSection}
+          onCreate={handleCreateWriterSection}
+          onSave={(data, isActive) =>
+            articleBodySection
+              ? handleSaveSection(articleBodySection.id, data, isActive)
+              : Promise.resolve()
+          }
+        />
+      ) : null}
 
       {/* Sections */}
       <section className="space-y-4">

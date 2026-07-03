@@ -1,4 +1,5 @@
 import { Router } from "express";
+import crypto from "crypto";
 import pool from "../db/pool.js";
 import {
   FEATURES_MEGA_MENU_KEY,
@@ -10,6 +11,8 @@ import {
   enrichMegaMenuFeaturedImage,
   resolveMenuLinks,
 } from "../lib/site-settings.js";
+import { parseLeadRow, validateLeadInput } from "../lib/leads.js";
+import { sendLeadNotificationEmail } from "../lib/email.js";
 
 const router = Router();
 
@@ -32,6 +35,14 @@ function parseSeoRow(row) {
     }
   }
   return row;
+}
+
+function parsePageRow(row) {
+  if (!row) return row;
+  return {
+    ...row,
+    published_at: row.published_at ?? null,
+  };
 }
 
 function slugFromParam(param) {
@@ -127,6 +138,77 @@ async function enrichSectionsWithMedia(sections, req) {
         for (const item of data.items) {
           if (item?.media_id) mediaIds.add(item.media_id);
         }
+      }
+    }
+
+    if (section.section_type === "page_hero") {
+      if (data.desktop_image_media_id) mediaIds.add(data.desktop_image_media_id);
+      if (data.mobile_image_media_id) mediaIds.add(data.mobile_image_media_id);
+    }
+
+    if (section.section_type === "hero_section_service_page" && data.image_media_id) {
+      mediaIds.add(data.image_media_id);
+    }
+
+    if (section.section_type === "services_intro_section_service_page" && Array.isArray(data.featured_items)) {
+      for (const item of data.featured_items) {
+        if (item?.image_media_id) mediaIds.add(item.image_media_id);
+      }
+    }
+
+    if (section.section_type === "services_catalogue_section_service_page" && Array.isArray(data.services)) {
+      for (const item of data.services) {
+        if (item?.image_media_id) mediaIds.add(item.image_media_id);
+      }
+    }
+
+    if (section.section_type === "hero_section_tools" && data.image_media_id) {
+      mediaIds.add(data.image_media_id);
+    }
+
+    if (section.section_type === "tools_intro_section_tools" && Array.isArray(data.tool_pills)) {
+      for (const item of data.tool_pills) {
+        if (item?.image_media_id) mediaIds.add(item.image_media_id);
+      }
+    }
+
+    if (section.section_type === "tools_flagship_section_tools" && Array.isArray(data.tools)) {
+      for (const item of data.tools) {
+        if (item?.image_media_id) mediaIds.add(item.image_media_id);
+      }
+    }
+
+    if (section.section_type === "hero_section_software" && data.image_media_id) {
+      mediaIds.add(data.image_media_id);
+    }
+
+    if (section.section_type === "software_intro_section_software" && data.image_media_id) {
+      mediaIds.add(data.image_media_id);
+    }
+
+    if (section.section_type === "software_modules_section_software" && data.image_media_id) {
+      mediaIds.add(data.image_media_id);
+    }
+
+    if (section.section_type === "software_cta_section_software" && data.image_media_id) {
+      mediaIds.add(data.image_media_id);
+    }
+
+    if (section.section_type === "page_clients" && Array.isArray(data.items)) {
+      for (const item of data.items) {
+        if (item?.media_id) mediaIds.add(item.media_id);
+      }
+    }
+
+    if (section.section_type === "asset_management_solution" && Array.isArray(data.tabs)) {
+      for (const tab of data.tabs) {
+        if (tab?.image_media_id) mediaIds.add(tab.image_media_id);
+      }
+    }
+
+    if (section.section_type === "article_body" && Array.isArray(data.embedded_media_ids)) {
+      for (const mediaId of data.embedded_media_ids) {
+        if (mediaId) mediaIds.add(mediaId);
       }
     }
   }
@@ -315,6 +397,198 @@ async function enrichSectionsWithMedia(sections, req) {
       return { ...section, data };
     }
 
+    if (section.section_type === "page_hero") {
+      const data = { ...section.data };
+
+      if (data.desktop_image_media_id && mediaMap.has(data.desktop_image_media_id)) {
+        const media = mediaMap.get(data.desktop_image_media_id);
+        data.desktop_image_url = absoluteAssetUrl(media.file_url, req);
+        data.desktop_image_alt = media.alt_text || data.desktop_image_alt;
+      }
+
+      if (data.mobile_image_media_id && mediaMap.has(data.mobile_image_media_id)) {
+        const media = mediaMap.get(data.mobile_image_media_id);
+        data.mobile_image_url = absoluteAssetUrl(media.file_url, req);
+        data.mobile_image_alt = media.alt_text || data.mobile_image_alt;
+      }
+
+      return { ...section, data };
+    }
+
+    if (section.section_type === "hero_section_service_page") {
+      const data = { ...section.data };
+
+      if (data.image_media_id && mediaMap.has(data.image_media_id)) {
+        const media = mediaMap.get(data.image_media_id);
+        data.image_url = absoluteAssetUrl(media.file_url, req);
+        data.image_alt = media.alt_text || data.image_alt;
+      }
+
+      return { ...section, data };
+    }
+
+    if (
+      section.section_type === "services_intro_section_service_page" &&
+      Array.isArray(section.data.featured_items)
+    ) {
+      const data = {
+        ...section.data,
+        featured_items: section.data.featured_items.map((item) => {
+          if (!item?.image_media_id || !mediaMap.has(item.image_media_id)) return item;
+          const media = mediaMap.get(item.image_media_id);
+          return {
+            ...item,
+            image_url: absoluteAssetUrl(media.file_url, req),
+            image_alt: media.alt_text || item.image_alt,
+          };
+        }),
+      };
+      return { ...section, data };
+    }
+
+    if (
+      section.section_type === "services_catalogue_section_service_page" &&
+      Array.isArray(section.data.services)
+    ) {
+      const data = {
+        ...section.data,
+        services: section.data.services.map((item) => {
+          if (!item?.image_media_id || !mediaMap.has(item.image_media_id)) return item;
+          const media = mediaMap.get(item.image_media_id);
+          return {
+            ...item,
+            image_url: absoluteAssetUrl(media.file_url, req),
+            image_alt: media.alt_text || item.image_alt,
+          };
+        }),
+      };
+      return { ...section, data };
+    }
+
+    if (section.section_type === "hero_section_tools") {
+      const data = { ...section.data };
+
+      if (data.image_media_id && mediaMap.has(data.image_media_id)) {
+        const media = mediaMap.get(data.image_media_id);
+        data.image_url = absoluteAssetUrl(media.file_url, req);
+        data.image_alt = media.alt_text || data.image_alt;
+      }
+
+      return { ...section, data };
+    }
+
+    if (
+      section.section_type === "tools_intro_section_tools" &&
+      Array.isArray(section.data.tool_pills)
+    ) {
+      const data = {
+        ...section.data,
+        tool_pills: section.data.tool_pills.map((item) => {
+          if (!item?.image_media_id || !mediaMap.has(item.image_media_id)) return item;
+          const media = mediaMap.get(item.image_media_id);
+          return {
+            ...item,
+            image_url: absoluteAssetUrl(media.file_url, req),
+            image_alt: media.alt_text || item.image_alt,
+          };
+        }),
+      };
+      return { ...section, data };
+    }
+
+    if (
+      section.section_type === "tools_flagship_section_tools" &&
+      Array.isArray(section.data.tools)
+    ) {
+      const data = {
+        ...section.data,
+        tools: section.data.tools.map((item) => {
+          if (!item?.image_media_id || !mediaMap.has(item.image_media_id)) return item;
+          const media = mediaMap.get(item.image_media_id);
+          return {
+            ...item,
+            image_url: absoluteAssetUrl(media.file_url, req),
+            image_alt: media.alt_text || item.image_alt,
+          };
+        }),
+      };
+      return { ...section, data };
+    }
+
+    if (section.section_type === "hero_section_software") {
+      const data = { ...section.data };
+      if (data.image_media_id && mediaMap.has(data.image_media_id)) {
+        const media = mediaMap.get(data.image_media_id);
+        data.image_url = absoluteAssetUrl(media.file_url, req);
+        data.image_alt = media.alt_text || data.image_alt;
+      }
+      return { ...section, data };
+    }
+
+    if (section.section_type === "software_intro_section_software") {
+      const data = { ...section.data };
+      if (data.image_media_id && mediaMap.has(data.image_media_id)) {
+        const media = mediaMap.get(data.image_media_id);
+        data.image_url = absoluteAssetUrl(media.file_url, req);
+        data.image_alt = media.alt_text || data.image_alt;
+      }
+      return { ...section, data };
+    }
+
+    if (section.section_type === "software_modules_section_software") {
+      const data = { ...section.data };
+      if (data.image_media_id && mediaMap.has(data.image_media_id)) {
+        const media = mediaMap.get(data.image_media_id);
+        data.image_url = absoluteAssetUrl(media.file_url, req);
+        data.image_alt = media.alt_text || data.image_alt;
+      }
+      return { ...section, data };
+    }
+
+    if (section.section_type === "software_cta_section_software") {
+      const data = { ...section.data };
+      if (data.image_media_id && mediaMap.has(data.image_media_id)) {
+        const media = mediaMap.get(data.image_media_id);
+        data.image_url = absoluteAssetUrl(media.file_url, req);
+        data.image_alt = media.alt_text || data.image_alt;
+      }
+      return { ...section, data };
+    }
+
+    if (section.section_type === "page_clients" && Array.isArray(section.data.items)) {
+      const data = {
+        ...section.data,
+        items: section.data.items.map((item) => {
+          if (!item?.media_id || !mediaMap.has(item.media_id)) return item;
+          const media = mediaMap.get(item.media_id);
+          return {
+            ...item,
+            logo_url: absoluteAssetUrl(media.file_url, req),
+          };
+        }),
+      };
+      return { ...section, data };
+    }
+
+    if (
+      section.section_type === "asset_management_solution" &&
+      Array.isArray(section.data.tabs)
+    ) {
+      const data = {
+        ...section.data,
+        tabs: section.data.tabs.map((tab) => {
+          if (!tab?.image_media_id || !mediaMap.has(tab.image_media_id)) return tab;
+          const media = mediaMap.get(tab.image_media_id);
+          return {
+            ...tab,
+            image_url: absoluteAssetUrl(media.file_url, req),
+            image_alt: media.alt_text || tab.image_alt,
+          };
+        }),
+      };
+      return { ...section, data };
+    }
+
     if (section.section_type === "track" && Array.isArray(section.data.items)) {
       const data = {
         ...section.data,
@@ -380,13 +654,14 @@ router.get("/pages/:slug", async (req, res) => {
 
   try {
     const pageResult = await pool.query(
-      `SELECT id, title, slug, page_type, status, sort_order, updated_at
+      `SELECT id, title, slug, page_type, status, excerpt, featured_image_id, published_at,
+              author_name, client_name, industry, sort_order, updated_at
        FROM pages
        WHERE slug = ? AND status = 'published'`,
       [slug]
     );
 
-    const page = pageResult.rows[0];
+    const page = parsePageRow(pageResult.rows[0]);
     if (!page) {
       return res.status(404).json({ error: "Page not found" });
     }
@@ -405,15 +680,160 @@ router.get("/pages/:slug", async (req, res) => {
     let sections = sectionsResult.rows.map(parseSectionRow);
     sections = await enrichSectionsWithMedia(sections, req);
 
+    const seo = seoResult.rows[0] ? parseSeoRow(seoResult.rows[0]) : null;
+
+    if (page.featured_image_id) {
+      const featuredImageResult = await pool.query(
+        `SELECT id, file_url, alt_text, mime_type FROM media WHERE id = ?`,
+        [page.featured_image_id]
+      );
+      const featuredImage = featuredImageResult.rows[0];
+      if (featuredImage) {
+        page.featured_image_url = absoluteAssetUrl(featuredImage.file_url, req);
+        page.featured_image_alt = featuredImage.alt_text || page.title;
+      }
+    }
+
+    if (seo?.og_image_id) {
+      const ogImageResult = await pool.query(
+        `SELECT id, file_url, alt_text FROM media WHERE id = ?`,
+        [seo.og_image_id]
+      );
+      const ogImage = ogImageResult.rows[0];
+      if (ogImage) {
+        seo.og_image_url = absoluteAssetUrl(ogImage.file_url, req);
+        seo.og_image_alt = ogImage.alt_text || page.title;
+      }
+    }
+
     res.json({
       page,
       sections,
-      seo: seoResult.rows[0] ? parseSeoRow(seoResult.rows[0]) : null,
+      seo,
     });
   } catch (error) {
     console.error("Public page error:", error);
     res.status(500).json({ error: "Failed to load page" });
   }
 });
+
+router.get("/content/:pageType", async (req, res) => {
+  const pageType = String(req.params.pageType ?? "").trim();
+  const limit = Math.min(Math.max(Number(req.query.limit ?? 12), 1), 50);
+  const offset = Math.max(Number(req.query.offset ?? 0), 0);
+  const allowedTypes = new Set(["blog", "case_study"]);
+
+  if (!allowedTypes.has(pageType)) {
+    return res.status(400).json({ error: "Unsupported content type" });
+  }
+
+  try {
+    const result = await pool.query(
+      `SELECT id, title, slug, page_type, status, excerpt, featured_image_id, published_at,
+              author_name, client_name, industry, updated_at
+       FROM pages
+       WHERE page_type = ? AND status = 'published'
+       ORDER BY COALESCE(published_at, updated_at) DESC, updated_at DESC
+       LIMIT ? OFFSET ?`,
+      [pageType, limit, offset]
+    );
+
+    const rows = result.rows.map(parsePageRow);
+    const mediaIds = rows.map((row) => row.featured_image_id).filter(Boolean);
+    const mediaMap = new Map();
+
+    if (mediaIds.length > 0) {
+      const placeholders = mediaIds.map(() => "?").join(", ");
+      const mediaResult = await pool.query(
+        `SELECT id, file_url, alt_text FROM media WHERE id IN (${placeholders})`,
+        mediaIds
+      );
+      for (const media of mediaResult.rows) {
+        mediaMap.set(media.id, media);
+      }
+    }
+
+    const items = rows.map((row) => {
+      const featuredImage = row.featured_image_id ? mediaMap.get(row.featured_image_id) : null;
+
+      return {
+        ...row,
+        featured_image_url: featuredImage ? absoluteAssetUrl(featuredImage.file_url, req) : null,
+        featured_image_alt: featuredImage?.alt_text || row.title,
+      };
+    });
+
+    res.json({ items });
+  } catch (error) {
+    console.error("Public content list error:", error);
+    res.status(500).json({ error: "Failed to load content list" });
+  }
+});
+
+router.post("/leads", async (req, res) => {
+  const validation = validateLeadInput(req.body);
+
+  if (validation.error) {
+    return res.status(400).json({ error: validation.error });
+  }
+
+  const lead = validation.data;
+  const leadId = crypto.randomUUID();
+  const referer = sanitizeLeadReferer(req.get("referer"));
+
+  try {
+    await pool.query(
+      `INSERT INTO leads (
+        id, form_type, name, email, phone, message, source_page, source_label, status
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'new')`,
+      [
+        leadId,
+        lead.form_type,
+        lead.name,
+        lead.email,
+        lead.phone,
+        lead.message,
+        lead.source_page ?? referer,
+        lead.source_label,
+      ]
+    );
+
+    const result = await pool.query(
+      `SELECT id, form_type, name, email, phone, message, source_page, source_label, status, metadata, created_at, updated_at
+       FROM leads WHERE id = ?`,
+      [leadId]
+    );
+
+    const savedLead = parseLeadRow(result.rows[0]);
+
+    sendLeadNotificationEmail(savedLead)
+      .then((result) => {
+        if (!result.sent) {
+          console.warn("Lead notification email was not sent:", result.reason);
+        }
+      })
+      .catch((emailError) => {
+        console.error("Lead notification email failed:", emailError);
+      });
+
+    res.status(201).json({
+      message: "Thank you! We will get back to you shortly.",
+      lead: savedLead,
+    });
+  } catch (error) {
+    console.error("Create lead error:", error);
+    res.status(500).json({ error: "Failed to submit form" });
+  }
+});
+
+function sanitizeLeadReferer(referer) {
+  if (!referer) return null;
+  try {
+    const url = new URL(referer);
+    return `${url.pathname}${url.search}`.slice(0, 255);
+  } catch {
+    return String(referer).slice(0, 255);
+  }
+}
 
 export default router;

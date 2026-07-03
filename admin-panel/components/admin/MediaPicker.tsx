@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Check, ChevronDown, ChevronUp, ImagePlus, Loader2, Upload } from "lucide-react";
+import Link from "next/link";
+import { Check, ExternalLink, ImagePlus, Loader2, Upload } from "lucide-react";
 import MediaThumbnail from "@/components/admin/MediaThumbnail";
 import { getMedia, uploadMedia, type MediaItem } from "@/lib/api";
 import { getStoredToken } from "@/lib/auth";
@@ -32,7 +33,7 @@ export default function MediaPicker({
   value,
   onChange,
   accept = "image",
-  label = "Select from library",
+  label = "Pick from media library",
   defaultGalleryOpen = true,
 }: MediaPickerProps) {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -42,13 +43,21 @@ export default function MediaPicker({
   const [error, setError] = useState("");
   const [galleryOpen, setGalleryOpen] = useState(defaultGalleryOpen);
 
-  useEffect(() => {
+  async function loadMedia() {
     const token = getStoredToken();
     if (!token) return;
 
-    getMedia(token)
-      .then((data) => setMedia(data.media))
-      .finally(() => setLoading(false));
+    setLoading(true);
+    try {
+      const data = await getMedia(token);
+      setMedia(data.media);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    loadMedia();
   }, []);
 
   const filtered = media.filter((item) => {
@@ -84,6 +93,13 @@ export default function MediaPicker({
       <div className="flex flex-wrap items-center justify-between gap-2">
         <p className="text-xs font-medium uppercase tracking-wide text-muted">{label}</p>
         <div className="flex items-center gap-2">
+          <Link
+            href="/dashboard/media"
+            className="inline-flex items-center gap-1 text-xs text-muted transition hover:text-[var(--orange)]"
+          >
+            Open Media
+            <ExternalLink className="h-3 w-3" />
+          </Link>
           <input
             ref={inputRef}
             type="file"
@@ -99,17 +115,7 @@ export default function MediaPicker({
             onClick={() => setGalleryOpen(!galleryOpen)}
             className="inline-flex items-center gap-1 text-xs text-muted transition hover:text-foreground"
           >
-            {galleryOpen ? (
-              <>
-                <ChevronUp className="h-3.5 w-3.5" />
-                Minimize
-              </>
-            ) : (
-              <>
-                <ChevronDown className="h-3.5 w-3.5" />
-                Show library
-              </>
-            )}
+            {galleryOpen ? "Hide library" : "Show library"}
           </button>
           <button
             type="button"
@@ -163,14 +169,17 @@ export default function MediaPicker({
 
       {galleryOpen ? (
         loading ? (
-          <p className="text-xs text-muted">Loading media...</p>
+          <div className="flex items-center gap-2 py-6 text-sm text-muted">
+            <Loader2 className="h-4 w-4 animate-spin" />
+            Loading media library...
+          </div>
         ) : filtered.length === 0 ? (
           <div className="flex items-center gap-2 rounded-xl border border-dashed border-border px-4 py-6 text-sm text-muted">
             <ImagePlus className="h-4 w-4" />
             No {accept === "video" ? "videos" : "images"} yet — upload one above.
           </div>
         ) : (
-          <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">
+          <div className="grid max-h-[360px] grid-cols-3 gap-2 overflow-y-auto rounded-xl border border-border bg-[var(--surface-muted)]/20 p-3 sm:grid-cols-4 md:grid-cols-5">
             {filtered.map((item) => {
               const isSelected = item.id === value;
               return (
@@ -178,7 +187,7 @@ export default function MediaPicker({
                   key={item.id}
                   type="button"
                   onClick={() => onChange(item.id, item)}
-                  className={`relative aspect-video overflow-hidden rounded-lg border-2 transition ${
+                  className={`relative aspect-square overflow-hidden rounded-lg border-2 bg-card transition ${
                     isSelected
                       ? "border-[var(--orange)] ring-2 ring-[var(--orange)]/20"
                       : "border-border hover:border-[var(--orange)]/50"

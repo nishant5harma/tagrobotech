@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import TinyMceEditor from "@/components/admin/TinyMceEditor";
 import {
   normalizeRichTextSectionData,
   richTextSectionToPayload,
@@ -71,19 +72,11 @@ export default function RichTextSectionEditor({
         />
       </div>
 
-      <div className="space-y-2">
-        <label className="block text-xs font-medium uppercase tracking-wide text-muted">Content</label>
-        <textarea
-          value={data.content}
-          onChange={(e) => updateField("content", e.target.value)}
-          rows={14}
-          placeholder="Write page content. Use blank lines between paragraphs."
-          className={`${inputClass} resize-y font-mono text-[13px] leading-relaxed`}
-        />
-        <p className="text-xs text-muted">
-          Plain text with blank lines between paragraphs. HTML tags are also supported.
-        </p>
-      </div>
+      <TinyMceEditor
+        label="Content"
+        value={data.content}
+        onChange={(value) => updateField("content", value)}
+      />
 
       {error ? <p className="text-sm text-[var(--error-text)]">{error}</p> : null}
 

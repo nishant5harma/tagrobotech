@@ -1,0 +1,24 @@
+{
+  "tagline": "FAQ",
+  "heading": "Frequently Asked",
+  "heading_accent": "Questions",
+  "description": "Find answers to common questions about our asset management software and implementation.",
+  "items": [
+    {
+      "question": "What is asset management software?",
+      "answer": "Asset management software helps organizations track, maintain, and optimize physical and digital assets across locations with real-time visibility and audit-ready records."
+    },
+    {
+      "question": "Can this work for multiple sites and departments?",
+      "answer": "Yes. You can manage assets across plants, warehouses, offices, and remote locations from one centralized platform with role-based access."
+    },
+    {
+      "question": "Does it support RFID, BLE, and barcode tracking?",
+      "answer": "Tag RoBo Tech supports RFID, BLE, barcode, GPS, and IoT integrations so you can choose the right tracking method for each asset type."
+    },
+    {
+      "question": "How long does implementation take?",
+      "answer": "Most deployments begin with a pilot in a few weeks. Full rollout timelines depend on asset volume, integrations, and site count."
+    }
+  ]
+}

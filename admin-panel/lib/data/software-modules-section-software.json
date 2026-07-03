@@ -1,0 +1,58 @@
+{
+  "tagline": "Analysis",
+  "heading": "Key features built for operational clarity",
+  "description": "Nine integrated modules — from visibility and reconciliation to maintenance, incidents, and ERP integration.",
+  "platform_tagline": "Platform map",
+  "platform_heading": "Everything in one command centre",
+  "platform_description": "All modules included in every Footprints deployment",
+  "image_media_id": null,
+  "image_src": "/assets-images/laptop.png",
+  "image_alt": "Footprints asset tracking dashboard by Tag RoBo Tech",
+  "modules": [
+    {
+      "number": "01",
+      "title": "Item visibility & tracking",
+      "description": "You can view geo location where asset was last traced."
+    },
+    {
+      "number": "02",
+      "title": "Auto reconciliation",
+      "description": "Reconciliation can be done between book data and physical count."
+    },
+    {
+      "number": "03",
+      "title": "Utilization monitoring",
+      "description": "You can identify unutilized assets."
+    },
+    {
+      "number": "04",
+      "title": "Physical condition monitoring",
+      "description": "Not working assets can be identified."
+    },
+    {
+      "number": "05",
+      "title": "Maintenance log",
+      "description": "Check on maintenance records."
+    },
+    {
+      "number": "06",
+      "title": "Incident management",
+      "description": "Log of past breakdown can be retrieved including repair details."
+    },
+    {
+      "number": "07",
+      "title": "Location mapping",
+      "description": "Current location of item can be traced."
+    },
+    {
+      "number": "08",
+      "title": "Manual retrieval",
+      "description": "If you wish to retrieve any data point such as machine manual, this can be done very conveniently."
+    },
+    {
+      "number": "09",
+      "title": "Integration",
+      "description": "With your ERP via API."
+    }
+  ]
+}

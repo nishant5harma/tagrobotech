@@ -22,12 +22,21 @@ export default function MediaThumbnail({
   const [failed, setFailed] = useState(false);
   const url = resolveMediaUrl(src);
 
-  if (!src || fileMissing || failed) {
+  if (!src) {
+    return (
+      <div className="flex h-full w-full flex-col items-center justify-center gap-1 bg-[var(--surface-muted)] p-2 text-center">
+        <ImageIcon className="h-5 w-5 text-muted" />
+        <span className="line-clamp-3 text-[10px] text-muted">{fallbackLabel || "No preview"}</span>
+      </div>
+    );
+  }
+
+  if (failed) {
     return (
       <div className="flex h-full w-full flex-col items-center justify-center gap-1 bg-[var(--surface-muted)] p-2 text-center">
         <ImageIcon className="h-5 w-5 text-muted" />
         <span className="line-clamp-3 text-[10px] text-muted">
-          {fileMissing ? "File missing — re-upload" : fallbackLabel || "No preview"}
+          {fileMissing ? "File missing — re-upload" : fallbackLabel || "Preview unavailable"}
         </span>
       </div>
     );

@@ -16,7 +16,26 @@ import WhoWeAreAboutSectionEditor from "@/components/admin/sections/WhoWeAreAbou
 import OurJourneyAboutSectionEditor from "@/components/admin/sections/OurJourneyAboutSectionEditor";
 import WhatWeDeliverAboutSectionEditor from "@/components/admin/sections/WhatWeDeliverAboutSectionEditor";
 import ReachTrustAboutSectionEditor from "@/components/admin/sections/ReachTrustAboutSectionEditor";
+import PageHeroSectionEditor from "@/components/admin/sections/PageHeroSectionEditor";
+import PageClientsSectionEditor from "@/components/admin/sections/PageClientsSectionEditor";
+import AssetManagementSolutionSectionEditor from "@/components/admin/sections/AssetManagementSolutionSectionEditor";
+import PageFaqSectionEditor from "@/components/admin/sections/PageFaqSectionEditor";
+import PageCtaSectionEditor from "@/components/admin/sections/PageCtaSectionEditor";
+import CtaReusableSectionEditor from "@/components/admin/sections/CtaReusableSectionEditor";
 import ResourcePageHeroSectionEditor from "@/components/admin/sections/ResourcePageHeroSectionEditor";
+import HeroSectionServicePageEditor from "@/components/admin/sections/HeroSectionServicePageEditor";
+import ServicesIntroSectionServicePageEditor from "@/components/admin/sections/ServicesIntroSectionServicePageEditor";
+import ServicesCatalogueSectionServicePageEditor from "@/components/admin/sections/ServicesCatalogueSectionServicePageEditor";
+import ServicesExecutionSectionServicePageEditor from "@/components/admin/sections/ServicesExecutionSectionServicePageEditor";
+import HeroSectionToolsEditor from "@/components/admin/sections/HeroSectionToolsEditor";
+import ToolsIntroSectionToolsEditor from "@/components/admin/sections/ToolsIntroSectionToolsEditor";
+import ToolsFlagshipSectionToolsEditor from "@/components/admin/sections/ToolsFlagshipSectionToolsEditor";
+import ToolsCtaSectionToolsEditor from "@/components/admin/sections/ToolsCtaSectionToolsEditor";
+import HeroSectionSoftwareEditor from "@/components/admin/sections/HeroSectionSoftwareEditor";
+import SoftwareIntroSectionSoftwareEditor from "@/components/admin/sections/SoftwareIntroSectionSoftwareEditor";
+import SoftwareModulesSectionSoftwareEditor from "@/components/admin/sections/SoftwareModulesSectionSoftwareEditor";
+import SoftwareCtaSectionSoftwareEditor from "@/components/admin/sections/SoftwareCtaSectionSoftwareEditor";
+import ArticleBodySectionEditor from "@/components/admin/sections/ArticleBodySectionEditor";
 import RichTextSectionEditor from "@/components/admin/sections/RichTextSectionEditor";
 import { SECTION_TYPES } from "@/lib/sections";
 import type { PageSection } from "@/lib/api";
@@ -72,7 +91,29 @@ export default function SectionEditor({
   const isOurJourneyAbout = section.section_type === "our_journey_about";
   const isWhatWeDeliverAbout = section.section_type === "what_we_deliver_about";
   const isReachTrustAbout = section.section_type === "reach_trust_about";
+  const isPageHero = section.section_type === "page_hero";
+  const isPageClients = section.section_type === "page_clients";
+  const isAssetManagementSolution = section.section_type === "asset_management_solution";
+  const isPageFaq = section.section_type === "page_faq";
+  const isPageCta = section.section_type === "page_cta";
+  const isCtaReusable = section.section_type === "cta_reusable";
   const isResourcePageHero = section.section_type === "resource_page_hero";
+  const isHeroSectionServicePage = section.section_type === "hero_section_service_page";
+  const isServicesIntroSectionServicePage =
+    section.section_type === "services_intro_section_service_page";
+  const isServicesCatalogueSectionServicePage =
+    section.section_type === "services_catalogue_section_service_page";
+  const isServicesExecutionSectionServicePage =
+    section.section_type === "services_execution_section_service_page";
+  const isHeroSectionTools = section.section_type === "hero_section_tools";
+  const isToolsIntroSectionTools = section.section_type === "tools_intro_section_tools";
+  const isToolsFlagshipSectionTools = section.section_type === "tools_flagship_section_tools";
+  const isToolsCtaSectionTools = section.section_type === "tools_cta_section_tools";
+  const isHeroSectionSoftware = section.section_type === "hero_section_software";
+  const isSoftwareIntroSectionSoftware = section.section_type === "software_intro_section_software";
+  const isSoftwareModulesSectionSoftware = section.section_type === "software_modules_section_software";
+  const isSoftwareCtaSectionSoftware = section.section_type === "software_cta_section_software";
+  const isArticleBody = section.section_type === "article_body";
   const isRichText = section.section_type === "rich_text";
   const hasFormEditor =
     isHero ||
@@ -89,7 +130,26 @@ export default function SectionEditor({
     isOurJourneyAbout ||
     isWhatWeDeliverAbout ||
     isReachTrustAbout ||
+    isPageHero ||
+    isPageClients ||
+    isAssetManagementSolution ||
+    isPageFaq ||
+    isPageCta ||
+    isCtaReusable ||
     isResourcePageHero ||
+    isHeroSectionServicePage ||
+    isServicesIntroSectionServicePage ||
+    isServicesCatalogueSectionServicePage ||
+    isServicesExecutionSectionServicePage ||
+    isHeroSectionTools ||
+    isToolsIntroSectionTools ||
+    isToolsFlagshipSectionTools ||
+    isToolsCtaSectionTools ||
+    isHeroSectionSoftware ||
+    isSoftwareIntroSectionSoftware ||
+    isSoftwareModulesSectionSoftware ||
+    isSoftwareCtaSectionSoftware ||
+    isArticleBody ||
     isRichText;
 
   async function handleJsonSave() {
@@ -247,8 +307,141 @@ export default function SectionEditor({
               onIsActiveChange={setIsActive}
               onSave={onSave}
             />
+          ) : isPageHero ? (
+            <PageHeroSectionEditor
+              initialData={section.data}
+              isActive={isActive}
+              onIsActiveChange={setIsActive}
+              onSave={onSave}
+            />
+          ) : isPageClients ? (
+            <PageClientsSectionEditor
+              initialData={section.data}
+              isActive={isActive}
+              onIsActiveChange={setIsActive}
+              onSave={onSave}
+            />
+          ) : isAssetManagementSolution ? (
+            <AssetManagementSolutionSectionEditor
+              initialData={section.data}
+              isActive={isActive}
+              onIsActiveChange={setIsActive}
+              onSave={onSave}
+            />
+          ) : isPageFaq ? (
+            <PageFaqSectionEditor
+              initialData={section.data}
+              isActive={isActive}
+              onIsActiveChange={setIsActive}
+              onSave={onSave}
+            />
+          ) : isPageCta ? (
+            <PageCtaSectionEditor
+              initialData={section.data}
+              isActive={isActive}
+              onIsActiveChange={setIsActive}
+              onSave={onSave}
+            />
+          ) : isCtaReusable ? (
+            <CtaReusableSectionEditor
+              initialData={section.data}
+              isActive={isActive}
+              onIsActiveChange={setIsActive}
+              onSave={onSave}
+            />
           ) : isResourcePageHero ? (
             <ResourcePageHeroSectionEditor
+              initialData={section.data}
+              isActive={isActive}
+              onIsActiveChange={setIsActive}
+              onSave={onSave}
+            />
+          ) : isHeroSectionServicePage ? (
+            <HeroSectionServicePageEditor
+              initialData={section.data}
+              isActive={isActive}
+              onIsActiveChange={setIsActive}
+              onSave={onSave}
+            />
+          ) : isServicesIntroSectionServicePage ? (
+            <ServicesIntroSectionServicePageEditor
+              initialData={section.data}
+              isActive={isActive}
+              onIsActiveChange={setIsActive}
+              onSave={onSave}
+            />
+          ) : isServicesCatalogueSectionServicePage ? (
+            <ServicesCatalogueSectionServicePageEditor
+              initialData={section.data}
+              isActive={isActive}
+              onIsActiveChange={setIsActive}
+              onSave={onSave}
+            />
+          ) : isServicesExecutionSectionServicePage ? (
+            <ServicesExecutionSectionServicePageEditor
+              initialData={section.data}
+              isActive={isActive}
+              onIsActiveChange={setIsActive}
+              onSave={onSave}
+            />
+          ) : isHeroSectionTools ? (
+            <HeroSectionToolsEditor
+              initialData={section.data}
+              isActive={isActive}
+              onIsActiveChange={setIsActive}
+              onSave={onSave}
+            />
+          ) : isToolsIntroSectionTools ? (
+            <ToolsIntroSectionToolsEditor
+              initialData={section.data}
+              isActive={isActive}
+              onIsActiveChange={setIsActive}
+              onSave={onSave}
+            />
+          ) : isToolsFlagshipSectionTools ? (
+            <ToolsFlagshipSectionToolsEditor
+              initialData={section.data}
+              isActive={isActive}
+              onIsActiveChange={setIsActive}
+              onSave={onSave}
+            />
+          ) : isToolsCtaSectionTools ? (
+            <ToolsCtaSectionToolsEditor
+              initialData={section.data}
+              isActive={isActive}
+              onIsActiveChange={setIsActive}
+              onSave={onSave}
+            />
+          ) : isHeroSectionSoftware ? (
+            <HeroSectionSoftwareEditor
+              initialData={section.data}
+              isActive={isActive}
+              onIsActiveChange={setIsActive}
+              onSave={onSave}
+            />
+          ) : isSoftwareIntroSectionSoftware ? (
+            <SoftwareIntroSectionSoftwareEditor
+              initialData={section.data}
+              isActive={isActive}
+              onIsActiveChange={setIsActive}
+              onSave={onSave}
+            />
+          ) : isSoftwareModulesSectionSoftware ? (
+            <SoftwareModulesSectionSoftwareEditor
+              initialData={section.data}
+              isActive={isActive}
+              onIsActiveChange={setIsActive}
+              onSave={onSave}
+            />
+          ) : isSoftwareCtaSectionSoftware ? (
+            <SoftwareCtaSectionSoftwareEditor
+              initialData={section.data}
+              isActive={isActive}
+              onIsActiveChange={setIsActive}
+              onSave={onSave}
+            />
+          ) : isArticleBody ? (
+            <ArticleBodySectionEditor
               initialData={section.data}
               isActive={isActive}
               onIsActiveChange={setIsActive}

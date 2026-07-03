@@ -1,0 +1,18 @@
+{
+  "tagline": "Our Services",
+  "heading": "Our Services",
+  "description": "Pioneers of enterprise asset tracking — tags, robotics & technology",
+  "phone_label": "Contact",
+  "phone_number": "9319013339",
+  "primary_button": {
+    "text": "Contact",
+    "link": "/contact"
+  },
+  "secondary_button": {
+    "text": "9319013339",
+    "link": "tel:9319013339"
+  },
+  "image_media_id": null,
+  "image_src": "/assets-images/laptop.png",
+  "image_alt": "Enterprise asset tracking dashboard"
+}
