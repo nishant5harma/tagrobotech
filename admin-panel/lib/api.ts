@@ -229,6 +229,14 @@ export function deletePage(token: string, id: string) {
   );
 }
 
+export function duplicatePage(token: string, id: string) {
+  return apiFetch<{ page: PageRow; sections: PageSection[]; seo: PageSeo | null }>(
+    `/api/admin/pages/${id}/duplicate`,
+    { method: "POST" },
+    token
+  );
+}
+
 export function createSection(
   token: string,
   pageId: string,

@@ -3,9 +3,9 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { FileText, Pencil, Plus } from "lucide-react";
+import { Copy, FileText, Pencil, Plus } from "lucide-react";
 import PageStatusBadge from "@/components/admin/PageStatusBadge";
-import { getPages, type PageRow } from "@/lib/api";
+import { duplicatePage, getPages, type PageRow } from "@/lib/api";
 import { getStoredToken } from "@/lib/auth";
 
 export default function PagesPage() {
@@ -13,6 +13,27 @@ export default function PagesPage() {
   const [pages, setPages] = useState<PageRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState("all");
+  const [copyingId, setCopyingId] = useState<string | null>(null);
+  const [error, setError] = useState("");
+
+  async function handleCopyPage(page: PageRow) {
+    const token = getStoredToken();
+    if (!token) {
+      router.replace("/login");
+      return;
+    }
+
+    setCopyingId(page.id);
+    setError("");
+
+    try {
+      const { page: copied } = await duplicatePage(token, page.id);
+      router.push(`/dashboard/pages/${copied.id}`);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to copy page");
+      setCopyingId(null);
+    }
+  }
 
   useEffect(() => {
     const token = getStoredToken();
@@ -44,6 +65,12 @@ export default function PagesPage() {
           Add Page
         </Link>
       </div>
+
+      {error ? (
+        <p className="mb-4 rounded-xl border border-[var(--error-border)] bg-[var(--error-bg)] px-4 py-3 text-sm text-[var(--error-text)]">
+          {error}
+        </p>
+      ) : null}
 
       <section className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
         <div className="flex items-center justify-between border-b border-border px-6 py-4">
@@ -111,13 +138,24 @@ export default function PagesPage() {
                       <PageStatusBadge status={page.status} />
                     </td>
                     <td className="px-6 py-3.5">
-                      <Link
-                        href={`/dashboard/pages/${page.id}`}
-                        className="inline-flex items-center gap-1.5 rounded-lg border border-border px-3 py-1.5 text-xs font-medium text-foreground transition hover:border-[var(--orange)] hover:text-[var(--orange)]"
-                      >
-                        <Pencil className="h-3.5 w-3.5" />
-                        Edit
-                      </Link>
+                      <div className="flex flex-wrap items-center gap-2">
+                        <Link
+                          href={`/dashboard/pages/${page.id}`}
+                          className="inline-flex items-center gap-1.5 rounded-lg border border-border px-3 py-1.5 text-xs font-medium text-foreground transition hover:border-[var(--orange)] hover:text-[var(--orange)]"
+                        >
+                          <Pencil className="h-3.5 w-3.5" />
+                          Edit
+                        </Link>
+                        <button
+                          type="button"
+                          onClick={() => handleCopyPage(page)}
+                          disabled={copyingId === page.id}
+                          className="inline-flex items-center gap-1.5 rounded-lg border border-border px-3 py-1.5 text-xs font-medium text-foreground transition hover:border-[var(--orange)] hover:text-[var(--orange)] disabled:cursor-not-allowed disabled:opacity-50"
+                        >
+                          <Copy className="h-3.5 w-3.5" />
+                          {copyingId === page.id ? "Copying..." : "Copy"}
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))}

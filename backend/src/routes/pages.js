@@ -80,6 +80,22 @@ function sanitizeSectionData(sectionType, data) {
   return data;
 }
 
+async function findUniqueCopySlug(baseSlug) {
+  const slugBase = baseSlug === "/" ? "home" : baseSlug;
+  let candidate = `${slugBase}-copy`;
+  let counter = 2;
+
+  while (true) {
+    const normalized = normalizeSlug(candidate);
+    const existing = await pool.query(`SELECT id FROM pages WHERE slug = ?`, [normalized]);
+    if (existing.rows.length === 0) {
+      return normalized;
+    }
+    candidate = `${slugBase}-copy-${counter}`;
+    counter += 1;
+  }
+}
+
 router.use(requireAuth);
 
 router.get("/", async (_req, res) => {
@@ -196,6 +212,132 @@ router.get("/:id", async (req, res) => {
   } catch (error) {
     console.error("Get page error:", error);
     res.status(500).json({ error: "Failed to load page" });
+  }
+});
+
+router.post("/:id/duplicate", async (req, res) => {
+  try {
+    const pageResult = await pool.query(`SELECT * FROM pages WHERE id = ?`, [req.params.id]);
+    const sourcePage = pageResult.rows[0];
+
+    if (!sourcePage) {
+      return res.status(404).json({ error: "Page not found" });
+    }
+
+    const [sectionsResult, seoResult] = await Promise.all([
+      pool.query(
+        `SELECT section_type, position, is_active, data
+         FROM page_sections
+         WHERE page_id = ?
+         ORDER BY position ASC, created_at ASC`,
+        [req.params.id]
+      ),
+      pool.query(`SELECT * FROM page_seo WHERE page_id = ?`, [req.params.id]),
+    ]);
+
+    const newPageId = crypto.randomUUID();
+    const newTitle = `${sourcePage.title} (Copy)`;
+    const newSlug = await findUniqueCopySlug(sourcePage.slug);
+
+    await pool.query(
+      `INSERT INTO pages (
+        id, title, slug, page_type, status, excerpt, featured_image_id, published_at,
+        author_name, client_name, industry, sort_order
+      )
+       VALUES (?, ?, ?, ?, 'draft', ?, ?, NULL, ?, ?, ?, ?)`,
+      [
+        newPageId,
+        newTitle,
+        newSlug,
+        sourcePage.page_type,
+        sourcePage.excerpt ?? null,
+        sourcePage.featured_image_id ?? null,
+        sourcePage.author_name ?? null,
+        sourcePage.client_name ?? null,
+        sourcePage.industry ?? null,
+        sourcePage.sort_order ?? 0,
+      ]
+    );
+
+    try {
+      for (const section of sectionsResult.rows) {
+        const sectionData =
+          typeof section.data === "string" ? JSON.parse(section.data) : section.data;
+        await pool.query(
+          `INSERT INTO page_sections (id, page_id, section_type, position, is_active, data)
+           VALUES (?, ?, ?, ?, ?, ?)`,
+          [
+            crypto.randomUUID(),
+            newPageId,
+            section.section_type,
+            section.position,
+            section.is_active,
+            JSON.stringify(sectionData),
+          ]
+        );
+      }
+
+      const sourceSeo = seoResult.rows[0];
+      const seoId = crypto.randomUUID();
+      if (sourceSeo) {
+        const schemaJson =
+          sourceSeo.schema_json === null || sourceSeo.schema_json === undefined
+            ? null
+            : typeof sourceSeo.schema_json === "string"
+              ? sourceSeo.schema_json
+              : JSON.stringify(sourceSeo.schema_json);
+
+        await pool.query(
+          `INSERT INTO page_seo (
+            id, page_id, meta_title, meta_description, meta_keywords, canonical_url,
+            robots, og_title, og_description, og_image_id, schema_json
+          )
+           VALUES (?, ?, ?, ?, ?, NULL, ?, ?, ?, ?, ?)`,
+          [
+            seoId,
+            newPageId,
+            sourceSeo.meta_title ? `${sourceSeo.meta_title} (Copy)` : newTitle,
+            sourceSeo.meta_description ?? null,
+            sourceSeo.meta_keywords ?? null,
+            sourceSeo.robots ?? "index,follow",
+            sourceSeo.og_title ?? null,
+            sourceSeo.og_description ?? null,
+            sourceSeo.og_image_id ?? null,
+            schemaJson,
+          ]
+        );
+      } else {
+        await pool.query(
+          `INSERT INTO page_seo (id, page_id, meta_title, robots)
+           VALUES (?, ?, ?, 'index,follow')`,
+          [seoId, newPageId, newTitle]
+        );
+      }
+    } catch (sectionError) {
+      await pool.query(`DELETE FROM pages WHERE id = ?`, [newPageId]);
+      throw sectionError;
+    }
+
+    const [newPageResult, newSectionsResult, newSeoResult] = await Promise.all([
+      pool.query(`SELECT * FROM pages WHERE id = ?`, [newPageId]),
+      pool.query(
+        `SELECT id, page_id, section_type, position, is_active, data, created_at, updated_at
+         FROM page_sections
+         WHERE page_id = ?
+         ORDER BY position ASC, created_at ASC`,
+        [newPageId]
+      ),
+      pool.query(`SELECT * FROM page_seo WHERE page_id = ?`, [newPageId]),
+    ]);
+
+    res.status(201).json({
+      page: parsePageRow(newPageResult.rows[0]),
+      sections: newSectionsResult.rows.map(parseSectionRow),
+      seo: newSeoResult.rows[0] ? parseSeoRow(newSeoResult.rows[0]) : null,
+    });
+  } catch (error) {
+    console.error("Duplicate page error:", error);
+    res.status(500).json({ error: "Failed to duplicate page" });
   }
 });
 

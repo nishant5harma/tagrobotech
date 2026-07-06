@@ -3,7 +3,7 @@
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
-import { ArrowLeft, Layers, Plus, Save } from "lucide-react";
+import { ArrowLeft, Copy, Layers, Plus, Save } from "lucide-react";
 import ContentWriterPanel from "@/components/admin/ContentWriterPanel";
 import MediaPicker from "@/components/admin/MediaPicker";
 import SortableSectionsList from "@/components/admin/SortableSectionsList";
@@ -13,6 +13,7 @@ import PageStatusBadge from "@/components/admin/PageStatusBadge";
 import {
   createSection,
   deleteSection,
+  duplicatePage,
   getPage,
   updatePage,
   updatePageSeo,
@@ -48,6 +49,7 @@ export default function EditPagePage() {
   const [addingSection, setAddingSection] = useState(false);
   const [creatingWriterSection, setCreatingWriterSection] = useState(false);
   const [reorderingSections, setReorderingSections] = useState(false);
+  const [copyingPage, setCopyingPage] = useState(false);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
 
@@ -198,6 +200,26 @@ export default function EditPagePage() {
     setMessage("SEO settings saved.");
   }
 
+  async function handleCopyPage() {
+    const token = getStoredToken();
+    if (!token) {
+      router.replace("/login");
+      return;
+    }
+
+    setCopyingPage(true);
+    setError("");
+    setMessage("");
+
+    try {
+      const { page: copied } = await duplicatePage(token, pageId);
+      router.push(`/dashboard/pages/${copied.id}`);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to copy page");
+      setCopyingPage(false);
+    }
+  }
+
   async function handleDeleteSection(sectionId: string) {
     if (!confirm("Delete this section?")) return;
 
@@ -257,6 +279,15 @@ export default function EditPagePage() {
           <h1 className="text-2xl font-semibold tracking-tight text-foreground">{page.title}</h1>
           <p className="mt-1 text-sm text-muted">Edit metadata, SEO, and page sections.</p>
         </div>
+        <button
+          type="button"
+          onClick={handleCopyPage}
+          disabled={copyingPage}
+          className="inline-flex items-center gap-2 rounded-xl border border-border bg-card px-4 py-2.5 text-sm font-medium text-foreground transition hover:border-[var(--orange)] hover:text-[var(--orange)] disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          <Copy className="h-4 w-4" />
+          {copyingPage ? "Copying..." : "Copy this page"}
+        </button>
       </div>
 
       {message ? (

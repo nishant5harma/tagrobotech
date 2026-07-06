@@ -41,7 +41,7 @@ PORT=4000
 DATABASE_URL=mysql://${DB_USER}:${DB_PASS}@127.0.0.1:3306/${DB_NAME}
 JWT_SECRET=${JWT_SECRET}
 JWT_EXPIRES_IN=7d
-CORS_ORIGIN=http://${PUBLIC_HOST},http://${PUBLIC_HOST}:8080,http://tagrobotech.com,http://www.tagrobotech.com,https://tagrobotech.com,https://www.tagrobotech.com
+CORS_ORIGIN=http://${PUBLIC_HOST},http://${PUBLIC_HOST}:8080,http://tagrobotech.com,http://www.tagrobotech.com,https://tagrobotech.com,https://www.tagrobotech.com,http://admin.tagrobotech.com,https://admin.tagrobotech.com
 PUBLIC_ASSET_URL=http://${PUBLIC_HOST}
 RESEND_API_KEY=${RESEND_API_KEY}
 RESEND_FROM_EMAIL=${RESEND_FROM_EMAIL}
@@ -105,7 +105,8 @@ echo "============================================"
 echo " Deployment complete"
 echo "============================================"
 echo " Website:  http://${PUBLIC_HOST}/"
-echo " Admin:    http://${PUBLIC_HOST}:8080/login"
+echo " Admin:    https://admin.tagrobotech.com/login"
+echo "           (run deploy/setup-ssl-admin.sh after DNS points to this server)"
 echo " API:      http://${PUBLIC_HOST}/api/health"
 echo ""
 echo " Admin login: admin@tagrobotech.com / Admin@123456"
