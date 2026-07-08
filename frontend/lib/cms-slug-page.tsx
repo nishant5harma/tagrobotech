@@ -82,6 +82,15 @@ export async function generateCmsSlugMetadata({
   return buildCmsMetadata(page);
 }
 
+export async function getMetadataForStaticSlug(
+  slug: string,
+  fallback: Metadata
+): Promise<Metadata> {
+  const page = await getPublishedPage(slug);
+  if (!page) return fallback;
+  return buildCmsMetadata(page);
+}
+
 export async function renderCmsSlugPage({ params, pageType }: CmsSlugPageProps) {
   const { slug } = await params;
   const page = await getPublishedPage(slug);

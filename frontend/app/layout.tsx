@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Space_Grotesk } from "next/font/google";
 import "./globals.css";
+import { getSiteBrandingSettings } from "@/lib/site-settings";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
@@ -9,11 +10,22 @@ const spaceGrotesk = Space_Grotesk({
   display: "swap",
 });
 
-export const metadata: Metadata = {
-  title: "Tag RoBo Tech | Pioneers of Enterprise Asset Tracking",
-  description:
-    "Tag RoBo Tech pioneered enterprise asset tracking in India — RFID, IoT, BLE, and robotics solutions for assets, inventory, fleet, and more.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await getSiteBrandingSettings();
+  const faviconUrl = settings.favicon_url || undefined;
+
+  return {
+    title: settings.default_title,
+    description: settings.default_description,
+    icons: faviconUrl
+      ? {
+          icon: faviconUrl,
+          shortcut: faviconUrl,
+          apple: faviconUrl,
+        }
+      : undefined,
+  };
+}
 
 export default function RootLayout({
   children,

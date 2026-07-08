@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import HomeExperience from "@/components/HomeExperience";
 import {
   getAboutSectionFromPage,
@@ -12,6 +13,15 @@ import {
   getMoreClientsSectionFromPage,
   toClientCarouselData,
 } from "@/lib/cms";
+import { getMetadataForStaticSlug } from "@/lib/cms-slug-page";
+
+export async function generateMetadata(): Promise<Metadata> {
+  return getMetadataForStaticSlug(process.env.CMS_HOME_SLUG || "/", {
+    title: "Tag RoBo Tech | Pioneers of Enterprise Asset Tracking",
+    description:
+      "Tag RoBo Tech pioneered enterprise asset tracking in India — RFID, IoT, BLE, and robotics solutions for assets, inventory, fleet, and more.",
+  });
+}
 
 export default async function Home() {
   const page = await getPublishedPage(process.env.CMS_HOME_SLUG || "/");

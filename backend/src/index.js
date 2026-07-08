@@ -9,6 +9,7 @@ import mediaRoutes from "./routes/media.js";
 import publicRoutes from "./routes/public.js";
 import navigationRoutes from "./routes/navigation.js";
 import leadsRoutes from "./routes/leads.js";
+import siteSettingsRoutes from "./routes/site-settings.js";
 import { getHealthStatus } from "./lib/health.js";
 import { UPLOAD_DIR } from "./lib/upload.js";
 
@@ -43,6 +44,7 @@ app.use("/api/admin/pages", pagesRoutes);
 app.use("/api/admin/media", mediaRoutes);
 app.use("/api/admin/navigation", navigationRoutes);
 app.use("/api/admin/leads", leadsRoutes);
+app.use("/api/admin/site-settings", siteSettingsRoutes);
 app.use("/api/public", publicRoutes);
 
 app.use((_req, res) => {

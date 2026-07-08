@@ -158,7 +158,7 @@ export async function getPublishedPage(slug: string): Promise<CmsPageResponse | 
 
   try {
     const response = await fetch(`${CMS_API_URL}/api/public/pages/${slugParam}`, {
-      next: { revalidate: 60 },
+      cache: "no-store",
     });
 
     if (response.status === 404) return null;
@@ -186,7 +186,7 @@ export async function getPublishedContentList(
     const response = await fetch(
       `${CMS_API_URL}/api/public/content/${pageType}${search.size ? `?${search.toString()}` : ""}`,
       {
-        next: { revalidate: 60 },
+        cache: "no-store",
       }
     );
 
@@ -553,7 +553,7 @@ export function getSoftwareCtaSectionSoftwareFromPage(
 async function fetchMegaMenu(kind: MegaMenuKind): Promise<MegaMenuData | null> {
   try {
     const response = await fetch(`${CMS_API_URL}/api/public/navigation/${kind}`, {
-      next: { revalidate: 60 },
+      cache: "no-store",
     });
 
     if (!response.ok) {

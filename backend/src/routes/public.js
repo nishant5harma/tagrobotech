@@ -5,8 +5,12 @@ import {
   FEATURES_MEGA_MENU_KEY,
   RESOURCES_MEGA_MENU_KEY,
   SOLUTIONS_MEGA_MENU_KEY,
+  defaultFooterSettings,
+  defaultSiteBrandingSettings,
   getFeaturesMegaMenuSetting,
+  getFooterSetting,
   getResourcesMegaMenuSetting,
+  getSiteBrandingSetting,
   getSolutionsMegaMenuSetting,
   enrichMegaMenuFeaturedImage,
   resolveMenuLinks,
@@ -637,6 +641,23 @@ async function sendPublicMegaMenu(req, res, menuKey, getSetting) {
   }
 }
 
+async function enrichMediaSetting(mediaId, req) {
+  if (!mediaId) return null;
+  const mediaResult = await pool.query(
+    `SELECT id, file_url, alt_text, mime_type FROM media WHERE id = ?`,
+    [mediaId]
+  );
+  const media = mediaResult.rows[0];
+  if (!media) return null;
+
+  return {
+    id: media.id,
+    url: absoluteAssetUrl(media.file_url, req),
+    alt_text: media.alt_text || null,
+    mime_type: media.mime_type || null,
+  };
+}
+
 router.get("/navigation/resources", (req, res) =>
   sendPublicMegaMenu(req, res, RESOURCES_MEGA_MENU_KEY, getResourcesMegaMenuSetting)
 );
@@ -648,6 +669,46 @@ router.get("/navigation/features", (req, res) =>
 router.get("/navigation/solutions", (req, res) =>
   sendPublicMegaMenu(req, res, SOLUTIONS_MEGA_MENU_KEY, getSolutionsMegaMenuSetting)
 );
+
+router.get("/settings/branding", async (req, res) => {
+  try {
+    const settings = {
+      ...defaultSiteBrandingSettings(),
+      ...(await getSiteBrandingSetting()),
+    };
+    const favicon = await enrichMediaSetting(settings.favicon_media_id, req);
+    res.json({
+      settings: {
+        ...settings,
+        favicon_url: favicon?.url ?? null,
+        favicon_alt: favicon?.alt_text ?? settings.site_name,
+      },
+    });
+  } catch (error) {
+    console.error("Public branding settings error:", error);
+    res.status(500).json({ error: "Failed to load branding settings" });
+  }
+});
+
+router.get("/settings/footer", async (req, res) => {
+  try {
+    const settings = {
+      ...defaultFooterSettings(),
+      ...(await getFooterSetting()),
+    };
+    const logo = await enrichMediaSetting(settings.logo_media_id, req);
+    res.json({
+      settings: {
+        ...settings,
+        logo_url: logo?.url ?? null,
+        logo_alt: logo?.alt_text ?? "Tag RoBo Tech",
+      },
+    });
+  } catch (error) {
+    console.error("Public footer settings error:", error);
+    res.status(500).json({ error: "Failed to load footer settings" });
+  }
+});
 
 router.get("/pages/:slug", async (req, res) => {
   const slug = slugFromParam(req.params.slug);

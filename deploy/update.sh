@@ -44,6 +44,7 @@ npm ci 2>/dev/null || npm install
 echo "==> Running database migrations..."
 cd "${APP_DIR}/backend"
 npm run db:migrate
+npm run db:ensure-admin
 
 echo "==> Ensuring backend is up for CMS fetches during build..."
 sudo systemctl restart tagrobotech-backend || true

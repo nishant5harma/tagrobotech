@@ -6,6 +6,8 @@ import { defaultSolutionsMegaMenuData } from "./solutions-mega-menu-defaults.js"
 export const RESOURCES_MEGA_MENU_KEY = "resources_mega_menu";
 export const FEATURES_MEGA_MENU_KEY = "features_mega_menu";
 export const SOLUTIONS_MEGA_MENU_KEY = "solutions_mega_menu";
+export const SITE_BRANDING_KEY = "site_branding";
+export const FOOTER_SETTINGS_KEY = "footer_settings";
 
 const MENU_DEFAULTS = {
   [RESOURCES_MEGA_MENU_KEY]: defaultResourcesMegaMenuData,
@@ -18,6 +20,56 @@ const MENU_LINK_PREFIX = {
   [FEATURES_MEGA_MENU_KEY]: "/features",
   [SOLUTIONS_MEGA_MENU_KEY]: "/solutions",
 };
+
+export function defaultSiteBrandingSettings() {
+  return {
+    site_name: "Tag RoBo Tech",
+    default_title: "Tag RoBo Tech | Pioneers of Enterprise Asset Tracking",
+    default_description:
+      "Tag RoBo Tech pioneered enterprise asset tracking in India — RFID, IoT, BLE, and robotics solutions for assets, inventory, fleet, and more.",
+    favicon_media_id: null,
+  };
+}
+
+export function defaultFooterSettings() {
+  return {
+    logo_media_id: null,
+    about_text:
+      "We have implemented solutions to track assets, inventory, finished goods, tools, fleet, delivery, consumables, employees, documentation, remote sites etc. almost everything that needs to be tracked!",
+    quick_links: [
+      { label: "Home", href: "/" },
+      { label: "About Us", href: "/about" },
+      { label: "Products", href: "/services" },
+      { label: "Services", href: "/services" },
+      { label: "Clients", href: "/clients" },
+      { label: "Blogs", href: "/#blogs" },
+    ],
+    support_links: [
+      { label: "Contact Us", href: "/contact" },
+      { label: "FAQs", href: "/contact#faqs" },
+      { label: "Customer Support", href: "/contact" },
+      { label: "How it Works", href: "/services" },
+      { label: "Terms & Conditions", href: "/contact#terms" },
+    ],
+    legal_links: [
+      { label: "Privacy Policy", href: "/contact#privacy" },
+      { label: "Terms of Use", href: "/contact#terms" },
+    ],
+    social_links: [
+      { label: "Facebook", href: "https://www.facebook.com/tagrobotechllp" },
+      { label: "Instagram", href: "https://www.instagram.com/tagrobotechllp/" },
+      { label: "X", href: "https://x.com/tagrobotechllp" },
+      { label: "LinkedIn", href: "https://www.linkedin.com/company/tag-robo-tech-official-llp/" },
+    ],
+    contact: {
+      head_office: "Suncity Success Tower, Sector-65, Gurugram — 122018",
+      rnd_centre: "198, Udyog Vihar, Phase IV — Gurgaon — 122015",
+      email: "info@tagrobotech.com",
+      sales_phone: "9319013339",
+      partner_phone: "9818883697",
+    },
+  };
+}
 
 function parseJsonValue(value) {
   if (typeof value === "string") {
@@ -83,6 +135,22 @@ export async function getSolutionsMegaMenuSetting() {
 
 export async function setSolutionsMegaMenuSetting(value) {
   return setMegaMenuSetting(SOLUTIONS_MEGA_MENU_KEY, value);
+}
+
+export async function getSiteBrandingSetting() {
+  return getSiteSetting(SITE_BRANDING_KEY, defaultSiteBrandingSettings());
+}
+
+export async function setSiteBrandingSetting(value) {
+  return setSiteSetting(SITE_BRANDING_KEY, value);
+}
+
+export async function getFooterSetting() {
+  return getSiteSetting(FOOTER_SETTINGS_KEY, defaultFooterSettings());
+}
+
+export async function setFooterSetting(value) {
+  return setSiteSetting(FOOTER_SETTINGS_KEY, value);
 }
 
 export function resolveMenuItemHref(item, linkPrefix = "/resources") {

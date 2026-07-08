@@ -96,6 +96,34 @@ export type MediaItem = {
   file_exists?: boolean;
 };
 
+export type SiteBrandingSettings = {
+  site_name: string;
+  default_title: string;
+  default_description: string;
+  favicon_media_id: string | null;
+};
+
+export type FooterLinkItem = {
+  label: string;
+  href: string;
+};
+
+export type FooterSettings = {
+  logo_media_id: string | null;
+  about_text: string;
+  quick_links: FooterLinkItem[];
+  support_links: FooterLinkItem[];
+  legal_links: FooterLinkItem[];
+  social_links: FooterLinkItem[];
+  contact: {
+    head_office: string;
+    rnd_centre: string;
+    email: string;
+    sales_phone: string;
+    partner_phone: string;
+  };
+};
+
 async function apiFetch<T>(
   path: string,
   options: RequestInit = {},
@@ -327,6 +355,39 @@ export async function uploadMedia(token: string, file: File, altText?: string) {
   }
 
   return data as { media: MediaItem };
+}
+
+export function getSiteBrandingSettings(token: string) {
+  return apiFetch<{ settings: SiteBrandingSettings }>("/api/admin/site-settings/branding", {}, token);
+}
+
+export function updateSiteBrandingSettings(
+  token: string,
+  settings: SiteBrandingSettings
+) {
+  return apiFetch<{ settings: SiteBrandingSettings }>(
+    "/api/admin/site-settings/branding",
+    {
+      method: "PUT",
+      body: JSON.stringify({ settings }),
+    },
+    token
+  );
+}
+
+export function getFooterSettings(token: string) {
+  return apiFetch<{ settings: FooterSettings }>("/api/admin/site-settings/footer", {}, token);
+}
+
+export function updateFooterSettings(token: string, settings: FooterSettings) {
+  return apiFetch<{ settings: FooterSettings }>(
+    "/api/admin/site-settings/footer",
+    {
+      method: "PUT",
+      body: JSON.stringify({ settings }),
+    },
+    token
+  );
 }
 
 export async function getResourcesMegaMenu(token: string) {

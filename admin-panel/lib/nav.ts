@@ -1,5 +1,6 @@
 import {
   Boxes,
+  Settings,
   FileText,
   Home,
   Image,
@@ -20,6 +21,7 @@ export const adminNavItems: NavItem[] = [
   { label: "Pages", href: "/dashboard/pages", icon: FileText },
   { label: "Components", href: "/dashboard/components", icon: Boxes },
   { label: "Navigation", href: "/dashboard/navigation", icon: Menu },
+  { label: "Settings", href: "/dashboard/settings", icon: Settings },
   { label: "Leads", href: "/dashboard/leads", icon: Users },
   { label: "Change Password", href: "/dashboard/change-password", icon: KeyRound },
   { label: "Media", href: "/dashboard/media", icon: Image },

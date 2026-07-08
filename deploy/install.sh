@@ -68,6 +68,7 @@ echo "==> Running database migrations and seed..."
 cd "${APP_DIR}/backend"
 npm run db:migrate
 npm run db:seed
+npm run db:ensure-admin
 
 echo "==> Building Next.js apps (this may take a few minutes)..."
 cd "${APP_DIR}/admin-panel"

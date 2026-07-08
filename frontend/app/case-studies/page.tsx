@@ -3,12 +3,15 @@ import ContentArchivePage from "@/components/ContentArchivePage";
 import Footer from "@/components/Footer";
 import SiteNavbar from "@/components/SiteNavbar";
 import { getPublishedContentList } from "@/lib/cms";
+import { getMetadataForStaticSlug } from "@/lib/cms-slug-page";
 
-export const metadata: Metadata = {
-  title: "Case Studies | Tag RoBo Tech",
-  description:
-    "See how Tag RoBo Tech helps enterprises improve visibility, compliance, and efficiency with tracking solutions.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  return getMetadataForStaticSlug("case-studies", {
+    title: "Case Studies | Tag RoBo Tech",
+    description:
+      "See how Tag RoBo Tech helps enterprises improve visibility, compliance, and efficiency with tracking solutions.",
+  });
+}
 
 export default async function CaseStudiesPage() {
   const items = await getPublishedContentList("case_study", { limit: 24 });
