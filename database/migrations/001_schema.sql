@@ -1,16 +1,5 @@
 -- CMS core tables (MySQL 8)
-
-SET FOREIGN_KEY_CHECKS = 0;
-
-DROP TABLE IF EXISTS page_seo;
-DROP TABLE IF EXISTS page_sections;
-DROP TABLE IF EXISTS admin_users;
-DROP TABLE IF EXISTS media;
-DROP TABLE IF EXISTS pages;
-
-SET FOREIGN_KEY_CHECKS = 1;
-
-CREATE TABLE pages (
+CREATE TABLE IF NOT EXISTS pages (
     id CHAR(36) PRIMARY KEY DEFAULT (UUID()),
     title VARCHAR(255) NOT NULL,
     slug VARCHAR(255) NOT NULL,
@@ -24,7 +13,7 @@ CREATE TABLE pages (
     CONSTRAINT fk_pages_parent FOREIGN KEY (parent_page_id) REFERENCES pages(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-CREATE TABLE media (
+CREATE TABLE IF NOT EXISTS media (
     id CHAR(36) PRIMARY KEY DEFAULT (UUID()),
     original_name VARCHAR(255),
     file_name VARCHAR(255),
@@ -38,7 +27,7 @@ CREATE TABLE media (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-CREATE TABLE page_sections (
+CREATE TABLE IF NOT EXISTS page_sections (
     id CHAR(36) PRIMARY KEY DEFAULT (UUID()),
     page_id CHAR(36) NOT NULL,
     section_type VARCHAR(100) NOT NULL,
@@ -50,7 +39,7 @@ CREATE TABLE page_sections (
     CONSTRAINT fk_page_sections_page FOREIGN KEY (page_id) REFERENCES pages(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-CREATE TABLE page_seo (
+CREATE TABLE IF NOT EXISTS page_seo (
     id CHAR(36) PRIMARY KEY DEFAULT (UUID()),
     page_id CHAR(36) NOT NULL,
     meta_title VARCHAR(255),
@@ -69,7 +58,7 @@ CREATE TABLE page_seo (
     CONSTRAINT fk_page_seo_og_image FOREIGN KEY (og_image_id) REFERENCES media(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-CREATE TABLE admin_users (
+CREATE TABLE IF NOT EXISTS admin_users (
     id CHAR(36) PRIMARY KEY DEFAULT (UUID()),
     email VARCHAR(255) NOT NULL,
     password_hash VARCHAR(255) NOT NULL,

@@ -35,6 +35,7 @@ EOF
 RESEND_API_KEY="${RESEND_API_KEY:-}"
 RESEND_FROM_EMAIL="${RESEND_FROM_EMAIL:-Tag RoBo Tech <onboarding@resend.dev>}"
 LEADS_NOTIFY_EMAIL="${LEADS_NOTIFY_EMAIL:-nishantsharma.meta@gmail.com}"
+SEED_SAMPLE_DATA="${SEED_SAMPLE_DATA:-false}"
 
 cat > "${APP_DIR}/backend/.env" <<EOF
 PORT=4000
@@ -64,11 +65,14 @@ cd "${APP_DIR}/backend" && npm ci --omit=dev 2>/dev/null || npm install --omit=d
 cd "${APP_DIR}/admin-panel" && npm ci 2>/dev/null || npm install
 cd "${APP_DIR}/frontend" && npm ci 2>/dev/null || npm install
 
-echo "==> Running database migrations and seed..."
+echo "==> Running database migrations..."
 cd "${APP_DIR}/backend"
 npm run db:migrate
-npm run db:seed
 npm run db:ensure-admin
+if [ "${SEED_SAMPLE_DATA}" = "true" ]; then
+  echo "==> Seeding sample CMS data..."
+  npm run db:seed
+fi
 
 echo "==> Building Next.js apps (this may take a few minutes)..."
 cd "${APP_DIR}/admin-panel"
