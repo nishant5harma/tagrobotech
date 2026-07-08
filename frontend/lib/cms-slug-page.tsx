@@ -43,9 +43,14 @@ export function buildCmsMetadata(page: NonNullable<Awaited<ReturnType<typeof get
     seo.og_image_url || page.page.featured_image_url || ""
   );
   const robots = String(seo.robots || "index,follow");
+  const metaKeywords = String(seo.meta_keywords || "")
+    .split(",")
+    .map((keyword) => keyword.trim())
+    .filter(Boolean);
   const metadata: Metadata = {
     title: `${title} | Tag RoBo Tech`,
     description,
+    ...(metaKeywords.length > 0 ? { keywords: metaKeywords } : {}),
     alternates: { canonical: canonicalUrl },
     robots,
     openGraph: {
