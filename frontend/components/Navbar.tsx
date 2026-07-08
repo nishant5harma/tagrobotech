@@ -130,6 +130,12 @@ export default function Navbar({ visible = true, megaMenus = {}, branding }: Nav
   const navbarLogoAlt = branding?.navbar_logo_alt || branding?.site_name || "Tag RoBo Tech";
   const navbarLogoWidth = Math.max(80, Number(branding?.navbar_logo_width || 230));
   const navbarLogoHeight = Math.max(24, Number(branding?.navbar_logo_height || 39));
+  const topbarTagline =
+    branding?.topbar_tagline?.trim() ||
+    "Pioneers of enterprise asset tracking — tags, robotics & technology";
+  const topbarContactLabel = branding?.topbar_contact_label?.trim() || "Contact";
+  const topbarPhone = branding?.topbar_contact_phone?.trim() || CONTACT_PHONE;
+  const topbarTelHref = `tel:+91${topbarPhone.replace(/\D/g, "")}`;
 
   function renderNavLink(
     link: (typeof NAV_LINKS_BEFORE_MEGA)[number] | (typeof NAV_LINKS_AFTER_MEGA)[number],
@@ -241,17 +247,17 @@ export default function Navbar({ visible = true, megaMenus = {}, branding }: Nav
         <div className="border-b border-neutral-100 bg-white">
           <div className="mx-auto flex h-9 max-w-[1400px] items-center justify-between px-5 sm:px-8 lg:px-10">
             <p className="hidden text-[12px] font-normal tracking-[0.02em] text-neutral-500 sm:block">
-              Pioneers of enterprise asset tracking — tags, robotics &amp; technology
+              {topbarTagline}
             </p>
 
             <div className="ml-auto flex items-center gap-4">
               <a
-                href={`tel:+91${CONTACT_PHONE}`}
+                href={topbarTelHref}
                 className="inline-flex items-center gap-1.5 text-[13px] font-medium tabular-nums tracking-[-0.01em] text-neutral-600 transition-colors hover:text-[#f97316]"
               >
                 <PhoneIcon />
-                <span className="hidden sm:inline">Contact</span>
-                {CONTACT_PHONE}
+                <span className="hidden sm:inline">{topbarContactLabel}</span>
+                {topbarPhone}
               </a>
 
               <span className="hidden h-3.5 w-px bg-neutral-200 sm:block" aria-hidden="true" />
@@ -376,11 +382,13 @@ export default function Navbar({ visible = true, megaMenus = {}, branding }: Nav
 
         <div className="mt-6 space-y-4 border-t border-neutral-100 pt-6">
           <a
-            href={`tel:+91${CONTACT_PHONE}`}
+            href={topbarTelHref}
             className="flex items-center gap-2 text-[15px] font-medium text-neutral-700"
           >
             <PhoneIcon />
-            {CONTACT_PHONE}
+            <span>
+              {topbarContactLabel} {topbarPhone}
+            </span>
           </a>
 
           <div className="flex items-center gap-2">

@@ -43,6 +43,9 @@ export type SiteBrandingSettings = {
   navbar_logo_height: number;
   navbar_logo_url?: string | null;
   navbar_logo_alt?: string | null;
+  topbar_tagline: string;
+  topbar_contact_label: string;
+  topbar_contact_phone: string;
   favicon_url?: string | null;
   favicon_alt?: string | null;
 };
@@ -58,6 +61,9 @@ export const defaultSiteBrandingSettings: SiteBrandingSettings = {
   navbar_logo_height: 39,
   navbar_logo_url: null,
   navbar_logo_alt: null,
+  topbar_tagline: "Pioneers of enterprise asset tracking — tags, robotics & technology",
+  topbar_contact_label: "Contact",
+  topbar_contact_phone: "9319013339",
   favicon_url: null,
   favicon_alt: null,
 };

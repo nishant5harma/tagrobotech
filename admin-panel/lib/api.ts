@@ -104,6 +104,9 @@ export type SiteBrandingSettings = {
   navbar_logo_media_id: string | null;
   navbar_logo_width: number;
   navbar_logo_height: number;
+  topbar_tagline: string;
+  topbar_contact_label: string;
+  topbar_contact_phone: string;
 };
 
 export type FooterLinkItem = {

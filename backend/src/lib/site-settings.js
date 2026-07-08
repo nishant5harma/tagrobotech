@@ -31,6 +31,9 @@ export function defaultSiteBrandingSettings() {
     navbar_logo_media_id: null,
     navbar_logo_width: 230,
     navbar_logo_height: 39,
+    topbar_tagline: "Pioneers of enterprise asset tracking — tags, robotics & technology",
+    topbar_contact_label: "Contact",
+    topbar_contact_phone: "9319013339",
   };
 }
 
@@ -143,7 +146,11 @@ export async function setSolutionsMegaMenuSetting(value) {
 }
 
 export async function getSiteBrandingSetting() {
-  return getSiteSetting(SITE_BRANDING_KEY, defaultSiteBrandingSettings());
+  const stored = await getSiteSetting(SITE_BRANDING_KEY, null);
+  return {
+    ...defaultSiteBrandingSettings(),
+    ...(stored && typeof stored === "object" ? stored : {}),
+  };
 }
 
 export async function setSiteBrandingSetting(value) {

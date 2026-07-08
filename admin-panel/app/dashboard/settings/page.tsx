@@ -26,6 +26,9 @@ const defaultBranding: SiteBrandingSettings = {
   navbar_logo_media_id: null,
   navbar_logo_width: 230,
   navbar_logo_height: 39,
+  topbar_tagline: "Pioneers of enterprise asset tracking — tags, robotics & technology",
+  topbar_contact_label: "Contact",
+  topbar_contact_phone: "9319013339",
 };
 
 const defaultFooter: FooterSettings = {
@@ -121,8 +124,12 @@ export default function SettingsPage() {
 
     Promise.all([getSiteBrandingSettings(token), getFooterSettings(token)])
       .then(([brandingResult, footerResult]) => {
-        setBranding(brandingResult.settings);
-        setFooter(footerResult.settings);
+        setBranding({ ...defaultBranding, ...brandingResult.settings });
+        setFooter({
+          ...defaultFooter,
+          ...footerResult.settings,
+          contact: { ...defaultFooter.contact, ...(footerResult.settings.contact ?? {}) },
+        });
       })
       .catch((err) => setError(err instanceof Error ? err.message : "Failed to load settings"))
       .finally(() => setLoading(false));
@@ -178,7 +185,7 @@ export default function SettingsPage() {
           <h1 className="text-2xl font-semibold tracking-tight text-foreground">Site settings</h1>
         </div>
         <p className="text-sm text-muted">
-          Manage global SEO defaults, favicon, footer logo, footer contact details, and footer links.
+          Manage global SEO defaults, top bar, favicon, navbar logo, footer logo, contact details, and footer links.
         </p>
       </div>
 
@@ -232,6 +239,48 @@ export default function SettingsPage() {
             rows={4}
             className={`${inputClass} resize-y`}
           />
+        </div>
+
+        <div className="space-y-4 rounded-xl border border-border p-4">
+          <div>
+            <h3 className="text-sm font-semibold text-foreground">Top bar (above navbar)</h3>
+            <p className="mt-1 text-xs text-muted">
+              Tagline and contact phone shown in the thin bar above the main navigation.
+            </p>
+          </div>
+          <div className="space-y-2">
+            <label className="block text-sm font-medium">Top bar tagline</label>
+            <input
+              value={branding.topbar_tagline}
+              onChange={(e) => setBranding((prev) => ({ ...prev, topbar_tagline: e.target.value }))}
+              placeholder="Pioneers of enterprise asset tracking — tags, robotics & technology"
+              className={inputClass}
+            />
+          </div>
+          <div className="grid gap-4 md:grid-cols-2">
+            <div className="space-y-2">
+              <label className="block text-sm font-medium">Contact label</label>
+              <input
+                value={branding.topbar_contact_label}
+                onChange={(e) =>
+                  setBranding((prev) => ({ ...prev, topbar_contact_label: e.target.value }))
+                }
+                placeholder="Contact"
+                className={inputClass}
+              />
+            </div>
+            <div className="space-y-2">
+              <label className="block text-sm font-medium">Contact phone</label>
+              <input
+                value={branding.topbar_contact_phone}
+                onChange={(e) =>
+                  setBranding((prev) => ({ ...prev, topbar_contact_phone: e.target.value }))
+                }
+                placeholder="9319013339"
+                className={inputClass}
+              />
+            </div>
+          </div>
         </div>
 
         <MediaPicker
