@@ -28,8 +28,18 @@ function renameUploadedFile(oldFileUrl, desiredName) {
   const oldPath = path.join(UPLOAD_DIR, path.basename(oldFileUrl));
   if (!fs.existsSync(oldPath)) return oldFileUrl;
 
-  const nextName = buildStoredFileName(path.basename(oldFileUrl), desiredName);
+  const parsed = path.parse(desiredName?.trim() || path.basename(oldFileUrl));
+  const originalExt = path.extname(path.basename(oldFileUrl)).toLowerCase();
+  const ext = (parsed.ext || originalExt).toLowerCase();
+  const base = slugifyFileBaseName(parsed.name || path.parse(path.basename(oldFileUrl)).name);
+  let nextName = `${base}${ext}`;
+  let counter = 2;
+  while (nextName !== path.basename(oldFileUrl) && fs.existsSync(path.join(UPLOAD_DIR, nextName))) {
+    nextName = `${base}-${counter}${ext}`;
+    counter += 1;
+  }
   const nextPath = path.join(UPLOAD_DIR, nextName);
+  if (nextPath === oldPath) return oldFileUrl;
   fs.renameSync(oldPath, nextPath);
   return `/uploads/${nextName}`;
 }

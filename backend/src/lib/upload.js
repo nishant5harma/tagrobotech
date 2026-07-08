@@ -1,4 +1,3 @@
-import crypto from "crypto";
 import fs from "fs";
 import path from "path";
 import multer from "multer";
@@ -24,7 +23,15 @@ function buildStoredFileName(originalName, preferredName) {
   const preferredExt = parsed.ext.toLowerCase();
   const ext = preferredExt || originalExt;
   const base = slugifyFileBaseName(parsed.name || path.parse(originalName).name);
-  return `${base}-${crypto.randomBytes(4).toString("hex")}${ext}`;
+  let candidate = `${base}${ext}`;
+  let counter = 2;
+
+  while (fs.existsSync(path.join(uploadDir, candidate))) {
+    candidate = `${base}-${counter}${ext}`;
+    counter += 1;
+  }
+
+  return candidate;
 }
 
 const storage = multer.diskStorage({
