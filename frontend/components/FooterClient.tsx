@@ -199,6 +199,8 @@ export default function FooterClient({ settings }: { settings: FooterSettings })
   const year = new Date().getFullYear();
   const logoSrc = settings.logo_url || "/images/Tag-Robo-Tech.png";
   const logoAlt = settings.logo_alt || "Tag RoBo Tech";
+  const logoHeight = Math.max(24, Number(settings.logo_height || 34));
+  const logoWidth = Math.max(80, Number(settings.logo_width || 200));
 
   return (
     <footer className="relative mt-auto bg-[#071222] text-white">
@@ -229,7 +231,10 @@ export default function FooterClient({ settings }: { settings: FooterSettings })
               <img
                 src={logoSrc}
                 alt={logoAlt}
-                className="h-8 w-auto brightness-0 invert"
+                width={logoWidth}
+                height={logoHeight}
+                className="block object-contain"
+                style={{ width: `${logoWidth}px`, height: `${logoHeight}px` }}
               />
             </Link>
             <p className="mt-5 max-w-sm text-[14px] leading-7 text-white/60">{settings.about_text}</p>

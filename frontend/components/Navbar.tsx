@@ -13,10 +13,12 @@ import {
 } from "@/lib/constants";
 import MegaMenuDropdown from "@/components/MegaMenuDropdown";
 import type { MegaMenuData, MegaMenuKind } from "@/lib/mega-menu";
+import type { SiteBrandingSettings } from "@/lib/site-settings";
 
 type NavbarProps = {
   visible?: boolean;
   megaMenus?: Partial<Record<MegaMenuKind, MegaMenuData>>;
+  branding?: SiteBrandingSettings;
 };
 
 const HEADER_OFFSET = "top-[108px]";
@@ -92,7 +94,7 @@ const SOCIAL_ICONS = {
   LinkedIn: LinkedInIcon,
 } as const;
 
-export default function Navbar({ visible = true, megaMenus = {} }: NavbarProps) {
+export default function Navbar({ visible = true, megaMenus = {}, branding }: NavbarProps) {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -124,6 +126,10 @@ export default function Navbar({ visible = true, megaMenus = {} }: NavbarProps) 
 
   const navLinksBeforeMegaMenus = NAV_LINKS_BEFORE_MEGA;
   const navLinksAfterMegaMenus = NAV_LINKS_AFTER_MEGA;
+  const navbarLogoSrc = branding?.navbar_logo_url || "/images/Tag-Robo-Tech.png";
+  const navbarLogoAlt = branding?.navbar_logo_alt || branding?.site_name || "Tag RoBo Tech";
+  const navbarLogoWidth = Math.max(80, Number(branding?.navbar_logo_width || 230));
+  const navbarLogoHeight = Math.max(24, Number(branding?.navbar_logo_height || 39));
 
   function renderNavLink(
     link: (typeof NAV_LINKS_BEFORE_MEGA)[number] | (typeof NAV_LINKS_AFTER_MEGA)[number],
@@ -282,14 +288,26 @@ export default function Navbar({ visible = true, megaMenus = {} }: NavbarProps) 
         >
           <div className="mx-auto flex h-[72px] max-w-[1400px] items-center gap-4 px-5 sm:px-8 lg:px-10">
             <Link href="/" className="relative z-10 shrink-0" aria-label="Tag RoBo Tech home">
-              <Image
-                src="/images/Tag-Robo-Tech.png"
-                alt="Tag RoBo Tech"
-                width={230}
-                height={39}
-                priority
-                className="h-8 w-auto sm:h-9"
-              />
+              {navbarLogoSrc.startsWith("/") ? (
+                <Image
+                  src={navbarLogoSrc}
+                  alt={navbarLogoAlt}
+                  width={navbarLogoWidth}
+                  height={navbarLogoHeight}
+                  priority
+                  className="block object-contain"
+                  style={{ width: `${navbarLogoWidth}px`, height: `${navbarLogoHeight}px` }}
+                />
+              ) : (
+                <img
+                  src={navbarLogoSrc}
+                  alt={navbarLogoAlt}
+                  width={navbarLogoWidth}
+                  height={navbarLogoHeight}
+                  className="block object-contain"
+                  style={{ width: `${navbarLogoWidth}px`, height: `${navbarLogoHeight}px` }}
+                />
+              )}
             </Link>
 
             <ul className="hidden min-w-0 flex-1 items-center justify-center gap-1 xl:flex">

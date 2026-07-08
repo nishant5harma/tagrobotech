@@ -21,6 +21,8 @@ export type FooterSocialLink = {
 
 export type FooterSettings = {
   logo_media_id: string | null;
+  logo_width: number;
+  logo_height: number;
   logo_url?: string | null;
   logo_alt?: string | null;
   about_text: string;
@@ -36,6 +38,11 @@ export type SiteBrandingSettings = {
   default_title: string;
   default_description: string;
   favicon_media_id: string | null;
+  navbar_logo_media_id: string | null;
+  navbar_logo_width: number;
+  navbar_logo_height: number;
+  navbar_logo_url?: string | null;
+  navbar_logo_alt?: string | null;
   favicon_url?: string | null;
   favicon_alt?: string | null;
 };
@@ -46,12 +53,19 @@ export const defaultSiteBrandingSettings: SiteBrandingSettings = {
   default_description:
     "Tag RoBo Tech pioneered enterprise asset tracking in India — RFID, IoT, BLE, and robotics solutions for assets, inventory, fleet, and more.",
   favicon_media_id: null,
+  navbar_logo_media_id: null,
+  navbar_logo_width: 230,
+  navbar_logo_height: 39,
+  navbar_logo_url: null,
+  navbar_logo_alt: null,
   favicon_url: null,
   favicon_alt: null,
 };
 
 export const defaultFooterSettings: FooterSettings = {
   logo_media_id: null,
+  logo_width: 200,
+  logo_height: 34,
   logo_url: null,
   logo_alt: "Tag RoBo Tech",
   about_text:

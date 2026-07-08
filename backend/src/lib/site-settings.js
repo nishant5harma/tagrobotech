@@ -28,12 +28,17 @@ export function defaultSiteBrandingSettings() {
     default_description:
       "Tag RoBo Tech pioneered enterprise asset tracking in India — RFID, IoT, BLE, and robotics solutions for assets, inventory, fleet, and more.",
     favicon_media_id: null,
+    navbar_logo_media_id: null,
+    navbar_logo_width: 230,
+    navbar_logo_height: 39,
   };
 }
 
 export function defaultFooterSettings() {
   return {
     logo_media_id: null,
+    logo_width: 200,
+    logo_height: 34,
     about_text:
       "We have implemented solutions to track assets, inventory, finished goods, tools, fleet, delivery, consumables, employees, documentation, remote sites etc. almost everything that needs to be tracked!",
     quick_links: [

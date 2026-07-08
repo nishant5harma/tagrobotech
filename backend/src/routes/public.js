@@ -677,11 +677,14 @@ router.get("/settings/branding", async (req, res) => {
       ...(await getSiteBrandingSetting()),
     };
     const favicon = await enrichMediaSetting(settings.favicon_media_id, req);
+    const navbarLogo = await enrichMediaSetting(settings.navbar_logo_media_id, req);
     res.json({
       settings: {
         ...settings,
         favicon_url: favicon?.url ?? null,
         favicon_alt: favicon?.alt_text ?? settings.site_name,
+        navbar_logo_url: navbarLogo?.url ?? null,
+        navbar_logo_alt: navbarLogo?.alt_text ?? settings.site_name,
       },
     });
   } catch (error) {

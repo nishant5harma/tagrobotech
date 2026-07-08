@@ -101,6 +101,9 @@ export type SiteBrandingSettings = {
   default_title: string;
   default_description: string;
   favicon_media_id: string | null;
+  navbar_logo_media_id: string | null;
+  navbar_logo_width: number;
+  navbar_logo_height: number;
 };
 
 export type FooterLinkItem = {
@@ -110,6 +113,8 @@ export type FooterLinkItem = {
 
 export type FooterSettings = {
   logo_media_id: string | null;
+  logo_width: number;
+  logo_height: number;
   about_text: string;
   quick_links: FooterLinkItem[];
   support_links: FooterLinkItem[];

@@ -23,10 +23,15 @@ const defaultBranding: SiteBrandingSettings = {
   default_description:
     "Tag RoBo Tech pioneered enterprise asset tracking in India — RFID, IoT, BLE, and robotics solutions for assets, inventory, fleet, and more.",
   favicon_media_id: null,
+  navbar_logo_media_id: null,
+  navbar_logo_width: 230,
+  navbar_logo_height: 39,
 };
 
 const defaultFooter: FooterSettings = {
   logo_media_id: null,
+  logo_width: 200,
+  logo_height: 34,
   about_text:
     "We have implemented solutions to track assets, inventory, finished goods, tools, fleet, delivery, consumables, employees, documentation, remote sites etc. almost everything that needs to be tracked!",
   quick_links: [],
@@ -236,6 +241,46 @@ export default function SettingsPage() {
           onChange={(id) => setBranding((prev) => ({ ...prev, favicon_media_id: id }))}
         />
 
+        <MediaPicker
+          label="Navbar logo"
+          accept="image"
+          value={branding.navbar_logo_media_id}
+          onChange={(id) => setBranding((prev) => ({ ...prev, navbar_logo_media_id: id }))}
+        />
+
+        <div className="grid gap-4 md:grid-cols-2">
+          <div className="space-y-2">
+            <label className="block text-sm font-medium">Navbar logo width (px)</label>
+            <input
+              type="number"
+              min={80}
+              value={branding.navbar_logo_width}
+              onChange={(e) =>
+                setBranding((prev) => ({
+                  ...prev,
+                  navbar_logo_width: Number(e.target.value || 230),
+                }))
+              }
+              className={inputClass}
+            />
+          </div>
+          <div className="space-y-2">
+            <label className="block text-sm font-medium">Navbar logo height (px)</label>
+            <input
+              type="number"
+              min={24}
+              value={branding.navbar_logo_height}
+              onChange={(e) =>
+                setBranding((prev) => ({
+                  ...prev,
+                  navbar_logo_height: Number(e.target.value || 39),
+                }))
+              }
+              className={inputClass}
+            />
+          </div>
+        </div>
+
         <button
           type="button"
           onClick={saveBranding}
@@ -261,6 +306,39 @@ export default function SettingsPage() {
           value={footer.logo_media_id}
           onChange={(id) => setFooter((prev) => ({ ...prev, logo_media_id: id }))}
         />
+
+        <div className="grid gap-4 md:grid-cols-2">
+          <div className="space-y-2">
+            <label className="block text-sm font-medium">Footer logo width (px)</label>
+            <input
+              type="number"
+              min={80}
+              value={footer.logo_width}
+              onChange={(e) =>
+                setFooter((prev) => ({
+                  ...prev,
+                  logo_width: Number(e.target.value || 200),
+                }))
+              }
+              className={inputClass}
+            />
+          </div>
+          <div className="space-y-2">
+            <label className="block text-sm font-medium">Footer logo height (px)</label>
+            <input
+              type="number"
+              min={24}
+              value={footer.logo_height}
+              onChange={(e) =>
+                setFooter((prev) => ({
+                  ...prev,
+                  logo_height: Number(e.target.value || 34),
+                }))
+              }
+              className={inputClass}
+            />
+          </div>
+        </div>
 
         <div className="space-y-2">
           <label className="block text-sm font-medium">Footer about text</label>
