@@ -9,11 +9,28 @@ if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
 }
 
+function slugifyFileBaseName(value) {
+  return String(value ?? "")
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "") || "file";
+}
+
+function buildStoredFileName(originalName, preferredName) {
+  const sourceName = preferredName?.trim() || originalName;
+  const parsed = path.parse(sourceName);
+  const originalExt = path.extname(originalName).toLowerCase();
+  const preferredExt = parsed.ext.toLowerCase();
+  const ext = preferredExt || originalExt;
+  const base = slugifyFileBaseName(parsed.name || path.parse(originalName).name);
+  return `${base}-${crypto.randomBytes(4).toString("hex")}${ext}`;
+}
+
 const storage = multer.diskStorage({
   destination: uploadDir,
-  filename: (_req, file, cb) => {
-    const ext = path.extname(file.originalname).toLowerCase();
-    const name = `${Date.now()}-${crypto.randomBytes(6).toString("hex")}${ext}`;
+  filename: (req, file, cb) => {
+    const name = buildStoredFileName(file.originalname, req.body?.file_name);
     cb(null, name);
   },
 });
@@ -33,3 +50,4 @@ export const upload = multer({
 });
 
 export const UPLOAD_DIR = uploadDir;
+export { buildStoredFileName, slugifyFileBaseName };

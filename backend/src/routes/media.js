@@ -4,7 +4,7 @@ import fs from "fs";
 import path from "path";
 import pool from "../db/pool.js";
 import { requireAuth } from "../middleware/auth.js";
-import { upload, UPLOAD_DIR } from "../lib/upload.js";
+import { buildStoredFileName, slugifyFileBaseName, upload, UPLOAD_DIR } from "../lib/upload.js";
 
 const router = Router();
 
@@ -16,6 +16,22 @@ function removeUploadedFile(fileUrl) {
   if (fs.existsSync(filePath)) {
     fs.unlinkSync(filePath);
   }
+}
+
+function resolveMediaLabel(row) {
+  return row.file_name || row.original_name || "file";
+}
+
+function renameUploadedFile(oldFileUrl, desiredName) {
+  if (!oldFileUrl?.startsWith("/uploads/")) return oldFileUrl;
+
+  const oldPath = path.join(UPLOAD_DIR, path.basename(oldFileUrl));
+  if (!fs.existsSync(oldPath)) return oldFileUrl;
+
+  const nextName = buildStoredFileName(path.basename(oldFileUrl), desiredName);
+  const nextPath = path.join(UPLOAD_DIR, nextName);
+  fs.renameSync(oldPath, nextPath);
+  return `/uploads/${nextName}`;
 }
 
 function withFileStatus(row) {
@@ -117,6 +133,7 @@ router.post("/upload", (req, res) => {
     const mediaId = crypto.randomUUID();
     const file_url = `/uploads/${req.file.filename}`;
     const alt_text = req.body.alt_text?.trim() || null;
+    const file_name = req.body.file_name?.trim() || req.file.originalname;
 
     try {
       await pool.query(
@@ -125,7 +142,7 @@ router.post("/upload", (req, res) => {
         [
           mediaId,
           req.file.originalname,
-          req.file.filename,
+          file_name,
           file_url,
           req.file.mimetype,
           req.file.size,
@@ -178,6 +195,60 @@ router.post("/", async (req, res) => {
   } catch (error) {
     console.error("Create media error:", error);
     res.status(500).json({ error: "Failed to create media" });
+  }
+});
+
+router.put("/:id", async (req, res) => {
+  const { file_name, alt_text } = req.body;
+
+  try {
+    const existing = await pool.query(`SELECT * FROM media WHERE id = ?`, [req.params.id]);
+    const media = existing.rows[0];
+    if (!media) {
+      return res.status(404).json({ error: "Media not found" });
+    }
+
+    const updates = [];
+    const values = [];
+    let nextFileUrl = media.file_url;
+
+    if (file_name !== undefined) {
+      const trimmedName = file_name?.trim();
+      const nextLabel = trimmedName || resolveMediaLabel(media);
+      updates.push("file_name = ?");
+      values.push(nextLabel);
+
+      if (media.file_url?.startsWith("/uploads/") && trimmedName && trimmedName !== media.file_name) {
+        nextFileUrl = renameUploadedFile(media.file_url, trimmedName);
+        updates.push("file_url = ?");
+        values.push(nextFileUrl);
+      }
+
+      if (trimmedName) {
+        const parsed = path.parse(trimmedName);
+        const ext = parsed.ext || path.extname(media.original_name || media.file_name || "");
+        updates.push("original_name = ?");
+        values.push(`${slugifyFileBaseName(parsed.name)}${ext}`);
+      }
+    }
+
+    if (alt_text !== undefined) {
+      updates.push("alt_text = ?");
+      values.push(alt_text?.trim() || null);
+    }
+
+    if (updates.length === 0) {
+      return res.status(400).json({ error: "No fields to update" });
+    }
+
+    values.push(req.params.id);
+    await pool.query(`UPDATE media SET ${updates.join(", ")} WHERE id = ?`, values);
+
+    const result = await pool.query(`SELECT * FROM media WHERE id = ?`, [req.params.id]);
+    res.json({ media: withFileStatus(result.rows[0]) });
+  } catch (error) {
+    console.error("Update media error:", error);
+    res.status(500).json({ error: "Failed to update media" });
   }
 });
 

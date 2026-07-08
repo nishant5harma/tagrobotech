@@ -2,12 +2,13 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { ImagePlus, Trash2, Upload } from "lucide-react";
+import { ImagePlus, Save, Trash2, Upload } from "lucide-react";
 import {
   createMedia,
   deleteMedia,
   getMedia,
   resolveMediaUrl,
+  updateMedia,
   uploadMedia,
   type MediaItem,
 } from "@/lib/api";
@@ -19,12 +20,15 @@ export default function MediaPage() {
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
   const [altText, setAltText] = useState("");
+  const [uploadFileName, setUploadFileName] = useState("");
   const [showUrlForm, setShowUrlForm] = useState(false);
   const [fileUrl, setFileUrl] = useState("");
   const [fileName, setFileName] = useState("");
   const [addingUrl, setAddingUrl] = useState(false);
   const [error, setError] = useState("");
   const [dragOver, setDragOver] = useState(false);
+  const [editing, setEditing] = useState<Record<string, { file_name: string; alt_text: string }>>({});
+  const [savingId, setSavingId] = useState<string | null>(null);
 
   function loadMedia() {
     const token = getStoredToken();
@@ -46,9 +50,10 @@ export default function MediaPage() {
 
     try {
       for (const file of Array.from(files)) {
-        await uploadMedia(token, file, altText || undefined);
+        await uploadMedia(token, file, altText || undefined, uploadFileName || file.name);
       }
       setAltText("");
+      setUploadFileName("");
       await loadMedia();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Upload failed");
@@ -99,6 +104,30 @@ export default function MediaPage() {
     }
   }
 
+  async function handleSaveMedia(item: MediaItem) {
+    const token = getStoredToken();
+    if (!token) return;
+
+    const draft = editing[item.id] ?? {
+      file_name: item.file_name || item.original_name || "",
+      alt_text: item.alt_text || "",
+    };
+
+    setSavingId(item.id);
+    setError("");
+    try {
+      const { media: updated } = await updateMedia(token, item.id, {
+        file_name: draft.file_name,
+        alt_text: draft.alt_text || null,
+      });
+      setMedia((prev) => prev.map((entry) => (entry.id === item.id ? updated : entry)));
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to update media");
+    } finally {
+      setSavingId(null);
+    }
+  }
+
   return (
     <div className="mx-auto max-w-6xl space-y-8">
       <div>
@@ -110,6 +139,16 @@ export default function MediaPage() {
         <div className="flex items-center gap-2">
           <ImagePlus className="h-5 w-5 text-[var(--orange)]" />
           <h2 className="font-semibold text-foreground">Upload files</h2>
+        </div>
+
+        <div className="space-y-2">
+          <label className="block text-sm font-medium">Image/video name</label>
+          <input
+            value={uploadFileName}
+            onChange={(e) => setUploadFileName(e.target.value)}
+            placeholder="hero-banner.webp"
+            className="login-input w-full max-w-md rounded-xl border border-[var(--form-border)] bg-[var(--input-bg)] px-4 py-2.5 text-sm"
+          />
         </div>
 
         <div className="space-y-2">
@@ -250,17 +289,59 @@ export default function MediaPage() {
                   {item.file_name || item.original_name}
                 </p>
                 <p className="truncate text-xs text-muted">{item.file_url}</p>
-                {item.alt_text ? (
-                  <p className="truncate text-xs text-muted">Alt: {item.alt_text}</p>
-                ) : null}
-                <button
-                  type="button"
-                  onClick={() => handleDelete(item.id)}
-                  className="inline-flex items-center gap-1.5 text-xs font-medium text-red-600 transition hover:text-red-700 dark:text-red-400"
-                >
-                  <Trash2 className="h-3.5 w-3.5" />
-                  Delete
-                </button>
+                <div className="space-y-2">
+                  <input
+                    value={
+                      editing[item.id]?.file_name ?? item.file_name ?? item.original_name ?? ""
+                    }
+                    onChange={(e) =>
+                      setEditing((prev) => ({
+                        ...prev,
+                        [item.id]: {
+                          file_name:
+                            e.target.value,
+                          alt_text: prev[item.id]?.alt_text ?? item.alt_text ?? "",
+                        },
+                      }))
+                    }
+                    placeholder="File name"
+                    className="login-input w-full rounded-xl border border-[var(--form-border)] bg-[var(--input-bg)] px-3 py-2 text-xs"
+                  />
+                  <input
+                    value={editing[item.id]?.alt_text ?? item.alt_text ?? ""}
+                    onChange={(e) =>
+                      setEditing((prev) => ({
+                        ...prev,
+                        [item.id]: {
+                          file_name:
+                            prev[item.id]?.file_name ?? item.file_name ?? item.original_name ?? "",
+                          alt_text: e.target.value,
+                        },
+                      }))
+                    }
+                    placeholder="Alt text"
+                    className="login-input w-full rounded-xl border border-[var(--form-border)] bg-[var(--input-bg)] px-3 py-2 text-xs"
+                  />
+                </div>
+                <div className="flex items-center gap-3">
+                  <button
+                    type="button"
+                    onClick={() => handleSaveMedia(item)}
+                    disabled={savingId === item.id}
+                    className="inline-flex items-center gap-1.5 text-xs font-medium text-[var(--orange)] transition hover:opacity-80 disabled:opacity-50"
+                  >
+                    <Save className="h-3.5 w-3.5" />
+                    {savingId === item.id ? "Saving..." : "Save"}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleDelete(item.id)}
+                    className="inline-flex items-center gap-1.5 text-xs font-medium text-red-600 transition hover:text-red-700 dark:text-red-400"
+                  >
+                    <Trash2 className="h-3.5 w-3.5" />
+                    Delete
+                  </button>
+                </div>
               </div>
             </div>
           ))}

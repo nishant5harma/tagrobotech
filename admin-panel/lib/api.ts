@@ -327,6 +327,21 @@ export function createMedia(
   );
 }
 
+export function updateMedia(
+  token: string,
+  id: string,
+  body: {
+    file_name?: string;
+    alt_text?: string | null;
+  }
+) {
+  return apiFetch<{ media: MediaItem }>(
+    `/api/admin/media/${id}`,
+    { method: "PUT", body: JSON.stringify(body) },
+    token
+  );
+}
+
 export function deleteMedia(token: string, id: string) {
   return apiFetch<{ message: string }>(
     `/api/admin/media/${id}`,
@@ -335,11 +350,14 @@ export function deleteMedia(token: string, id: string) {
   );
 }
 
-export async function uploadMedia(token: string, file: File, altText?: string) {
+export async function uploadMedia(token: string, file: File, altText?: string, fileName?: string) {
   const formData = new FormData();
   formData.append("file", file);
   if (altText?.trim()) {
     formData.append("alt_text", altText.trim());
+  }
+  if (fileName?.trim()) {
+    formData.append("file_name", fileName.trim());
   }
 
   const response = await fetch(`${API_URL}/api/admin/media/upload`, {
