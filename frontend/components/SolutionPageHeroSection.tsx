@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import CmsImage from "@/components/CmsImage";
 import Link from "next/link";
 import { ArrowUpRight, ChevronRight } from "lucide-react";
 import FootprintsDashboardMockup from "@/components/FootprintsDashboardMockup";
@@ -72,7 +72,7 @@ function MobileDashboardMockup({
             ))}
           </div>
           <div className="relative h-28 bg-neutral-50">
-            <Image
+            <CmsImage
               src={imageSrc}
               alt={imageAlt}
               fill

@@ -206,12 +206,21 @@ export async function enrichMegaMenuFeaturedImage(menu, req) {
   const media = mediaResult.rows[0];
   if (!media) return menu;
 
-  const base = process.env.PUBLIC_ASSET_URL || `${req.protocol}://${req.get("host")}`;
   const fileUrl = media.file_url;
   const imageUrl =
     fileUrl.startsWith("http://") || fileUrl.startsWith("https://")
-      ? fileUrl
-      : `${base}${fileUrl}`;
+      ? (() => {
+          try {
+            const parsed = new URL(fileUrl);
+            if (parsed.pathname.startsWith("/uploads/")) return parsed.pathname;
+          } catch {
+            return fileUrl;
+          }
+          return fileUrl;
+        })()
+      : fileUrl.startsWith("/")
+        ? fileUrl
+        : `/${fileUrl}`;
 
   return {
     ...menu,

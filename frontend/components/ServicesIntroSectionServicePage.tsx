@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import CmsImage from "@/components/CmsImage";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
@@ -77,7 +77,7 @@ export default function ServicesIntroSectionServicePage({
             >
               <Link href={item.link} className="block">
                 <div className="relative h-44 overflow-hidden">
-                  <Image
+                  <CmsImage
                     src={servicesIntroFeaturedImageSrc(item)}
                     alt={item.image_alt}
                     fill

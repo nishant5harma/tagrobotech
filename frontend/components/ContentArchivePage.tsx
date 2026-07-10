@@ -1,6 +1,6 @@
-import Image from "next/image";
+import CmsImage from "@/components/CmsImage";
 import Link from "next/link";
-import type { CmsContentListItem } from "@/lib/cms";
+import { resolveCmsMediaUrl, type CmsContentListItem } from "@/lib/cms";
 
 type ContentArchivePageProps = {
   title: string;
@@ -61,11 +61,10 @@ export default function ContentArchivePage({
                     <Link href={`${basePath}/${item.slug}`} className="block">
                       <div className="relative aspect-[16/9] bg-[#f8fafc]">
                         {item.featured_image_url ? (
-                          <Image
-                            src={item.featured_image_url}
+                          <CmsImage
+                            src={resolveCmsMediaUrl(item.featured_image_url)}
                             alt={item.featured_image_alt || item.title}
                             fill
-                            unoptimized
                             className="object-cover"
                           />
                         ) : (

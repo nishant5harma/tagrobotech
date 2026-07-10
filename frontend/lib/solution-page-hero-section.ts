@@ -140,14 +140,12 @@ export function mergeSolutionPageHeroData(
   return normalizeSolutionPageHeroData(cmsData);
 }
 
+import { resolveCmsMediaUrl } from "@/lib/cms";
+
 export function solutionHeroImageSrc(
   localSrc: string,
   mediaUrl?: string | null
 ): string {
-  if (mediaUrl) {
-    if (mediaUrl.startsWith("http")) return mediaUrl;
-    const base = process.env.NEXT_PUBLIC_CMS_API_URL ?? "";
-    return `${base}${mediaUrl}`;
-  }
+  if (mediaUrl) return resolveCmsMediaUrl(mediaUrl);
   return localSrc;
 }

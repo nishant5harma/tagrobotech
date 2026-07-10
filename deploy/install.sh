@@ -43,7 +43,7 @@ DATABASE_URL=mysql://${DB_USER}:${DB_PASS}@127.0.0.1:3306/${DB_NAME}
 JWT_SECRET=${JWT_SECRET}
 JWT_EXPIRES_IN=7d
 CORS_ORIGIN=http://${PUBLIC_HOST},http://${PUBLIC_HOST}:8080,http://tagrobotech.com,http://www.tagrobotech.com,https://tagrobotech.com,https://www.tagrobotech.com,http://admin.tagrobotech.com,https://admin.tagrobotech.com
-PUBLIC_ASSET_URL=http://${PUBLIC_HOST}
+PUBLIC_ASSET_URL=https://tagrobotech.com
 RESEND_API_KEY=${RESEND_API_KEY}
 RESEND_FROM_EMAIL=${RESEND_FROM_EMAIL}
 LEADS_NOTIFY_EMAIL=${LEADS_NOTIFY_EMAIL}
@@ -56,7 +56,7 @@ EOF
 
 cat > "${APP_DIR}/frontend/.env.local" <<EOF
 API_PROXY_URL=http://127.0.0.1:4000
-NEXT_PUBLIC_CMS_API_URL=http://127.0.0.1:4000
+NEXT_PUBLIC_CMS_API_URL=
 CMS_API_URL=http://127.0.0.1:4000
 EOF
 

@@ -62,6 +62,10 @@ API_PROXY_URL=http://127.0.0.1:4000 npm run build
 
 echo "==> Building frontend..."
 cd "${APP_DIR}/frontend"
+if ! grep -q '^NEXT_PUBLIC_CMS_API_URL=' "${APP_DIR}/frontend/.env.local" 2>/dev/null; then
+  echo "NEXT_PUBLIC_CMS_API_URL=" >> "${APP_DIR}/frontend/.env.local"
+fi
+sed -i 's|^NEXT_PUBLIC_CMS_API_URL=.*|NEXT_PUBLIC_CMS_API_URL=|' "${APP_DIR}/frontend/.env.local"
 API_PROXY_URL=http://127.0.0.1:4000 CMS_API_URL=http://127.0.0.1:4000 npm run build
 
 echo "==> Restarting services..."

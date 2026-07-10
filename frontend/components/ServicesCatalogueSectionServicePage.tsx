@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import Image from "next/image";
+import CmsImage from "@/components/CmsImage";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
@@ -104,7 +104,7 @@ export default function ServicesCatalogueSectionServicePage({
             >
               <Link href={service.link} className="block">
                 <div className="relative h-44 overflow-hidden">
-                  <Image
+                  <CmsImage
                     src={servicesCatalogueImageSrc(service)}
                     alt={service.image_alt}
                     fill
@@ -150,7 +150,7 @@ export default function ServicesCatalogueSectionServicePage({
                     className="grid gap-8 rounded-[1.75rem] border border-[#0f2744]/10 bg-white p-6 shadow-[0_16px_40px_rgba(15,39,68,0.06)] lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:p-8"
                   >
                     <div className="overflow-hidden rounded-[1.25rem]">
-                      <Image
+                      <CmsImage
                         src={servicesCatalogueImageSrc(service)}
                         alt={service.image_alt}
                         width={900}

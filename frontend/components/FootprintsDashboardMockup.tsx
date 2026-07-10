@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import CmsImage from "@/components/CmsImage";
 import { cn } from "@/lib/utils";
 
 type FootprintsDashboardMockupProps = {
@@ -20,14 +20,13 @@ export default function FootprintsDashboardMockup({
   imageAlt = DEFAULT_IMAGE_ALT,
 }: FootprintsDashboardMockupProps) {
   return (
-    <Image
+    <CmsImage
       src={imageSrc}
       alt={imageAlt}
       width={1536}
       height={1024}
       className={cn("h-auto w-full object-contain", className)}
       priority={priority}
-      unoptimized
     />
   );
 }

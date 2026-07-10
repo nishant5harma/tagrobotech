@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import CmsImage from "@/components/CmsImage";
 import { motion } from "framer-motion";
 import {
   mergeWhoWeAreAboutSectionData,
@@ -59,7 +59,7 @@ export default function WhoWeAreAboutSection({ data }: WhoWeAreAboutSectionProps
 
         <div className="grid gap-5 sm:grid-cols-2">
           <div className="overflow-hidden rounded-[2rem] border border-[#0f2744]/10 bg-white shadow-[0_18px_50px_rgba(15,39,68,0.08)] sm:col-span-2">
-            <Image
+            <CmsImage
               src={imageSrc}
               alt={section.image_alt}
               width={1200}

@@ -1,6 +1,6 @@
-import Image from "next/image";
+import CmsImage from "@/components/CmsImage";
 import CmsReusableSections from "@/components/CmsReusableSections";
-import type { CmsPageResponse } from "@/lib/cms";
+import { resolveCmsMediaUrl, type CmsPageResponse } from "@/lib/cms";
 
 type CmsEditorialPageExperienceProps = {
   page: CmsPageResponse;
@@ -47,11 +47,10 @@ export default function CmsEditorialPageExperience({ page }: CmsEditorialPageExp
 
           {page.page.featured_image_url ? (
             <div className="relative mt-10 aspect-[16/8] overflow-hidden rounded-[2rem] bg-[#f8fafc] shadow-[0_20px_60px_rgba(15,39,68,0.1)]">
-              <Image
-                src={page.page.featured_image_url}
+              <CmsImage
+                src={resolveCmsMediaUrl(page.page.featured_image_url)}
                 alt={page.page.featured_image_alt || page.page.title}
                 fill
-                unoptimized
                 className="object-cover"
               />
             </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import CmsImage from "@/components/CmsImage";
 import { motion } from "framer-motion";
 import {
   mergeWhatWeDeliverAboutSectionData,
@@ -38,7 +38,7 @@ export default function WhatWeDeliverAboutSection({ data }: WhatWeDeliverAboutSe
               {section.description}
             </p>
             <div className="mt-8 overflow-hidden rounded-[1.75rem] border border-[#0f2744]/10 bg-white shadow-[0_18px_50px_rgba(15,39,68,0.08)]">
-              <Image
+              <CmsImage
                 src={imageSrc}
                 alt={section.image_alt}
                 width={1400}

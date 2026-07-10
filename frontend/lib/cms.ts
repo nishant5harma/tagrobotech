@@ -148,9 +148,21 @@ export type CmsContentListItem = {
 
 export function resolveCmsMediaUrl(fileUrl: string): string {
   if (!fileUrl) return "";
+
+  try {
+    const parsed = fileUrl.startsWith("http")
+      ? new URL(fileUrl)
+      : new URL(fileUrl, "http://localhost");
+    if (parsed.pathname.startsWith("/uploads/")) {
+      return parsed.pathname;
+    }
+  } catch {
+    // Fall through to legacy handling below.
+  }
+
   if (fileUrl.startsWith("http://") || fileUrl.startsWith("https://")) return fileUrl;
-  const base = process.env.NEXT_PUBLIC_CMS_API_URL ?? "";
-  return `${base}${fileUrl}`;
+  if (fileUrl.startsWith("/")) return fileUrl;
+  return `/${fileUrl}`;
 }
 
 export async function getPublishedPage(slug: string): Promise<CmsPageResponse | null> {

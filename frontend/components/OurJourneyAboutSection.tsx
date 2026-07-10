@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import CmsImage from "@/components/CmsImage";
 import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -22,7 +22,7 @@ function JourneyCard({ item }: { item: OurJourneyItem }) {
   return (
     <div className="grid gap-0 overflow-hidden rounded-[1.75rem] bg-[#0d203a] lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
       <div className="relative h-full min-h-[260px]">
-        <Image
+        <CmsImage
           src={imageSrc}
           alt={item.image_alt}
           width={1400}

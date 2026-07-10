@@ -147,11 +147,11 @@ export function mergeMegaMenuData(cmsData: MegaMenuData | null, kind: MegaMenuKi
   return normalizeMegaMenuData(cmsData, kind);
 }
 
+import { resolveCmsMediaUrl } from "@/lib/cms";
+
 export function featuredImageSrc(featured: MegaMenuFeatured): string {
   if (featured.image_url) {
-    const base = process.env.NEXT_PUBLIC_CMS_API_URL ?? "";
-    if (featured.image_url.startsWith("http")) return featured.image_url;
-    return `${base}${featured.image_url}`;
+    return resolveCmsMediaUrl(featured.image_url);
   }
   return featured.image_src;
 }

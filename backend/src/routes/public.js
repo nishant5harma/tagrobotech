@@ -58,11 +58,31 @@ function slugFromParam(param) {
   }
 }
 
+function siteAssetUrl(fileUrl) {
+  if (!fileUrl) return null;
+  if (fileUrl.startsWith("http://") || fileUrl.startsWith("https://")) {
+    try {
+      const parsed = new URL(fileUrl);
+      if (parsed.pathname.startsWith("/uploads/")) {
+        return parsed.pathname;
+      }
+    } catch {
+      return fileUrl;
+    }
+    return fileUrl;
+  }
+  return fileUrl.startsWith("/") ? fileUrl : `/${fileUrl}`;
+}
+
 function absoluteAssetUrl(fileUrl, req) {
   if (!fileUrl) return null;
-  if (fileUrl.startsWith("http://") || fileUrl.startsWith("https://")) return fileUrl;
-  const base = process.env.PUBLIC_ASSET_URL || `${req.protocol}://${req.get("host")}`;
-  return `${base}${fileUrl}`;
+  const relative = siteAssetUrl(fileUrl);
+  if (relative.startsWith("http://") || relative.startsWith("https://")) return relative;
+  const base = (process.env.PUBLIC_ASSET_URL || `${req.protocol}://${req.get("host")}`).replace(
+    /\/$/,
+    ""
+  );
+  return `${base}${relative}`;
 }
 
 async function enrichSectionsWithMedia(sections, req) {
@@ -235,15 +255,15 @@ async function enrichSectionsWithMedia(sections, req) {
 
       if (data.image_id && mediaMap.has(data.image_id)) {
         const media = mediaMap.get(data.image_id);
-        data.image_url = absoluteAssetUrl(media.file_url, req);
+        data.image_url = siteAssetUrl(media.file_url);
         data.image_alt = media.alt_text;
       }
 
       if (data.video_id && mediaMap.has(data.video_id)) {
         const media = mediaMap.get(data.video_id);
-        data.video_url = absoluteAssetUrl(media.file_url, req);
+        data.video_url = siteAssetUrl(media.file_url);
       } else if (data.video_url?.startsWith("/uploads/")) {
-        data.video_url = absoluteAssetUrl(data.video_url, req);
+        data.video_url = siteAssetUrl(data.video_url);
       }
 
       return { ...section, data };
@@ -254,7 +274,7 @@ async function enrichSectionsWithMedia(sections, req) {
 
       if (data.image_id && mediaMap.has(data.image_id)) {
         const media = mediaMap.get(data.image_id);
-        data.image_url = absoluteAssetUrl(media.file_url, req);
+        data.image_url = siteAssetUrl(media.file_url);
         data.image_alt = media.alt_text;
       }
 
@@ -266,7 +286,7 @@ async function enrichSectionsWithMedia(sections, req) {
 
       if (data.background_media_id && mediaMap.has(data.background_media_id)) {
         const media = mediaMap.get(data.background_media_id);
-        data.background_image_url = absoluteAssetUrl(media.file_url, req);
+        data.background_image_url = siteAssetUrl(media.file_url);
       }
 
       if (Array.isArray(data.items)) {
@@ -275,7 +295,7 @@ async function enrichSectionsWithMedia(sections, req) {
           const media = mediaMap.get(item.media_id);
           return {
             ...item,
-            image_url: absoluteAssetUrl(media.file_url, req),
+            image_url: siteAssetUrl(media.file_url),
             image_alt: media.alt_text || item.image_alt || item.name,
           };
         });
@@ -289,7 +309,7 @@ async function enrichSectionsWithMedia(sections, req) {
 
       if (data.dashboard_media_id && mediaMap.has(data.dashboard_media_id)) {
         const media = mediaMap.get(data.dashboard_media_id);
-        data.dashboard_image_url = absoluteAssetUrl(media.file_url, req);
+        data.dashboard_image_url = siteAssetUrl(media.file_url);
         data.dashboard_image_alt = media.alt_text || data.dashboard_image_alt;
       }
 
@@ -304,7 +324,7 @@ async function enrichSectionsWithMedia(sections, req) {
           const media = mediaMap.get(item.media_id);
           return {
             ...item,
-            company_logo_url: absoluteAssetUrl(media.file_url, req),
+            company_logo_url: siteAssetUrl(media.file_url),
           };
         }),
       };
@@ -319,7 +339,7 @@ async function enrichSectionsWithMedia(sections, req) {
           const media = mediaMap.get(item.media_id);
           return {
             ...item,
-            logo_url: absoluteAssetUrl(media.file_url, req),
+            logo_url: siteAssetUrl(media.file_url),
           };
         }),
       };
@@ -331,7 +351,7 @@ async function enrichSectionsWithMedia(sections, req) {
 
       if (data.image_media_id && mediaMap.has(data.image_media_id)) {
         const media = mediaMap.get(data.image_media_id);
-        data.image_url = absoluteAssetUrl(media.file_url, req);
+        data.image_url = siteAssetUrl(media.file_url);
         data.image_alt = media.alt_text || data.image_alt;
       }
 
@@ -343,7 +363,7 @@ async function enrichSectionsWithMedia(sections, req) {
 
       if (data.image_media_id && mediaMap.has(data.image_media_id)) {
         const media = mediaMap.get(data.image_media_id);
-        data.image_url = absoluteAssetUrl(media.file_url, req);
+        data.image_url = siteAssetUrl(media.file_url);
         data.image_alt = media.alt_text || data.image_alt;
       }
 
@@ -358,7 +378,7 @@ async function enrichSectionsWithMedia(sections, req) {
           const media = mediaMap.get(item.image_media_id);
           return {
             ...item,
-            image_url: absoluteAssetUrl(media.file_url, req),
+            image_url: siteAssetUrl(media.file_url),
             image_alt: media.alt_text || item.image_alt,
           };
         }),
@@ -371,7 +391,7 @@ async function enrichSectionsWithMedia(sections, req) {
 
       if (data.image_media_id && mediaMap.has(data.image_media_id)) {
         const media = mediaMap.get(data.image_media_id);
-        data.image_url = absoluteAssetUrl(media.file_url, req);
+        data.image_url = siteAssetUrl(media.file_url);
         data.image_alt = media.alt_text || data.image_alt;
       }
 
@@ -383,7 +403,7 @@ async function enrichSectionsWithMedia(sections, req) {
 
       if (data.image_media_id && mediaMap.has(data.image_media_id)) {
         const media = mediaMap.get(data.image_media_id);
-        data.image_url = absoluteAssetUrl(media.file_url, req);
+        data.image_url = siteAssetUrl(media.file_url);
         data.image_alt = media.alt_text || data.image_alt;
       }
 
@@ -393,7 +413,7 @@ async function enrichSectionsWithMedia(sections, req) {
           const media = mediaMap.get(item.media_id);
           return {
             ...item,
-            logo_url: absoluteAssetUrl(media.file_url, req),
+            logo_url: siteAssetUrl(media.file_url),
           };
         });
       }
@@ -406,13 +426,13 @@ async function enrichSectionsWithMedia(sections, req) {
 
       if (data.desktop_image_media_id && mediaMap.has(data.desktop_image_media_id)) {
         const media = mediaMap.get(data.desktop_image_media_id);
-        data.desktop_image_url = absoluteAssetUrl(media.file_url, req);
+        data.desktop_image_url = siteAssetUrl(media.file_url);
         data.desktop_image_alt = media.alt_text || data.desktop_image_alt;
       }
 
       if (data.mobile_image_media_id && mediaMap.has(data.mobile_image_media_id)) {
         const media = mediaMap.get(data.mobile_image_media_id);
-        data.mobile_image_url = absoluteAssetUrl(media.file_url, req);
+        data.mobile_image_url = siteAssetUrl(media.file_url);
         data.mobile_image_alt = media.alt_text || data.mobile_image_alt;
       }
 
@@ -424,7 +444,7 @@ async function enrichSectionsWithMedia(sections, req) {
 
       if (data.image_media_id && mediaMap.has(data.image_media_id)) {
         const media = mediaMap.get(data.image_media_id);
-        data.image_url = absoluteAssetUrl(media.file_url, req);
+        data.image_url = siteAssetUrl(media.file_url);
         data.image_alt = media.alt_text || data.image_alt;
       }
 
@@ -442,7 +462,7 @@ async function enrichSectionsWithMedia(sections, req) {
           const media = mediaMap.get(item.image_media_id);
           return {
             ...item,
-            image_url: absoluteAssetUrl(media.file_url, req),
+            image_url: siteAssetUrl(media.file_url),
             image_alt: media.alt_text || item.image_alt,
           };
         }),
@@ -461,7 +481,7 @@ async function enrichSectionsWithMedia(sections, req) {
           const media = mediaMap.get(item.image_media_id);
           return {
             ...item,
-            image_url: absoluteAssetUrl(media.file_url, req),
+            image_url: siteAssetUrl(media.file_url),
             image_alt: media.alt_text || item.image_alt,
           };
         }),
@@ -474,7 +494,7 @@ async function enrichSectionsWithMedia(sections, req) {
 
       if (data.image_media_id && mediaMap.has(data.image_media_id)) {
         const media = mediaMap.get(data.image_media_id);
-        data.image_url = absoluteAssetUrl(media.file_url, req);
+        data.image_url = siteAssetUrl(media.file_url);
         data.image_alt = media.alt_text || data.image_alt;
       }
 
@@ -492,7 +512,7 @@ async function enrichSectionsWithMedia(sections, req) {
           const media = mediaMap.get(item.image_media_id);
           return {
             ...item,
-            image_url: absoluteAssetUrl(media.file_url, req),
+            image_url: siteAssetUrl(media.file_url),
             image_alt: media.alt_text || item.image_alt,
           };
         }),
@@ -511,7 +531,7 @@ async function enrichSectionsWithMedia(sections, req) {
           const media = mediaMap.get(item.image_media_id);
           return {
             ...item,
-            image_url: absoluteAssetUrl(media.file_url, req),
+            image_url: siteAssetUrl(media.file_url),
             image_alt: media.alt_text || item.image_alt,
           };
         }),
@@ -523,7 +543,7 @@ async function enrichSectionsWithMedia(sections, req) {
       const data = { ...section.data };
       if (data.image_media_id && mediaMap.has(data.image_media_id)) {
         const media = mediaMap.get(data.image_media_id);
-        data.image_url = absoluteAssetUrl(media.file_url, req);
+        data.image_url = siteAssetUrl(media.file_url);
         data.image_alt = media.alt_text || data.image_alt;
       }
       return { ...section, data };
@@ -533,7 +553,7 @@ async function enrichSectionsWithMedia(sections, req) {
       const data = { ...section.data };
       if (data.image_media_id && mediaMap.has(data.image_media_id)) {
         const media = mediaMap.get(data.image_media_id);
-        data.image_url = absoluteAssetUrl(media.file_url, req);
+        data.image_url = siteAssetUrl(media.file_url);
         data.image_alt = media.alt_text || data.image_alt;
       }
       return { ...section, data };
@@ -543,7 +563,7 @@ async function enrichSectionsWithMedia(sections, req) {
       const data = { ...section.data };
       if (data.image_media_id && mediaMap.has(data.image_media_id)) {
         const media = mediaMap.get(data.image_media_id);
-        data.image_url = absoluteAssetUrl(media.file_url, req);
+        data.image_url = siteAssetUrl(media.file_url);
         data.image_alt = media.alt_text || data.image_alt;
       }
       return { ...section, data };
@@ -553,7 +573,7 @@ async function enrichSectionsWithMedia(sections, req) {
       const data = { ...section.data };
       if (data.image_media_id && mediaMap.has(data.image_media_id)) {
         const media = mediaMap.get(data.image_media_id);
-        data.image_url = absoluteAssetUrl(media.file_url, req);
+        data.image_url = siteAssetUrl(media.file_url);
         data.image_alt = media.alt_text || data.image_alt;
       }
       return { ...section, data };
@@ -567,7 +587,7 @@ async function enrichSectionsWithMedia(sections, req) {
           const media = mediaMap.get(item.media_id);
           return {
             ...item,
-            logo_url: absoluteAssetUrl(media.file_url, req),
+            logo_url: siteAssetUrl(media.file_url),
           };
         }),
       };
@@ -585,7 +605,7 @@ async function enrichSectionsWithMedia(sections, req) {
           const media = mediaMap.get(tab.image_media_id);
           return {
             ...tab,
-            image_url: absoluteAssetUrl(media.file_url, req),
+            image_url: siteAssetUrl(media.file_url),
             image_alt: media.alt_text || tab.image_alt,
           };
         }),
@@ -601,7 +621,7 @@ async function enrichSectionsWithMedia(sections, req) {
           const media = mediaMap.get(item.media_id);
           return {
             ...item,
-            image_url: absoluteAssetUrl(media.file_url, req),
+            image_url: siteAssetUrl(media.file_url),
             image_alt: media.alt_text || item.image_alt || item.title,
           };
         }),
@@ -617,7 +637,7 @@ async function enrichSectionsWithMedia(sections, req) {
           const media = mediaMap.get(item.media_id);
           return {
             ...item,
-            logo_url: absoluteAssetUrl(media.file_url, req),
+            logo_url: siteAssetUrl(media.file_url),
             alt: media.alt_text || item.name,
           };
         }),
@@ -652,7 +672,7 @@ async function enrichMediaSetting(mediaId, req) {
 
   return {
     id: media.id,
-    url: absoluteAssetUrl(media.file_url, req),
+    url: siteAssetUrl(media.file_url),
     alt_text: media.alt_text || null,
     mime_type: media.mime_type || null,
   };
