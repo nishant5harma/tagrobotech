@@ -9,7 +9,7 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "TagRobotech CMS Admin",
+  title: "TagRobotech CMS Admin Panel",
   description: "Content management admin panel",
 };
 
