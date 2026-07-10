@@ -62,7 +62,7 @@ export default function HeroSection({ data, clients }: HeroSectionProps) {
 
   return (
     <section className="relative bg-white pt-[108px]">
-      <div className="relative min-h-[calc(100vh-108px)] overflow-hidden">
+      <div className="relative overflow-hidden">
         {isVideoBackground && videoSrc ? (
           <video
             ref={videoRef}
@@ -97,8 +97,8 @@ export default function HeroSection({ data, clients }: HeroSectionProps) {
           aria-hidden="true"
         />
 
-        <div className="relative mx-auto flex min-h-[calc(100vh-108px)] max-w-[1400px] flex-col px-5 pb-8 pt-10 sm:px-8 lg:px-10 lg:pb-10 lg:pt-14">
-          <div className="grid flex-1 items-center gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-8">
+        <div className="relative mx-auto flex max-w-[1400px] flex-col px-5 pb-6 pt-8 sm:px-8 sm:pb-8 sm:pt-10 lg:px-10 lg:pb-8 lg:pt-12">
+          <div className="grid items-center gap-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-8">
             <div className="max-w-2xl">
               <div className="mb-5 flex flex-wrap items-center gap-3">
                 <span className="h-px w-8 bg-[#f97316]" aria-hidden="true" />
@@ -147,7 +147,7 @@ export default function HeroSection({ data, clients }: HeroSectionProps) {
             <div className="hidden lg:block" aria-hidden="true" />
           </div>
 
-          <div className="mt-8 grid grid-cols-2 gap-4 border-t border-neutral-200/80 pt-8 sm:grid-cols-3 sm:gap-6 lg:mt-4">
+          <div className="mt-8 grid grid-cols-2 gap-4 border-t border-neutral-200/80 pt-6 sm:grid-cols-3 sm:gap-6 lg:mt-8">
             {hero.stats.map((stat, index) => (
               <div key={`${stat.label}-${index}`} className="flex items-start gap-3">
                 <div className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-50">
