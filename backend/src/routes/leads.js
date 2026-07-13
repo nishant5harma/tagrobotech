@@ -9,8 +9,8 @@ const router = Router();
 router.get("/", requireAuth, async (req, res) => {
   const status = String(req.query.status ?? "").trim();
   const formType = String(req.query.form_type ?? "").trim();
-  const limit = Math.min(Math.max(Number(req.query.limit ?? 100), 1), 500);
-  const offset = Math.max(Number(req.query.offset ?? 0), 0);
+  const limit = Math.min(Math.max(parseInt(String(req.query.limit ?? "100"), 10) || 100, 1), 500);
+  const offset = Math.max(parseInt(String(req.query.offset ?? "0"), 10) || 0, 0);
 
   const conditions = [];
   const params = [];
@@ -33,8 +33,8 @@ router.get("/", requireAuth, async (req, res) => {
        FROM leads
        ${whereClause}
        ORDER BY created_at DESC
-       LIMIT ? OFFSET ?`,
-      [...params, limit, offset]
+       LIMIT ${limit} OFFSET ${offset}`,
+      params
     );
 
     res.json({
