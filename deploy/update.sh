@@ -29,7 +29,14 @@ echo "==> Pulling latest code..."
 git fetch origin main
 git reset --hard origin/main
 
+# Load helpers from the freshly pulled code
+# shellcheck disable=SC1091
+source "${APP_DIR}/deploy/backup-db.sh"
+
 ensure_swap
+
+echo "==> Taking pre-deploy database backup..."
+backup_database "$APP_DIR"
 
 echo "==> Installing dependencies..."
 cd "${APP_DIR}/backend"
@@ -41,10 +48,11 @@ npm ci 2>/dev/null || npm install
 cd "${APP_DIR}/frontend"
 npm ci 2>/dev/null || npm install
 
-echo "==> Running database migrations..."
+echo "==> Running database migrations (no seed)..."
 cd "${APP_DIR}/backend"
 npm run db:migrate
 npm run db:ensure-admin
+# Never seed on update — production content must stay intact.
 
 echo "==> Ensuring backend is up for CMS fetches during build..."
 sudo systemctl restart tagrobotech-backend || true

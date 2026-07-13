@@ -37,7 +37,16 @@ RESEND_FROM_EMAIL="${RESEND_FROM_EMAIL:-Tag RoBo Tech <onboarding@resend.dev>}"
 LEADS_NOTIFY_EMAIL="${LEADS_NOTIFY_EMAIL:-nishantsharma.meta@gmail.com}"
 SEED_SAMPLE_DATA="${SEED_SAMPLE_DATA:-false}"
 
-cat > "${APP_DIR}/backend/.env" <<EOF
+# Preserve existing production env if already installed
+if [ -f "${APP_DIR}/backend/.env" ]; then
+  echo "==> Existing backend/.env found — keeping credentials and backing up DB first"
+  if [ -f "${APP_DIR}/deploy/backup-db.sh" ]; then
+    # shellcheck disable=SC1091
+    source "${APP_DIR}/deploy/backup-db.sh"
+    backup_database "$APP_DIR"
+  fi
+else
+  cat > "${APP_DIR}/backend/.env" <<EOF
 PORT=4000
 DATABASE_URL=mysql://${DB_USER}:${DB_PASS}@127.0.0.1:3306/${DB_NAME}
 JWT_SECRET=${JWT_SECRET}
@@ -48,17 +57,22 @@ RESEND_API_KEY=${RESEND_API_KEY}
 RESEND_FROM_EMAIL=${RESEND_FROM_EMAIL}
 LEADS_NOTIFY_EMAIL=${LEADS_NOTIFY_EMAIL}
 EOF
+fi
 
-cat > "${APP_DIR}/admin-panel/.env.local" <<EOF
+if [ ! -f "${APP_DIR}/admin-panel/.env.local" ]; then
+  cat > "${APP_DIR}/admin-panel/.env.local" <<EOF
 API_PROXY_URL=http://127.0.0.1:4000
 NEXT_PUBLIC_API_URL=
 EOF
+fi
 
-cat > "${APP_DIR}/frontend/.env.local" <<EOF
+if [ ! -f "${APP_DIR}/frontend/.env.local" ]; then
+  cat > "${APP_DIR}/frontend/.env.local" <<EOF
 API_PROXY_URL=http://127.0.0.1:4000
 NEXT_PUBLIC_CMS_API_URL=
 CMS_API_URL=http://127.0.0.1:4000
 EOF
+fi
 
 echo "==> Installing npm dependencies..."
 cd "${APP_DIR}/backend" && npm ci --omit=dev 2>/dev/null || npm install --omit=dev
@@ -69,9 +83,23 @@ echo "==> Running database migrations..."
 cd "${APP_DIR}/backend"
 npm run db:migrate
 npm run db:ensure-admin
+
 if [ "${SEED_SAMPLE_DATA}" = "true" ]; then
-  echo "==> Seeding sample CMS data..."
-  npm run db:seed
+  if [ -f "${APP_DIR}/deploy/backup-db.sh" ]; then
+    # shellcheck disable=SC1091
+    source "${APP_DIR}/deploy/backup-db.sh"
+    if cms_has_existing_pages "$APP_DIR"; then
+      echo "==> Skipping sample seed: existing pages already present"
+    else
+      echo "==> Seeding sample CMS data (empty database)..."
+      npm run db:seed
+    fi
+  else
+    echo "==> Seeding sample CMS data..."
+    npm run db:seed
+  fi
+else
+  echo "==> Skipping sample seed (SEED_SAMPLE_DATA=${SEED_SAMPLE_DATA})"
 fi
 
 echo "==> Building Next.js apps (this may take a few minutes)..."
