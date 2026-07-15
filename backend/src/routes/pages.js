@@ -528,6 +528,14 @@ router.put("/:id", async (req, res) => {
 
 router.delete("/:id", async (req, res) => {
   try {
+    const existing = await pool.query(`SELECT id, slug FROM pages WHERE id = ?`, [req.params.id]);
+    if (!existing.rows[0]) {
+      return res.status(404).json({ error: "Page not found" });
+    }
+    if (existing.rows[0].slug === "/") {
+      return res.status(400).json({ error: "The homepage cannot be deleted" });
+    }
+
     const result = await pool.query(`DELETE FROM pages WHERE id = ?`, [req.params.id]);
     if (!result.meta?.affectedRows) {
       return res.status(404).json({ error: "Page not found" });

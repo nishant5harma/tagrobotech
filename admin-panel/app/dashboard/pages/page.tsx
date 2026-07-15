@@ -3,9 +3,9 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Copy, FileText, Pencil, Plus } from "lucide-react";
+import { Copy, FileText, Pencil, Plus, Trash2 } from "lucide-react";
 import PageStatusBadge from "@/components/admin/PageStatusBadge";
-import { duplicatePage, getPages, type PageRow } from "@/lib/api";
+import { deletePage, duplicatePage, getPages, type PageRow } from "@/lib/api";
 import { getStoredToken } from "@/lib/auth";
 
 export default function PagesPage() {
@@ -14,6 +14,7 @@ export default function PagesPage() {
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState("all");
   const [copyingId, setCopyingId] = useState<string | null>(null);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
   const [error, setError] = useState("");
 
   async function handleCopyPage(page: PageRow) {
@@ -32,6 +33,39 @@ export default function PagesPage() {
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to copy page");
       setCopyingId(null);
+    }
+  }
+
+  async function handleDeletePage(page: PageRow) {
+    if (page.slug === "/") {
+      setError("The homepage cannot be deleted.");
+      return;
+    }
+
+    if (
+      !window.confirm(
+        `Delete “${page.title}” permanently? Sections and SEO for this page will also be removed.`
+      )
+    ) {
+      return;
+    }
+
+    const token = getStoredToken();
+    if (!token) {
+      router.replace("/login");
+      return;
+    }
+
+    setDeletingId(page.id);
+    setError("");
+
+    try {
+      await deletePage(token, page.id);
+      setPages((prev) => prev.filter((p) => p.id !== page.id));
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to delete page");
+    } finally {
+      setDeletingId(null);
     }
   }
 
@@ -149,12 +183,23 @@ export default function PagesPage() {
                         <button
                           type="button"
                           onClick={() => handleCopyPage(page)}
-                          disabled={copyingId === page.id}
+                          disabled={copyingId === page.id || deletingId === page.id}
                           className="inline-flex items-center gap-1.5 rounded-lg border border-border px-3 py-1.5 text-xs font-medium text-foreground transition hover:border-[var(--orange)] hover:text-[var(--orange)] disabled:cursor-not-allowed disabled:opacity-50"
                         >
                           <Copy className="h-3.5 w-3.5" />
                           {copyingId === page.id ? "Copying..." : "Copy"}
                         </button>
+                        {page.slug !== "/" ? (
+                          <button
+                            type="button"
+                            onClick={() => handleDeletePage(page)}
+                            disabled={deletingId === page.id || copyingId === page.id}
+                            className="inline-flex items-center gap-1.5 rounded-lg border border-red-200 px-3 py-1.5 text-xs font-medium text-red-600 transition hover:border-red-400 hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-50 dark:border-red-900 dark:text-red-400 dark:hover:bg-red-950/40"
+                          >
+                            <Trash2 className="h-3.5 w-3.5" />
+                            {deletingId === page.id ? "Deleting..." : "Delete"}
+                          </button>
+                        ) : null}
                       </div>
                     </td>
                   </tr>

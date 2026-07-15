@@ -3,7 +3,7 @@
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
-import { ArrowLeft, Copy, Layers, Plus, Save } from "lucide-react";
+import { ArrowLeft, Copy, Layers, Plus, Save, Trash2 } from "lucide-react";
 import ContentWriterPanel from "@/components/admin/ContentWriterPanel";
 import MediaPicker from "@/components/admin/MediaPicker";
 import SortableSectionsList from "@/components/admin/SortableSectionsList";
@@ -12,6 +12,7 @@ import PageSeoEditor from "@/components/admin/PageSeoEditor";
 import PageStatusBadge from "@/components/admin/PageStatusBadge";
 import {
   createSection,
+  deletePage,
   deleteSection,
   duplicatePage,
   getPage,
@@ -50,6 +51,7 @@ export default function EditPagePage() {
   const [creatingWriterSection, setCreatingWriterSection] = useState(false);
   const [reorderingSections, setReorderingSections] = useState(false);
   const [copyingPage, setCopyingPage] = useState(false);
+  const [deletingPage, setDeletingPage] = useState(false);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
 
@@ -220,6 +222,39 @@ export default function EditPagePage() {
     }
   }
 
+  async function handleDeletePage() {
+    if (slug === "/") {
+      setError("The homepage cannot be deleted.");
+      return;
+    }
+
+    if (
+      !window.confirm(
+        `Delete “${title || page?.title || "this page"}” permanently? Sections and SEO for this page will also be removed.`
+      )
+    ) {
+      return;
+    }
+
+    const token = getStoredToken();
+    if (!token) {
+      router.replace("/login");
+      return;
+    }
+
+    setDeletingPage(true);
+    setError("");
+    setMessage("");
+
+    try {
+      await deletePage(token, pageId);
+      router.push("/dashboard/pages");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to delete page");
+      setDeletingPage(false);
+    }
+  }
+
   async function handleDeleteSection(sectionId: string) {
     if (!confirm("Delete this section?")) return;
 
@@ -279,15 +314,28 @@ export default function EditPagePage() {
           <h1 className="text-2xl font-semibold tracking-tight text-foreground">{page.title}</h1>
           <p className="mt-1 text-sm text-muted">Edit metadata, SEO, and page sections.</p>
         </div>
-        <button
-          type="button"
-          onClick={handleCopyPage}
-          disabled={copyingPage}
-          className="inline-flex items-center gap-2 rounded-xl border border-border bg-card px-4 py-2.5 text-sm font-medium text-foreground transition hover:border-[var(--orange)] hover:text-[var(--orange)] disabled:cursor-not-allowed disabled:opacity-50"
-        >
-          <Copy className="h-4 w-4" />
-          {copyingPage ? "Copying..." : "Copy this page"}
-        </button>
+        <div className="flex flex-wrap items-center gap-2">
+          <button
+            type="button"
+            onClick={handleCopyPage}
+            disabled={copyingPage || deletingPage}
+            className="inline-flex items-center gap-2 rounded-xl border border-border bg-card px-4 py-2.5 text-sm font-medium text-foreground transition hover:border-[var(--orange)] hover:text-[var(--orange)] disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            <Copy className="h-4 w-4" />
+            {copyingPage ? "Copying..." : "Copy this page"}
+          </button>
+          {slug !== "/" ? (
+            <button
+              type="button"
+              onClick={handleDeletePage}
+              disabled={deletingPage || copyingPage}
+              className="inline-flex items-center gap-2 rounded-xl border border-red-200 bg-card px-4 py-2.5 text-sm font-medium text-red-600 transition hover:border-red-400 hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-50 dark:border-red-900 dark:text-red-400 dark:hover:bg-red-950/40"
+            >
+              <Trash2 className="h-4 w-4" />
+              {deletingPage ? "Deleting..." : "Delete page"}
+            </button>
+          ) : null}
+        </div>
       </div>
 
       {message ? (
