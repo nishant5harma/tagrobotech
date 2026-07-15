@@ -120,7 +120,7 @@ function TabPanel({ tab }: { tab: AssetSolutionTab }) {
         <h3 className="text-[clamp(1.35rem,2.5vw,1.85rem)] font-bold leading-tight text-[#111827]">
           {tab.panel_heading}
         </h3>
-        <p className="mt-4 max-w-xl text-[15px] leading-8 text-neutral-600">{tab.panel_description}</p>
+        <p className="mt-4 text-[15px] leading-8 text-pretty text-neutral-600">{tab.panel_description}</p>
 
         <div className="mt-8 space-y-0 border-t border-neutral-200">
           {tab.features.map((feature, index) => {
@@ -173,12 +173,12 @@ export default function AssetManagementSolutionSection({
   return (
     <section className="bg-[linear-gradient(180deg,#fff7f3_0%,#ffffff_28%,#ffffff_100%)] py-16 sm:py-20">
       <div className="mx-auto w-[min(92%,1280px)] px-4">
-        <div className="mx-auto max-w-3xl text-center">
-          <h2 className="text-[clamp(1.75rem,3.5vw,2.5rem)] font-bold leading-tight tracking-tight text-[#111827]">
+        <div className="mx-auto max-w-5xl text-center">
+          <h2 className="text-[clamp(1.75rem,3.5vw,2.5rem)] font-bold leading-snug tracking-tight text-pretty text-[#111827]">
             {section.heading}{" "}
             <span className="text-[#f97316]">{section.heading_accent}</span>
           </h2>
-          <p className="mt-5 text-[15px] leading-8 text-neutral-600 sm:text-[16px]">
+          <p className="mx-auto mt-5 max-w-4xl text-[15px] leading-8 text-pretty text-neutral-600 sm:text-[16px]">
             {section.description}
           </p>
         </div>
