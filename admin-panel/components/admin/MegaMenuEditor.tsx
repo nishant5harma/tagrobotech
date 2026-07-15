@@ -82,7 +82,7 @@ export default function MegaMenuEditor({
         i === columnIndex
           ? {
               ...column,
-              items: [...column.items, { label: "", page_slug: null, href: null }],
+              items: [...column.items, { label: "", description: null, page_slug: null, href: null }],
             }
           : column
       ),
@@ -274,14 +274,29 @@ export default function MegaMenuEditor({
           <div className="space-y-3">
             {column.items.map((item, itemIndex) => (
               <div key={itemIndex} className="rounded-xl border border-border bg-card p-4">
-                <div className="grid gap-3 sm:grid-cols-3">
-                  <div className="space-y-2">
+                <div className="grid gap-3 sm:grid-cols-2">
+                  <div className="space-y-2 sm:col-span-2">
                     <label className="block text-xs font-medium uppercase tracking-wide text-muted">Label</label>
                     <input
                       value={item.label}
                       onChange={(e) =>
                         updateColumnItem(columnIndex, itemIndex, { label: e.target.value })
                       }
+                      className={inputClass}
+                    />
+                  </div>
+                  <div className="space-y-2 sm:col-span-2">
+                    <label className="block text-xs font-medium uppercase tracking-wide text-muted">
+                      Description
+                    </label>
+                    <input
+                      value={item.description ?? ""}
+                      onChange={(e) =>
+                        updateColumnItem(columnIndex, itemIndex, {
+                          description: e.target.value || null,
+                        })
+                      }
+                      placeholder="Short supporting line"
                       className={inputClass}
                     />
                   </div>

@@ -105,15 +105,22 @@ export default function MegaMenuDropdown({
                   {column.subtitle ? (
                     <p className="mt-1 text-[12px] text-neutral-500">{column.subtitle}</p>
                   ) : null}
-                  <ul className="mt-5 space-y-2.5">
+                  <ul className="mt-5 space-y-4">
                     {column.items.map((item) => (
                       <li key={`${column.title}-${item.label}`}>
                         <Link
                           href={item.href || "#"}
-                          className="block text-[14px] font-medium text-[#0f2744] transition-colors hover:text-[#f97316]"
+                          className="group block transition-colors"
                           onClick={() => onOpenChange(false)}
                         >
-                          {item.label}
+                          <span className="block text-[14px] font-semibold text-[#0f2744] group-hover:text-[#f97316]">
+                            {item.label}
+                          </span>
+                          {item.description ? (
+                            <span className="mt-1 block text-[12px] leading-5 text-neutral-500">
+                              {item.description}
+                            </span>
+                          ) : null}
                         </Link>
                       </li>
                     ))}

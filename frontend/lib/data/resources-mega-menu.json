@@ -1,56 +1,104 @@
 {
   "label": "Resources",
   "intro_tagline": "RESOURCES",
-  "intro_description": "Explore guides, case studies, and insights on asset tracking, RFID, robotics, and operational intelligence.",
+  "intro_description": "Tools guides case studies and support resources to help you plan deploy and scale Tag RoBo Tech asset tracking across your organisation.",
   "featured": {
-    "tagline": "FEATURED",
-    "title": "Why enterprises trust Tag RoBo Tech for RFID asset tracking",
+    "tagline": "LEARN",
+    "title": "Explore blogs and case studies from Tag RoBo Tech deployments",
     "image_media_id": null,
     "image_src": "/assets-images/laptop.png",
     "page_slug": null,
-    "href": "/resources/rfid-asset-tracking"
+    "href": "/resources/insights"
   },
   "columns": [
     {
-      "title": "BY INDUSTRY",
-      "subtitle": "Tracking solutions across sectors",
+      "title": "TOOLS",
+      "subtitle": "Practical calculators and generators",
       "items": [
-        { "label": "Manufacturing", "page_slug": "manufacturing", "href": null },
-        { "label": "Healthcare", "page_slug": "healthcare", "href": null },
-        { "label": "Retail", "page_slug": "retail", "href": null },
-        { "label": "Logistics & Supply Chain", "page_slug": "logistics-supply-chain", "href": null },
-        { "label": "Banking & Finance", "page_slug": "banking-finance", "href": null },
-        { "label": "Pharma & MedTech", "page_slug": "pharma-medtech", "href": null },
-        { "label": "Automobile", "page_slug": "automobile", "href": null },
-        { "label": "Aviation", "page_slug": "aviation", "href": null },
-        { "label": "Hospitality", "page_slug": "hospitality", "href": null },
-        { "label": "Government", "page_slug": "government", "href": null },
-        { "label": "Education", "page_slug": "education", "href": null },
-        { "label": "Real Estate", "page_slug": "real-estate", "href": null }
+        {
+          "label": "Asset ROI Calculator",
+          "description": "ROI calculator for asset managers",
+          "page_slug": "asset-roi-calculator",
+          "href": null
+        },
+        {
+          "label": "Maintenance Calculators",
+          "description": "Calculators for maintenance teams",
+          "page_slug": "maintenance-calculators",
+          "href": null
+        },
+        {
+          "label": "QR Code Generator",
+          "description": "Generate QR codes with the asset details your teams need",
+          "page_slug": "qr-code-generator",
+          "href": null
+        },
+        {
+          "label": "Barcode Generator",
+          "description": "Create affordable customised barcodes for your business",
+          "page_slug": "barcode-generator",
+          "href": null
+        }
       ]
     },
     {
-      "title": "BY USE CASE",
-      "subtitle": "Solutions for every tracking need",
+      "title": "LEARN",
+      "subtitle": "Insights from the field",
       "items": [
-        { "label": "RFID Asset Tracking", "page_slug": "rfid-asset-tracking", "href": null },
-        { "label": "IT Asset Tracking", "page_slug": "it-asset-tracking", "href": null },
-        { "label": "Inventory Control", "page_slug": "inventory-control", "href": null },
-        { "label": "Fleet Management", "page_slug": "fleet-management", "href": null },
-        { "label": "Physical Verification", "page_slug": "physical-verification", "href": null },
-        { "label": "ERP Integration", "page_slug": "erp-integration", "href": null }
+        {
+          "label": "Blog",
+          "description": "The latest trends in asset operations",
+          "page_slug": null,
+          "href": "/blog"
+        },
+        {
+          "label": "Video Library",
+          "description": "Product walkthroughs and deployment stories from our video library",
+          "page_slug": "video-library",
+          "href": null
+        },
+        {
+          "label": "Case Studies",
+          "description": "See how Tag RoBo Tech helps organisations across industries",
+          "page_slug": null,
+          "href": "/case-studies"
+        },
+        {
+          "label": "Podcasts",
+          "description": "Listen to conversations on asset performance and operations",
+          "page_slug": "podcasts",
+          "href": null
+        }
       ]
     },
     {
-      "title": "BY TECHNOLOGY",
-      "subtitle": "Tags, robotics, and software platforms",
+      "title": "CONNECT WITH US",
+      "subtitle": "Support updates and partnerships",
       "items": [
-        { "label": "RFID Solutions", "page_slug": "rfid-solutions", "href": null },
-        { "label": "BLE & IoT Tracking", "page_slug": "ble-iot-tracking", "href": null },
-        { "label": "GPS & Fleet", "page_slug": "gps-fleet", "href": null },
-        { "label": "Robotics Verification", "page_slug": "robotics-verification", "href": null },
-        { "label": "Footprints Software", "page_slug": "footprints-software", "href": null },
-        { "label": "NFC & Beacon", "page_slug": "nfc-beacon", "href": null }
+        {
+          "label": "Help Center",
+          "description": "Need help? Our support team can assist with your queries",
+          "page_slug": "help-center",
+          "href": null
+        },
+        {
+          "label": "Press Releases",
+          "description": "Latest updates and announcements from Tag RoBo Tech",
+          "page_slug": "press-releases",
+          "href": null
+        },
+        {
+          "label": "Reviews",
+          "description": "Read what customers say about Tag RoBo Tech",
+          "page_slug": "reviews",
+          "href": null
+        },
+        {
+          "label": "Affiliate",
+          "description": "Explore our referral program for partners and businesses",
+          "page_slug": "affiliate",
+          "href": null
+        }
       ]
     }
   ]

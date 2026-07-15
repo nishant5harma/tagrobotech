@@ -4,6 +4,7 @@ import solutionsDefaults from "@/lib/data/solutions-mega-menu.json";
 
 export type MegaMenuLinkItem = {
   label: string;
+  description?: string | null;
   page_slug: string | null;
   href: string | null;
 };
@@ -78,6 +79,11 @@ function asLinkItems(
     const fb = fallback[index] ?? { label: "", page_slug: null, href: null };
     const parsed: MegaMenuLinkItem = {
       label: String(row.label ?? fb.label),
+      description: row.description
+        ? String(row.description)
+        : fb.description
+          ? String(fb.description)
+          : null,
       page_slug: row.page_slug ? String(row.page_slug) : null,
       href: row.href ? String(row.href) : null,
     };

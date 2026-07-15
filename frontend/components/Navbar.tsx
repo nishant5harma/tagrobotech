@@ -210,7 +210,7 @@ export default function Navbar({ visible = true, megaMenus = {}, branding }: Nav
                 <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#f97316]">
                   {column.title}
                 </p>
-                <ul className="mt-2 space-y-2">
+                <ul className="mt-2 space-y-3">
                   {column.items.map((item) => (
                     <li key={`${column.title}-${item.label}`}>
                       <Link
@@ -219,9 +219,16 @@ export default function Navbar({ visible = true, megaMenus = {}, branding }: Nav
                           setMenuOpen(false);
                           setMobileOpenMegaMenu(null);
                         }}
-                        className="block text-[14px] font-medium text-[#0f2744]"
+                        className="block"
                       >
-                        {item.label}
+                        <span className="block text-[14px] font-semibold text-[#0f2744]">
+                          {item.label}
+                        </span>
+                        {item.description ? (
+                          <span className="mt-0.5 block text-[12px] leading-5 text-neutral-500">
+                            {item.description}
+                          </span>
+                        ) : null}
                       </Link>
                     </li>
                   ))}
