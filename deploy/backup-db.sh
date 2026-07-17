@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 # Shared helpers for deploy scripts. Source this file; do not execute directly.
 
+read_database_url() {
+  local env_file="$1"
+  grep -E '^DATABASE_URL=' "$env_file" | head -1 | cut -d= -f2- | tr -d '\r'
+}
+
 backup_database() {
   local app_dir="${1:-${APP_DIR:-/home/ubuntu/tagrobotech}}"
   local env_file="${app_dir}/backend/.env"
@@ -12,18 +17,15 @@ backup_database() {
     return 0
   fi
 
-  # shellcheck disable=SC1090
-  set -a
-  # shellcheck disable=SC1091
-  source "$env_file"
-  set +a
+  local database_url
+  database_url="$(read_database_url "$env_file")"
 
-  if [ -z "${DATABASE_URL:-}" ]; then
+  if [ -z "${database_url}" ]; then
     echo "==> Skipping DB backup: DATABASE_URL missing"
     return 0
   fi
 
-  local db_url="${DATABASE_URL#mysql://}"
+  local db_url="${database_url#mysql://}"
   local creds="${db_url%%@*}"
   local host_db="${db_url#*@}"
   local db_user="${creds%%:*}"
@@ -88,17 +90,14 @@ cms_has_existing_pages() {
     return 1
   fi
 
-  # shellcheck disable=SC1090
-  set -a
-  # shellcheck disable=SC1091
-  source "$env_file"
-  set +a
+  local database_url
+  database_url="$(read_database_url "$env_file")"
 
-  if [ -z "${DATABASE_URL:-}" ]; then
+  if [ -z "${database_url}" ]; then
     return 1
   fi
 
-  local db_url="${DATABASE_URL#mysql://}"
+  local db_url="${database_url#mysql://}"
   local creds="${db_url%%@*}"
   local host_db="${db_url#*@}"
   local db_user="${creds%%:*}"
