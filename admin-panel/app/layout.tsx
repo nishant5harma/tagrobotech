@@ -11,6 +11,11 @@ const dmSans = DM_Sans({
 export const metadata: Metadata = {
   title: "TagRobotech CMS Admin Panel",
   description: "Content management admin panel",
+  icons: {
+    icon: "/favicon.png",
+    shortcut: "/favicon.png",
+    apple: "/favicon.png",
+  },
 };
 
 const themeScript = `
