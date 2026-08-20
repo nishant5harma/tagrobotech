@@ -82,7 +82,12 @@ export const defaultFooterSettings: FooterSettings = {
     { label: "Products", href: "/services" },
     { label: "Services", href: "/services" },
     { label: "Clients", href: "/clients" },
-    { label: "Blogs", href: "/#blogs" },
+    { label: "Blogs", href: "/blog" },
+    { label: "Future of RFID", href: "/blog/future-of-rfid" },
+    {
+      label: "FAR Verification Playbook",
+      href: "/blog/far-verification-playbook",
+    },
   ],
   support_links: [
     { label: "Contact Us", href: "/contact" },

@@ -9,7 +9,12 @@ export const FOOTER_QUICK_LINKS = [
   { label: "Products", href: "/services" },
   { label: "Services", href: "/services" },
   { label: "Clients", href: "/clients" },
-  { label: "Blogs", href: "/#blogs" },
+  { label: "Blogs", href: "/blog" },
+  { label: "Future of RFID", href: "/blog/future-of-rfid" },
+  {
+    label: "FAR Verification Playbook",
+    href: "/blog/far-verification-playbook",
+  },
 ] as const;
 
 export const FOOTER_SUPPORT_LINKS = [
