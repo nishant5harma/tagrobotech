@@ -113,7 +113,7 @@ export async function renderCmsSlugPage({ params, pageType }: CmsSlugPageProps) 
       ) : (
         <CmsResourcePageExperience page={page} />
       )}
-      <Footer />
+      {page.page.slug !== "landing-page" ? <Footer /> : null}
     </>
   );
 }

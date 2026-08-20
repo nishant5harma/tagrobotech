@@ -1,0 +1,24 @@
+{
+  "tagline": "Use cases",
+  "heading": "Where teams apply",
+  "heading_accent": "this feature",
+  "description": "Typical operating contexts where Tag RoBo Tech features create measurable value.",
+  "items": [
+    {
+      "title": "Manufacturing plants",
+      "description": "Track tools fixtures spare motors and line assets across bays and stores."
+    },
+    {
+      "title": "Warehouses and yards",
+      "description": "Improve presence checks for pallets equipment and outdoor movable assets."
+    },
+    {
+      "title": "Multi-site estates",
+      "description": "Standardise identity and verification across branches plants and shared services."
+    },
+    {
+      "title": "FAR and audit cycles",
+      "description": "Produce matched unmatched and evidence packs that finance can defend."
+    }
+  ]
+}

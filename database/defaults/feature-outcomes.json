@@ -1,0 +1,28 @@
+{
+  "tagline": "Outcomes",
+  "heading": "What programmes",
+  "heading_accent": "typically improve",
+  "description": "Outcome signals teams track after deploying Tag RoBo Tech features with Footprints and field process.",
+  "items": [
+    {
+      "value": "Faster",
+      "label": "Verification cycles",
+      "description": "Reduce manual hunt time during physical verification and cycle counts."
+    },
+    {
+      "value": "Cleaner",
+      "label": "FAR evidence",
+      "description": "Keep matched unmatched and ownership trails ready for reviews."
+    },
+    {
+      "value": "Fewer",
+      "label": "Unresolved gaps",
+      "description": "Give every exception an owner workflow and closure date."
+    },
+    {
+      "value": "Clearer",
+      "label": "Rollout path",
+      "description": "Move from pilot proof to multi-site waves with shared playbooks."
+    }
+  ]
+}

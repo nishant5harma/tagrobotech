@@ -1,0 +1,44 @@
+{
+  "tagline": "CASE STUDIES",
+  "heading": "Results that prove the programme",
+  "description": "Real enterprise deployments where Tag RoBo Tech turned physical assets into auditable, searchable, and actionable records.",
+  "read_more_chars": 160,
+  "items": [
+    {
+      "id": "far-ncr",
+      "title": "PAN-India FAR verification for a multi-site enterprise",
+      "excerpt": "A national operator needed a single Fixed Asset Register that matched the floor. Our teams tagged, scanned, and reconciled lakhs of assets across NCR campuses — closing gaps between books and reality, and handing finance a clean FAR they could defend in audit.",
+      "client": "Enterprise client",
+      "industry": "Multi-site operations",
+      "media_id": null,
+      "image_src": "/uploads/fixed-assets-auditing-company-in-ncr-india.webp",
+      "image_alt": "Fixed asset verification teams on site",
+      "link_text": "Explore FAR verification",
+      "link": "/far-verification"
+    },
+    {
+      "id": "rfid-plant",
+      "title": "RFID asset tracking across manufacturing plants",
+      "excerpt": "Plant managers were losing hours chasing tools and WIP. We deployed RFID handheld and fixed readers with Footprints dashboards so movements show up in real time — fewer stockouts, faster line changeovers, and clearer ownership on every shift.",
+      "client": "Manufacturing group",
+      "industry": "Manufacturing",
+      "media_id": null,
+      "image_src": "/uploads/automotive-asset-management.webp",
+      "image_alt": "RFID asset tracking on a manufacturing floor",
+      "link_text": "View RFID solutions",
+      "link": "/solutions/rfid-asset-tracking"
+    },
+    {
+      "id": "healthcare",
+      "title": "Equipment visibility for healthcare networks",
+      "excerpt": "Hospitals need location without disrupting care. BLE and RFID tagging of critical equipment cut search time for biomedical teams and improved utilisation reporting for leadership — with workflows that nurses and technicians actually follow.",
+      "client": "Healthcare network",
+      "industry": "Healthcare",
+      "media_id": null,
+      "image_src": "/uploads/health-asset-management.webp",
+      "image_alt": "Healthcare asset tracking",
+      "link_text": "Healthcare solutions",
+      "link": "/solutions/healthcare"
+    }
+  ]
+}

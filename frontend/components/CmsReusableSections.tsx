@@ -1,4 +1,5 @@
 import PageHeroSection from "@/components/PageHeroSection";
+import PageHeroSimpleSection from "@/components/PageHeroSimpleSection";
 import PageClientsSection from "@/components/PageClientsSection";
 import AssetManagementSolutionSection from "@/components/AssetManagementSolutionSection";
 import PageFaqSection from "@/components/PageFaqSection";
@@ -18,6 +19,16 @@ import SoftwareModulesSectionSoftware from "@/components/SoftwareModulesSectionS
 import SoftwareCtaSectionSoftware from "@/components/SoftwareCtaSectionSoftware";
 import ArticleBodySection from "@/components/ArticleBodySection";
 import RichTextSection from "@/components/RichTextSection";
+import ResourceBenefitsSection from "@/components/ResourceBenefitsSection";
+import ResourceHowItWorksSection from "@/components/ResourceHowItWorksSection";
+import ResourceToolWorkspaceSection from "@/components/ResourceToolWorkspaceSection";
+import FeatureCapabilitiesSection from "@/components/FeatureCapabilitiesSection";
+import FeatureWorkflowSection from "@/components/FeatureWorkflowSection";
+import FeatureOverviewSection from "@/components/FeatureOverviewSection";
+import FeatureUseCasesSection from "@/components/FeatureUseCasesSection";
+import FeatureOutcomesSection from "@/components/FeatureOutcomesSection";
+import CaseStudySection from "@/components/CaseStudySection";
+import TestimonialsSection from "@/components/TestimonialsSection";
 import type { CmsPageSection } from "@/lib/cms";
 import { normalizeAssetManagementSolutionSectionData } from "@/lib/asset-management-solution-section";
 import { normalizeArticleBodySectionData } from "@/lib/article-body-section";
@@ -26,6 +37,7 @@ import { normalizePageCtaSectionData } from "@/lib/page-cta-section";
 import { normalizeCtaReusableSectionData } from "@/lib/cta-reusable-section";
 import { normalizePageFaqSectionData } from "@/lib/page-faq-section";
 import { normalizePageHeroSectionData } from "@/lib/page-hero-section";
+import { normalizePageHeroSimpleSectionData } from "@/lib/page-hero-simple-section";
 import { normalizeHeroSectionServicePageData } from "@/lib/hero-section-service-page";
 import { normalizeServicesIntroSectionServicePageData } from "@/lib/services-intro-section-service-page";
 import { normalizeServicesCatalogueSectionServicePageData } from "@/lib/services-catalogue-section-service-page";
@@ -38,6 +50,16 @@ import { normalizeHeroSectionSoftwareData } from "@/lib/hero-section-software";
 import { normalizeSoftwareIntroSectionSoftwareData } from "@/lib/software-intro-section-software";
 import { normalizeSoftwareModulesSectionSoftwareData } from "@/lib/software-modules-section-software";
 import { normalizeSoftwareCtaSectionSoftwareData } from "@/lib/software-cta-section-software";
+import { normalizeResourceBenefitsSectionData } from "@/lib/resource-benefits-section";
+import { normalizeResourceHowItWorksSectionData } from "@/lib/resource-how-it-works-section";
+import { normalizeResourceToolWorkspaceSectionData } from "@/lib/resource-tool-workspace-section";
+import { normalizeFeatureCapabilitiesSectionData } from "@/lib/feature-capabilities-section";
+import { normalizeFeatureWorkflowSectionData } from "@/lib/feature-workflow-section";
+import { normalizeFeatureOverviewSectionData } from "@/lib/feature-overview-section";
+import { normalizeFeatureUseCasesSectionData } from "@/lib/feature-use-cases-section";
+import { normalizeFeatureOutcomesSectionData } from "@/lib/feature-outcomes-section";
+import { normalizeCaseStudySectionData } from "@/lib/case-study-section";
+import { normalizeTestimonialsSectionData } from "@/lib/testimonials-section";
 
 type CmsReusableSectionsProps = {
   sections: CmsPageSection[];
@@ -60,6 +82,17 @@ function renderSection(
     return (
       <PageHeroSection
         data={normalizePageHeroSectionData(section.data, {
+          pageType: pageContext?.pageType ?? "page",
+          pageTitle: pageContext?.pageTitle ?? "",
+        })}
+      />
+    );
+  }
+
+  if (section.section_type === "page_hero_simple") {
+    return (
+      <PageHeroSimpleSection
+        data={normalizePageHeroSimpleSectionData(section.data, {
           pageType: pageContext?.pageType ?? "page",
           pageTitle: pageContext?.pageTitle ?? "",
         })}
@@ -173,6 +206,54 @@ function renderSection(
 
   if (section.section_type === "rich_text") {
     return <RichTextSection data={section.data} />;
+  }
+
+  if (section.section_type === "resource_benefits") {
+    return <ResourceBenefitsSection data={normalizeResourceBenefitsSectionData(section.data)} />;
+  }
+
+  if (section.section_type === "resource_how_it_works") {
+    return (
+      <ResourceHowItWorksSection data={normalizeResourceHowItWorksSectionData(section.data)} />
+    );
+  }
+
+  if (section.section_type === "resource_tool_workspace") {
+    return (
+      <ResourceToolWorkspaceSection
+        data={normalizeResourceToolWorkspaceSectionData(section.data)}
+      />
+    );
+  }
+
+  if (section.section_type === "feature_capabilities") {
+    return (
+      <FeatureCapabilitiesSection data={normalizeFeatureCapabilitiesSectionData(section.data)} />
+    );
+  }
+
+  if (section.section_type === "feature_workflow") {
+    return <FeatureWorkflowSection data={normalizeFeatureWorkflowSectionData(section.data)} />;
+  }
+
+  if (section.section_type === "feature_overview") {
+    return <FeatureOverviewSection data={normalizeFeatureOverviewSectionData(section.data)} />;
+  }
+
+  if (section.section_type === "feature_use_cases") {
+    return <FeatureUseCasesSection data={normalizeFeatureUseCasesSectionData(section.data)} />;
+  }
+
+  if (section.section_type === "feature_outcomes") {
+    return <FeatureOutcomesSection data={normalizeFeatureOutcomesSectionData(section.data)} />;
+  }
+
+  if (section.section_type === "case_study") {
+    return <CaseStudySection data={normalizeCaseStudySectionData(section.data)} />;
+  }
+
+  if (section.section_type === "testimonials") {
+    return <TestimonialsSection data={normalizeTestimonialsSectionData(section.data)} />;
   }
 
   return null;

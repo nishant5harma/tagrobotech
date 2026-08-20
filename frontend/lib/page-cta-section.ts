@@ -4,6 +4,7 @@ export type PageCtaButton = {
 };
 
 export type PageCtaSectionData = {
+  tagline: string;
   heading: string;
   description: string;
   primary_button: PageCtaButton;
@@ -11,15 +12,16 @@ export type PageCtaSectionData = {
 };
 
 export const DEFAULT_PAGE_CTA_SECTION: PageCtaSectionData = {
-  heading: "Why Choose Tag RoBo Tech?",
+  tagline: "END-TO-END EXECUTION",
+  heading: "We verify on site, tag intelligently, integrate with ERP, and monitor continuously.",
   description:
-    "Tag RoBo Tech's asset discovery and tracking solutions, including RFID, BLE, IoT, and agentless methods, provide a comprehensive and flexible approach to managing your assets. Our platform is designed to meet the unique needs of your organization, delivering reliable and efficient asset management.",
+    "Tag RoBo Tech has implemented solutions to track assets, inventory, finished goods, tools, fleet, delivery, consumables, employees, documentation, and remote sites — almost everything that needs to be tracked.",
   primary_button: {
-    text: "Get Started for Free",
-    link: "/contact",
+    text: "About Tag RoBo Tech",
+    link: "/about",
   },
   secondary_button: {
-    text: "Schedule a Free Demo",
+    text: "Request a consultation",
     link: "/contact",
   },
 };
@@ -32,13 +34,11 @@ function asRecord(data: unknown): Record<string, unknown> {
       return {};
     }
   }
-
   return (data as Record<string, unknown>) ?? {};
 }
 
 function normalizeButton(value: unknown, fallback: PageCtaButton): PageCtaButton {
   const row = (value ?? {}) as Record<string, unknown>;
-
   return {
     text: String(row.text ?? fallback.text),
     link: String(row.link ?? fallback.link),
@@ -47,8 +47,8 @@ function normalizeButton(value: unknown, fallback: PageCtaButton): PageCtaButton
 
 export function normalizePageCtaSectionData(raw: unknown): PageCtaSectionData {
   const data = asRecord(raw);
-
   return {
+    tagline: String(data.tagline ?? DEFAULT_PAGE_CTA_SECTION.tagline),
     heading: String(data.heading ?? DEFAULT_PAGE_CTA_SECTION.heading),
     description: String(data.description ?? DEFAULT_PAGE_CTA_SECTION.description),
     primary_button: normalizeButton(

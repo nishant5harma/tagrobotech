@@ -1,0 +1,20 @@
+{
+  "tagline": "Capabilities",
+  "heading": "What this feature",
+  "heading_accent": "delivers",
+  "description": "Reusable capability blocks for Tag RoBo Tech feature pages covering tracking technologies platform modules and execution programmes.",
+  "items": [
+    {
+      "title": "Accurate identity at scale",
+      "description": "Capture reliable asset reads across plants warehouses yards and multi-site estates."
+    },
+    {
+      "title": "Operational visibility",
+      "description": "Give teams live status alerts and exception views without waiting for end-of-month audits."
+    },
+    {
+      "title": "Programme ready",
+      "description": "Connect tags software and field processes so rollout stays practical from pilot to enterprise."
+    }
+  ]
+}

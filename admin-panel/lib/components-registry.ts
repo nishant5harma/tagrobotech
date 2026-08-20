@@ -122,6 +122,15 @@ export const REUSABLE_COMPONENTS: ReusableComponent[] = [
     previewPath: "/preview/components/page-hero",
   },
   {
+    slug: "page-hero-simple",
+    sectionType: "page_hero_simple",
+    label: "Reusable Page Hero (No Mobile)",
+    description:
+      "Clean hero with breadcrumbs, dual CTAs, stats, and a single hero image — no mobile mockup.",
+    usedOn: ["solution", "feature", "resource", "service", "page"],
+    previewPath: "/preview/components/page-hero-simple",
+  },
+  {
     slug: "page-clients",
     sectionType: "page_clients",
     label: "Reusable Client Logos",
@@ -174,6 +183,87 @@ export const REUSABLE_COMPONENTS: ReusableComponent[] = [
       "Flexible text block for page body content. Pair it with the page hero on dynamic pages.",
     usedOn: ["solution", "feature", "resource", "service"],
     previewPath: "/preview/components/rich-text",
+  },
+  {
+    slug: "resource-benefits",
+    sectionType: "resource_benefits",
+    label: "Reusable Resource Benefits",
+    description:
+      "Three benefit cards for calculators generators and resource pages. Edit titles and copy per page.",
+    usedOn: ["resource", "page"],
+    previewPath: "/preview/components/resource-benefits",
+  },
+  {
+    slug: "resource-how-it-works",
+    sectionType: "resource_how_it_works",
+    label: "Reusable Resource How It Works",
+    description:
+      "Numbered steps section for resource tools. Explain how users move from inputs to next actions.",
+    usedOn: ["resource", "page"],
+    previewPath: "/preview/components/resource-how-it-works",
+  },
+  {
+    slug: "resource-tool-workspace",
+    sectionType: "resource_tool_workspace",
+    label: "Reusable Resource Tool Workspace",
+    description:
+      "Interactive ROI maintenance QR or barcode workspace with editable fields and live results.",
+    usedOn: ["resource", "page"],
+    previewPath: "/preview/components/resource-tool-workspace",
+  },
+  {
+    slug: "feature-capabilities",
+    sectionType: "feature_capabilities",
+    label: "Reusable Feature Capabilities",
+    description:
+      "Capability cards for Features mega-menu pages covering technologies platform and execution.",
+    usedOn: ["feature", "page"],
+    previewPath: "/preview/components/feature-capabilities",
+  },
+  {
+    slug: "feature-workflow",
+    sectionType: "feature_workflow",
+    label: "Reusable Feature Workflow",
+    description:
+      "Numbered workflow steps that explain how a feature moves from tagging to action.",
+    usedOn: ["feature", "page"],
+    previewPath: "/preview/components/feature-workflow",
+  },
+  {
+    slug: "feature-overview",
+    sectionType: "feature_overview",
+    label: "Reusable Feature Overview",
+    description:
+      "Two-column overview with body copy bullets and programme-fit aside for feature pages.",
+    usedOn: ["feature", "page"],
+    previewPath: "/preview/components/feature-overview",
+  },
+  {
+    slug: "feature-use-cases",
+    sectionType: "feature_use_cases",
+    label: "Reusable Feature Use Cases",
+    description:
+      "Four use-case cards covering plants warehouses multi-site estates and FAR cycles.",
+    usedOn: ["feature", "page"],
+    previewPath: "/preview/components/feature-use-cases",
+  },
+  {
+    slug: "feature-outcomes",
+    sectionType: "feature_outcomes",
+    label: "Reusable Feature Outcomes",
+    description:
+      "Outcome cards that highlight verification FAR exception and rollout improvements.",
+    usedOn: ["feature", "page"],
+    previewPath: "/preview/components/feature-outcomes",
+  },
+  {
+    slug: "case-study",
+    sectionType: "case_study",
+    label: "Reusable Case Study Cards",
+    description:
+      "Image + story cards with automatic Read more truncation. Reuse on solution landing pages and industry pages.",
+    usedOn: ["solution", "feature", "resource", "service", "page", "home"],
+    previewPath: "/preview/components/case-study",
   },
 ];
 

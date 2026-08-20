@@ -22,7 +22,8 @@
         { "label": "Banking & Finance", "page_slug": "banking-finance", "href": null },
         { "label": "Pharma", "page_slug": "pharma", "href": null },
         { "label": "Automobile", "page_slug": "automobile", "href": null },
-        { "label": "Government", "page_slug": "government", "href": null }
+        { "label": "Government", "page_slug": "government", "href": null },
+        { "label": "Landing Page", "page_slug": "landing-page", "href": null }
       ]
     },
     {

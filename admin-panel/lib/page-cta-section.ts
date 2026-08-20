@@ -6,6 +6,7 @@ export type PageCtaButton = {
 };
 
 export type PageCtaSectionData = {
+  tagline: string;
   heading: string;
   description: string;
   primary_button: PageCtaButton;
@@ -23,13 +24,11 @@ function asRecord(data: unknown): Record<string, unknown> {
       return {};
     }
   }
-
   return (data as Record<string, unknown>) ?? {};
 }
 
 function normalizeButton(value: unknown, fallback: PageCtaButton): PageCtaButton {
   const row = (value ?? {}) as Record<string, unknown>;
-
   return {
     text: String(row.text ?? fallback.text),
     link: String(row.link ?? fallback.link),
@@ -38,8 +37,8 @@ function normalizeButton(value: unknown, fallback: PageCtaButton): PageCtaButton
 
 export function normalizePageCtaSectionData(raw: unknown): PageCtaSectionData {
   const data = asRecord(raw);
-
   return {
+    tagline: String(data.tagline ?? DEFAULT_PAGE_CTA_SECTION.tagline ?? ""),
     heading: String(data.heading ?? DEFAULT_PAGE_CTA_SECTION.heading),
     description: String(data.description ?? DEFAULT_PAGE_CTA_SECTION.description),
     primary_button: normalizeButton(

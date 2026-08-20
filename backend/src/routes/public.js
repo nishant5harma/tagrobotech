@@ -170,6 +170,10 @@ async function enrichSectionsWithMedia(sections, req) {
       if (data.mobile_image_media_id) mediaIds.add(data.mobile_image_media_id);
     }
 
+    if (section.section_type === "page_hero_simple" && data.image_media_id) {
+      mediaIds.add(data.image_media_id);
+    }
+
     if (section.section_type === "hero_section_service_page" && data.image_media_id) {
       mediaIds.add(data.image_media_id);
     }
@@ -219,6 +223,12 @@ async function enrichSectionsWithMedia(sections, req) {
     }
 
     if (section.section_type === "page_clients" && Array.isArray(data.items)) {
+      for (const item of data.items) {
+        if (item?.media_id) mediaIds.add(item.media_id);
+      }
+    }
+
+    if (section.section_type === "case_study" && Array.isArray(data.items)) {
       for (const item of data.items) {
         if (item?.media_id) mediaIds.add(item.media_id);
       }
@@ -439,6 +449,16 @@ async function enrichSectionsWithMedia(sections, req) {
       return { ...section, data };
     }
 
+    if (section.section_type === "page_hero_simple") {
+      const data = { ...section.data };
+      if (data.image_media_id && mediaMap.has(data.image_media_id)) {
+        const media = mediaMap.get(data.image_media_id);
+        data.image_url = siteAssetUrl(media.file_url);
+        data.image_alt = media.alt_text || data.image_alt;
+      }
+      return { ...section, data };
+    }
+
     if (section.section_type === "hero_section_service_page") {
       const data = { ...section.data };
 
@@ -588,6 +608,22 @@ async function enrichSectionsWithMedia(sections, req) {
           return {
             ...item,
             logo_url: siteAssetUrl(media.file_url),
+          };
+        }),
+      };
+      return { ...section, data };
+    }
+
+    if (section.section_type === "case_study" && Array.isArray(section.data.items)) {
+      const data = {
+        ...section.data,
+        items: section.data.items.map((item) => {
+          if (!item?.media_id || !mediaMap.has(item.media_id)) return item;
+          const media = mediaMap.get(item.media_id);
+          return {
+            ...item,
+            image_url: siteAssetUrl(media.file_url),
+            image_alt: media.alt_text || item.image_alt || item.title,
           };
         }),
       };

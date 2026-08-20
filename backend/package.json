@@ -10,7 +10,8 @@
     "db:seed": "node src/scripts/seed.js",
     "db:ensure-admin": "node src/scripts/ensure-admin.js",
     "db:export-content": "node src/scripts/export-content.js",
-    "db:import-content": "node src/scripts/import-content.js"
+    "db:import-content": "node src/scripts/import-content.js",
+    "db:import-selective": "node src/scripts/import-selective-content.js"
   },
   "dependencies": {
     "bcryptjs": "^3.0.2",

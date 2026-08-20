@@ -1,17 +1,37 @@
 import { notFound } from "next/navigation";
 import PageHeroSection from "@/components/PageHeroSection";
+import PageHeroSimpleSection from "@/components/PageHeroSimpleSection";
 import PageClientsSection from "@/components/PageClientsSection";
 import AssetManagementSolutionSection from "@/components/AssetManagementSolutionSection";
 import PageFaqSection from "@/components/PageFaqSection";
 import PageCtaSection from "@/components/PageCtaSection";
 import CtaReusableSection from "@/components/CtaReusableSection";
 import RichTextSection from "@/components/RichTextSection";
+import ResourceBenefitsSection from "@/components/ResourceBenefitsSection";
+import ResourceHowItWorksSection from "@/components/ResourceHowItWorksSection";
+import ResourceToolWorkspaceSection from "@/components/ResourceToolWorkspaceSection";
+import FeatureCapabilitiesSection from "@/components/FeatureCapabilitiesSection";
+import FeatureWorkflowSection from "@/components/FeatureWorkflowSection";
+import FeatureOverviewSection from "@/components/FeatureOverviewSection";
+import FeatureUseCasesSection from "@/components/FeatureUseCasesSection";
+import FeatureOutcomesSection from "@/components/FeatureOutcomesSection";
+import CaseStudySection from "@/components/CaseStudySection";
 import { DEFAULT_ASSET_MANAGEMENT_SOLUTION_SECTION } from "@/lib/asset-management-solution-section";
 import { DEFAULT_PAGE_FAQ_SECTION } from "@/lib/page-faq-section";
 import { DEFAULT_PAGE_CTA_SECTION } from "@/lib/page-cta-section";
 import { DEFAULT_CTA_REUSABLE_SECTION } from "@/lib/cta-reusable-section";
 import { DEFAULT_PAGE_HERO_SECTION } from "@/lib/page-hero-section";
+import { DEFAULT_PAGE_HERO_SIMPLE_SECTION } from "@/lib/page-hero-simple-section";
 import { DEFAULT_PAGE_CLIENTS_SECTION } from "@/lib/page-clients-section";
+import { DEFAULT_RESOURCE_BENEFITS_SECTION } from "@/lib/resource-benefits-section";
+import { DEFAULT_RESOURCE_HOW_IT_WORKS_SECTION } from "@/lib/resource-how-it-works-section";
+import { DEFAULT_RESOURCE_TOOL_WORKSPACE_SECTION } from "@/lib/resource-tool-workspace-section";
+import { DEFAULT_FEATURE_CAPABILITIES_SECTION } from "@/lib/feature-capabilities-section";
+import { DEFAULT_FEATURE_WORKFLOW_SECTION } from "@/lib/feature-workflow-section";
+import { DEFAULT_FEATURE_OVERVIEW_SECTION } from "@/lib/feature-overview-section";
+import { DEFAULT_FEATURE_USE_CASES_SECTION } from "@/lib/feature-use-cases-section";
+import { DEFAULT_FEATURE_OUTCOMES_SECTION } from "@/lib/feature-outcomes-section";
+import { DEFAULT_CASE_STUDY_SECTION } from "@/lib/case-study-section";
 import HeroSectionServicePage from "@/components/HeroSectionServicePage";
 import ServicesIntroSectionServicePage from "@/components/ServicesIntroSectionServicePage";
 import ServicesCatalogueSectionServicePage from "@/components/ServicesCatalogueSectionServicePage";
@@ -44,6 +64,10 @@ type ComponentPreviewPageProps = {
 function renderPreview(slug: string) {
   if (slug === "page-hero") {
     return <PageHeroSection data={DEFAULT_PAGE_HERO_SECTION} />;
+  }
+
+  if (slug === "page-hero-simple") {
+    return <PageHeroSimpleSection data={DEFAULT_PAGE_HERO_SIMPLE_SECTION} />;
   }
 
   if (slug === "hero-section-service-page") {
@@ -128,6 +152,42 @@ function renderPreview(slug: string) {
         }}
       />
     );
+  }
+
+  if (slug === "resource-benefits") {
+    return <ResourceBenefitsSection data={DEFAULT_RESOURCE_BENEFITS_SECTION} />;
+  }
+
+  if (slug === "resource-how-it-works") {
+    return <ResourceHowItWorksSection data={DEFAULT_RESOURCE_HOW_IT_WORKS_SECTION} />;
+  }
+
+  if (slug === "resource-tool-workspace") {
+    return <ResourceToolWorkspaceSection data={DEFAULT_RESOURCE_TOOL_WORKSPACE_SECTION} />;
+  }
+
+  if (slug === "feature-capabilities") {
+    return <FeatureCapabilitiesSection data={DEFAULT_FEATURE_CAPABILITIES_SECTION} />;
+  }
+
+  if (slug === "feature-workflow") {
+    return <FeatureWorkflowSection data={DEFAULT_FEATURE_WORKFLOW_SECTION} />;
+  }
+
+  if (slug === "feature-overview") {
+    return <FeatureOverviewSection data={DEFAULT_FEATURE_OVERVIEW_SECTION} />;
+  }
+
+  if (slug === "feature-use-cases") {
+    return <FeatureUseCasesSection data={DEFAULT_FEATURE_USE_CASES_SECTION} />;
+  }
+
+  if (slug === "feature-outcomes") {
+    return <FeatureOutcomesSection data={DEFAULT_FEATURE_OUTCOMES_SECTION} />;
+  }
+
+  if (slug === "case-study") {
+    return <CaseStudySection data={DEFAULT_CASE_STUDY_SECTION} />;
   }
 
   return null;

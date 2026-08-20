@@ -1,0 +1,20 @@
+{
+  "tagline": "How it works",
+  "heading": "Three steps to",
+  "heading_accent": "get value",
+  "description": "A simple path from inputs to insight for every resource tool page.",
+  "steps": [
+    {
+      "title": "Enter your details",
+      "description": "Share asset counts site context or label values required by the tool."
+    },
+    {
+      "title": "Review the output",
+      "description": "See an estimate code preview or checklist tailored to your inputs."
+    },
+    {
+      "title": "Talk to Tag RoBo Tech",
+      "description": "Take the result into a consultation so tagging software and verification plans stay practical."
+    }
+  ]
+}

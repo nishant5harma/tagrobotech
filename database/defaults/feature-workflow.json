@@ -1,0 +1,20 @@
+{
+  "tagline": "Workflow",
+  "heading": "How teams put this",
+  "heading_accent": "feature to work",
+  "description": "A clear field-to-software path you can reuse across every Tag RoBo Tech feature page.",
+  "steps": [
+    {
+      "title": "Identify and tag",
+      "description": "Apply the right RFID BLE GPS NFC or hybrid identity for each asset class and site condition."
+    },
+    {
+      "title": "Capture and sync",
+      "description": "Read assets through handhelds robotics gateways or automation and push events into Footprints."
+    },
+    {
+      "title": "Act on exceptions",
+      "description": "Use dashboards alerts and reconciliation workflows to close gaps before they become write-offs."
+    }
+  ]
+}

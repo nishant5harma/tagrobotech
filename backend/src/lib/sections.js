@@ -11,6 +11,7 @@ import { defaultWhatWeDeliverAboutSectionData } from "./what-we-deliver-about-de
 import { defaultReachTrustAboutSectionData } from "./reach-trust-about-defaults.js";
 import { defaultResourcePageHeroSectionData } from "./resource-page-hero-defaults.js";
 import { defaultPageHeroSectionData } from "./page-hero-defaults.js";
+import { defaultPageHeroSimpleSectionData } from "./page-hero-simple-defaults.js";
 import { defaultPageClientsSectionData } from "./page-clients-defaults.js";
 import { defaultAssetManagementSolutionSectionData } from "./asset-management-solution-defaults.js";
 import { defaultPageFaqSectionData } from "./page-faq-defaults.js";
@@ -28,6 +29,15 @@ import { defaultHeroSectionSoftwareData } from "./hero-section-software-defaults
 import { defaultSoftwareIntroSectionSoftwareData } from "./software-intro-section-software-defaults.js";
 import { defaultSoftwareModulesSectionSoftwareData } from "./software-modules-section-software-defaults.js";
 import { defaultSoftwareCtaSectionSoftwareData } from "./software-cta-section-software-defaults.js";
+import { defaultResourceBenefitsSectionData } from "./resource-benefits-defaults.js";
+import { defaultResourceHowItWorksSectionData } from "./resource-how-it-works-defaults.js";
+import { defaultResourceToolWorkspaceSectionData } from "./resource-tool-workspace-defaults.js";
+import { defaultFeatureCapabilitiesSectionData } from "./feature-capabilities-defaults.js";
+import { defaultFeatureWorkflowSectionData } from "./feature-workflow-defaults.js";
+import { defaultFeatureOverviewSectionData } from "./feature-overview-defaults.js";
+import { defaultFeatureUseCasesSectionData } from "./feature-use-cases-defaults.js";
+import { defaultFeatureOutcomesSectionData } from "./feature-outcomes-defaults.js";
+import { defaultCaseStudySectionData } from "./case-study-defaults.js";
 
 export const SECTION_TYPES = [
   { value: "hero", label: "Hero" },
@@ -50,6 +60,7 @@ export const SECTION_TYPES = [
   { value: "what_we_deliver_about", label: "What We Deliver - About" },
   { value: "reach_trust_about", label: "Reach & Trust - About" },
   { value: "page_hero", label: "Reusable Page Hero" },
+  { value: "page_hero_simple", label: "Reusable Page Hero (No Mobile)" },
   { value: "page_clients", label: "Reusable Client Logos" },
   { value: "asset_management_solution", label: "Reusable Asset Management Software Solution" },
   { value: "page_faq", label: "Reusable FAQ" },
@@ -74,6 +85,15 @@ export const SECTION_TYPES = [
   { value: "pricing", label: "Pricing" },
   { value: "article_body", label: "Article Body" },
   { value: "rich_text", label: "Rich Text" },
+  { value: "resource_benefits", label: "Reusable Resource Benefits" },
+  { value: "resource_how_it_works", label: "Reusable Resource How It Works" },
+  { value: "resource_tool_workspace", label: "Reusable Resource Tool Workspace" },
+  { value: "feature_capabilities", label: "Reusable Feature Capabilities" },
+  { value: "feature_workflow", label: "Reusable Feature Workflow" },
+  { value: "feature_overview", label: "Reusable Feature Overview" },
+  { value: "feature_use_cases", label: "Reusable Feature Use Cases" },
+  { value: "feature_outcomes", label: "Reusable Feature Outcomes" },
+  { value: "case_study", label: "Reusable Case Study Cards" },
   { value: "video", label: "Video" },
   { value: "partners", label: "Partners" },
 ];
@@ -137,6 +157,7 @@ export function defaultSectionData(type) {
     what_we_deliver_about: defaultWhatWeDeliverAboutSectionData(),
     reach_trust_about: defaultReachTrustAboutSectionData(),
     page_hero: defaultPageHeroSectionData(),
+    page_hero_simple: defaultPageHeroSimpleSectionData(),
     page_clients: defaultPageClientsSectionData(),
     asset_management_solution: defaultAssetManagementSolutionSectionData(),
     page_faq: defaultPageFaqSectionData(),
@@ -155,6 +176,15 @@ export function defaultSectionData(type) {
     software_intro_section_software: defaultSoftwareIntroSectionSoftwareData(),
     software_modules_section_software: defaultSoftwareModulesSectionSoftwareData(),
     software_cta_section_software: defaultSoftwareCtaSectionSoftwareData(),
+    resource_benefits: defaultResourceBenefitsSectionData(),
+    resource_how_it_works: defaultResourceHowItWorksSectionData(),
+    resource_tool_workspace: defaultResourceToolWorkspaceSectionData(),
+    feature_capabilities: defaultFeatureCapabilitiesSectionData(),
+    feature_workflow: defaultFeatureWorkflowSectionData(),
+    feature_overview: defaultFeatureOverviewSectionData(),
+    feature_use_cases: defaultFeatureUseCasesSectionData(),
+    feature_outcomes: defaultFeatureOutcomesSectionData(),
+    case_study: defaultCaseStudySectionData(),
     timeline: { heading: "", items: [{ year: "", title: "", description: "" }] },
     contact_form: { heading: "Contact Us", submit_label: "Send" },
     pricing: { heading: "", items: [{ name: "", price: "", features: [] }] },

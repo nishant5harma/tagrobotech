@@ -1,4 +1,5 @@
 import PageHeroSection from "@/components/PageHeroSection";
+import PageHeroSimpleSection from "@/components/PageHeroSimpleSection";
 import CmsReusableSections from "@/components/CmsReusableSections";
 import ResourcePageHeroSection from "@/components/ResourcePageHeroSection";
 import type { CmsPageResponse } from "@/lib/cms";
@@ -6,6 +7,10 @@ import {
   normalizePageHeroSectionData,
   type PageHeroSectionData,
 } from "@/lib/page-hero-section";
+import {
+  normalizePageHeroSimpleSectionData,
+  type PageHeroSimpleSectionData,
+} from "@/lib/page-hero-simple-section";
 import {
   normalizeResourcePageHeroSectionData,
   type ResourcePageHeroSectionData,
@@ -42,13 +47,30 @@ function getPageHeroFromPage(page: CmsPageResponse): PageHeroSectionData | null 
   });
 }
 
+function getPageHeroSimpleFromPage(page: CmsPageResponse): PageHeroSimpleSectionData | null {
+  const section = page.sections.find(
+    (item) => item.section_type === "page_hero_simple" && item.is_active
+  );
+  if (!section?.data) return null;
+  return normalizePageHeroSimpleSectionData(section.data, {
+    pageType: page.page.page_type,
+    pageTitle: page.page.title,
+  });
+}
+
 export default function CmsResourcePageExperience({ page }: CmsResourcePageExperienceProps) {
+  const pageHeroSimpleData = getPageHeroSimpleFromPage(page);
   const pageHeroData = getPageHeroFromPage(page);
   const heroData = getResourceHeroFromPage(page);
 
   return (
     <main className="overflow-hidden bg-white pt-[108px]">
-      {pageHeroData ? (
+      {pageHeroSimpleData ? (
+        <PageHeroSimpleSection
+          data={pageHeroSimpleData}
+          context={{ pageType: page.page.page_type, pageTitle: page.page.title }}
+        />
+      ) : pageHeroData ? (
         <PageHeroSection
           data={pageHeroData}
           context={{ pageType: page.page.page_type, pageTitle: page.page.title }}
@@ -67,7 +89,7 @@ export default function CmsResourcePageExperience({ page }: CmsResourcePageExper
 
       <CmsReusableSections
         sections={page.sections}
-        excludeTypes={["page_hero", "resource_page_hero"]}
+        excludeTypes={["page_hero", "page_hero_simple", "resource_page_hero"]}
         pageContext={{ pageType: page.page.page_type, pageTitle: page.page.title }}
       />
     </main>

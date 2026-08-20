@@ -1,0 +1,18 @@
+{
+  "tool_type": "roi",
+  "tagline": "Interactive tool",
+  "heading": "Asset ROI Calculator",
+  "description": "Estimate annual savings from reduced search time write-offs and faster verification.",
+  "primary_button": {
+    "text": "Talk to an expert",
+    "link": "/contact"
+  },
+  "fields": [
+    { "id": "assets", "label": "Tracked assets", "placeholder": "5000", "suffix": "assets" },
+    { "id": "hours", "label": "Hours lost searching per week", "placeholder": "20", "suffix": "hrs" },
+    { "id": "rate", "label": "Loaded labour cost per hour", "placeholder": "800", "suffix": "INR" },
+    { "id": "writeoffs", "label": "Annual write-off loss", "placeholder": "1000000", "suffix": "INR" }
+  ],
+  "result_heading": "Indicative annual opportunity",
+  "result_helper": "This is a planning estimate. Final ROI depends on sites tagging method and process design."
+}

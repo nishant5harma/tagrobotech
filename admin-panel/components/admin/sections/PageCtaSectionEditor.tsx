@@ -77,13 +77,25 @@ export default function PageCtaSectionEditor({
 
         <div className="space-y-2">
           <label className="block text-xs font-medium uppercase tracking-wide text-muted">
+            Tagline / eyebrow
+          </label>
+          <input
+            value={form.tagline}
+            onChange={(e) => updateField("tagline", e.target.value)}
+            className={inputClass}
+            placeholder="END-TO-END EXECUTION"
+          />
+        </div>
+
+        <div className="space-y-2">
+          <label className="block text-xs font-medium uppercase tracking-wide text-muted">
             Heading
           </label>
           <input
             value={form.heading}
             onChange={(e) => updateField("heading", e.target.value)}
             className={inputClass}
-            placeholder="Why Choose Tag RoBo Tech?"
+            placeholder="We verify on site, tag intelligently..."
           />
         </div>
 

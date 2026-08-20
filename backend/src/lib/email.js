@@ -14,11 +14,18 @@ function getResendClient() {
   return new Resend(apiKey);
 }
 
+function parseNotifyEmails(value) {
+  return String(value ?? "")
+    .split(",")
+    .map((email) => email.trim())
+    .filter(Boolean);
+}
+
 export async function sendLeadNotificationEmail(lead) {
   const resend = getResendClient();
-  const to = process.env.LEADS_NOTIFY_EMAIL?.trim();
+  const to = parseNotifyEmails(process.env.LEADS_NOTIFY_EMAIL);
 
-  if (!resend || !to) {
+  if (!resend || to.length === 0) {
     console.warn("Lead email skipped: RESEND_API_KEY or LEADS_NOTIFY_EMAIL is not configured");
     return { sent: false, reason: "not_configured" };
   }
@@ -60,7 +67,7 @@ export async function sendLeadNotificationEmail(lead) {
 
   const { data, error } = await resend.emails.send({
     from,
-    to: [to],
+    to,
     replyTo: lead.email,
     subject,
     html,

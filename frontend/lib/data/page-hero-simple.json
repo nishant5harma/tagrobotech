@@ -1,0 +1,25 @@
+{
+  "breadcrumbs": [
+    { "label": "Home", "href": "/" },
+    { "label": "Solutions", "href": "/solutions/manufacturing" },
+    { "label": "Landing Page", "href": null }
+  ],
+  "heading": "Turn every asset into a live, auditable signal",
+  "description": "Tag RoBo Tech helps enterprises see, verify, and govern physical assets with RFID, BLE, IoT, and field-proven verification programmes — from plant floors to multi-site estates.",
+  "primary_button": {
+    "text": "Schedule a free demo",
+    "link": "/contact"
+  },
+  "secondary_button": {
+    "text": "Explore solutions",
+    "link": "/solutions/rfid-asset-tracking"
+  },
+  "stats": [
+    { "value": "500+", "label": "Projects delivered" },
+    { "value": "99%", "label": "Tracking accuracy" },
+    { "value": "10+", "label": "Years pioneering" }
+  ],
+  "image_media_id": null,
+  "image_src": "/uploads/tag-robo-tech-audit-platform.webp",
+  "image_alt": "Tag RoBo Tech audit and tracking platform"
+}

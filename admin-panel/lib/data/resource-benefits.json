@@ -1,0 +1,20 @@
+{
+  "tagline": "Why it helps",
+  "heading": "Built for teams who need",
+  "heading_accent": "clearer asset decisions",
+  "description": "Use these reusable benefit blocks to explain the value of each Tag RoBo Tech resource tool.",
+  "items": [
+    {
+      "title": "Faster planning",
+      "description": "Turn assumptions into numbers your leadership can review before approving a tracking programme."
+    },
+    {
+      "title": "Operational focus",
+      "description": "Highlight the asset classes and sites where search time loss write-offs or audit gaps hurt most."
+    },
+    {
+      "title": "Ready for rollout",
+      "description": "Move from a calculator or generator into a Tag RoBo Tech discovery call with clearer requirements."
+    }
+  ]
+}

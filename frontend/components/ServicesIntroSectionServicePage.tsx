@@ -75,22 +75,34 @@ export default function ServicesIntroSectionServicePage({
               transition={{ duration: 0.45, delay: index * 0.04 }}
               className="group overflow-hidden rounded-[1.5rem] border border-[#0f2744]/10 bg-[#f8fafc]"
             >
-              <Link href={item.link} className="block">
-                <div className="relative h-44 overflow-hidden">
-                  <CmsImage
-                    src={servicesIntroFeaturedImageSrc(item)}
-                    alt={item.image_alt}
-                    fill
-                    className="object-cover transition duration-500 group-hover:scale-105"
-                  />
-                </div>
-                <div className="p-5">
-                  <p className="text-[12px] font-medium uppercase tracking-wide text-[#f97316]">
-                    {item.summary_label}
-                  </p>
-                  <h3 className="mt-2 text-[1.1rem] font-bold text-[#0f2744]">{item.title}</h3>
-                </div>
-              </Link>
+              {(() => {
+                const content = (
+                  <>
+                    <div className="relative h-44 overflow-hidden">
+                      <CmsImage
+                        src={servicesIntroFeaturedImageSrc(item)}
+                        alt={item.image_alt}
+                        fill
+                        className="object-cover transition duration-500 group-hover:scale-105"
+                      />
+                    </div>
+                    <div className="p-5">
+                      <p className="text-[12px] font-medium uppercase tracking-wide text-[#f97316]">
+                        {item.summary_label}
+                      </p>
+                      <h3 className="mt-2 text-[1.1rem] font-bold text-[#0f2744]">{item.title}</h3>
+                    </div>
+                  </>
+                );
+                const href = item.link?.trim();
+                return href ? (
+                  <Link href={href} className="block">
+                    {content}
+                  </Link>
+                ) : (
+                  <div className="block">{content}</div>
+                );
+              })()}
             </motion.article>
           ))}
         </div>

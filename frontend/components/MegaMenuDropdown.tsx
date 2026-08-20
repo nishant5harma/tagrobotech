@@ -57,26 +57,26 @@ export default function MegaMenuDropdown({
             : "pointer-events-none -translate-y-1 opacity-0"
         }`}
       >
-        <div className="overflow-hidden rounded-[1.75rem] border border-neutral-200 bg-white shadow-[0_24px_60px_rgba(15,39,68,0.12)]">
-          <div className="grid lg:grid-cols-[minmax(0,0.72fr)_minmax(0,1.28fr)]">
-            <aside className="border-b border-neutral-200 bg-[#f8fafc] p-8 lg:border-b-0 lg:border-r">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[#f97316]">
+        <div className="overflow-hidden rounded-[1.25rem] border border-neutral-200 bg-white shadow-[0_24px_60px_rgba(15,39,68,0.12)]">
+          <div className="grid lg:grid-cols-[minmax(0,0.68fr)_minmax(0,1.32fr)]">
+            <aside className="border-b border-neutral-200 bg-[#f8fafc] px-5 py-5 lg:border-b-0 lg:border-r lg:px-6 lg:py-5">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#f97316]">
                 {menu.intro_tagline}
               </p>
-              <p className="mt-4 text-[15px] leading-7 text-neutral-600">
+              <p className="mt-2 text-[13px] leading-5 text-neutral-600 line-clamp-3">
                 {menu.intro_description}
               </p>
 
-              <div className="mt-8">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[#f97316]">
+              <div className="mt-4">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#f97316]">
                   {menu.featured.tagline}
                 </p>
                 <Link
                   href={menu.featured.href || "#"}
-                  className="mt-4 block overflow-hidden rounded-[1.25rem] border border-[#0f2744]/10 bg-white shadow-[0_12px_30px_rgba(15,39,68,0.08)] transition hover:-translate-y-0.5 hover:shadow-[0_18px_40px_rgba(15,39,68,0.12)]"
+                  className="mt-2.5 block overflow-hidden rounded-xl border border-[#0f2744]/10 bg-white shadow-[0_8px_20px_rgba(15,39,68,0.06)] transition hover:-translate-y-0.5 hover:shadow-[0_12px_28px_rgba(15,39,68,0.1)]"
                   onClick={() => onOpenChange(false)}
                 >
-                  <div className="relative h-36 bg-[#fff7ed]">
+                  <div className="relative h-24 bg-[#fff7ed]">
                     <Image
                       src={featuredImage}
                       alt={menu.featured.image_alt || menu.featured.title}
@@ -84,8 +84,8 @@ export default function MegaMenuDropdown({
                       className="object-cover"
                     />
                   </div>
-                  <div className="p-4">
-                    <p className="text-[14px] font-semibold leading-6 text-[#0f2744]">
+                  <div className="px-3 py-2.5">
+                    <p className="text-[13px] font-semibold leading-5 text-[#0f2744] line-clamp-2">
                       {menu.featured.title}
                     </p>
                   </div>
@@ -93,19 +93,21 @@ export default function MegaMenuDropdown({
               </div>
             </aside>
 
-            <div className="grid gap-0 p-8 md:grid-cols-2 xl:grid-cols-3">
+            <div className="grid gap-0 px-4 py-5 md:grid-cols-2 xl:grid-cols-3 xl:px-5">
               {menu.columns.map((column) => (
                 <div
                   key={column.title}
-                  className="border-neutral-200 px-0 py-0 md:border-r md:px-6 md:last:border-r-0 xl:px-8"
+                  className="border-neutral-200 px-3 py-1 md:border-r md:px-4 md:last:border-r-0 xl:px-5"
                 >
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[#f97316]">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#f97316]">
                     {column.title}
                   </p>
                   {column.subtitle ? (
-                    <p className="mt-1 text-[12px] text-neutral-500">{column.subtitle}</p>
+                    <p className="mt-0.5 text-[11px] leading-4 text-neutral-500 line-clamp-1">
+                      {column.subtitle}
+                    </p>
                   ) : null}
-                  <ul className="mt-5 space-y-4">
+                  <ul className="mt-3 space-y-2">
                     {column.items.map((item) => (
                       <li key={`${column.title}-${item.label}`}>
                         <Link
@@ -113,11 +115,11 @@ export default function MegaMenuDropdown({
                           className="group block transition-colors"
                           onClick={() => onOpenChange(false)}
                         >
-                          <span className="block text-[14px] font-semibold text-[#0f2744] group-hover:text-[#f97316]">
+                          <span className="block text-[13px] font-semibold leading-5 text-[#0f2744] group-hover:text-[#f97316]">
                             {item.label}
                           </span>
                           {item.description ? (
-                            <span className="mt-1 block text-[12px] leading-5 text-neutral-500">
+                            <span className="mt-0.5 block text-[11px] leading-4 text-neutral-500 line-clamp-1">
                               {item.description}
                             </span>
                           ) : null}

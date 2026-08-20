@@ -52,28 +52,16 @@
           "href": "/blog"
         },
         {
-          "label": "Video Library",
-          "description": "Product walkthroughs and deployment stories from our video library",
-          "page_slug": "video-library",
-          "href": null
-        },
-        {
           "label": "Case Studies",
           "description": "See how Tag RoBo Tech helps organisations across industries",
           "page_slug": null,
           "href": "/case-studies"
-        },
-        {
-          "label": "Podcasts",
-          "description": "Listen to conversations on asset performance and operations",
-          "page_slug": "podcasts",
-          "href": null
         }
       ]
     },
     {
       "title": "CONNECT WITH US",
-      "subtitle": "Support updates and partnerships",
+      "subtitle": "Support and customer feedback",
       "items": [
         {
           "label": "Help Center",
@@ -82,21 +70,9 @@
           "href": null
         },
         {
-          "label": "Press Releases",
-          "description": "Latest updates and announcements from Tag RoBo Tech",
-          "page_slug": "press-releases",
-          "href": null
-        },
-        {
           "label": "Reviews",
           "description": "Read what customers say about Tag RoBo Tech",
           "page_slug": "reviews",
-          "href": null
-        },
-        {
-          "label": "Affiliate",
-          "description": "Explore our referral program for partners and businesses",
-          "page_slug": "affiliate",
           "href": null
         }
       ]

@@ -17,6 +17,7 @@ import OurJourneyAboutSectionEditor from "@/components/admin/sections/OurJourney
 import WhatWeDeliverAboutSectionEditor from "@/components/admin/sections/WhatWeDeliverAboutSectionEditor";
 import ReachTrustAboutSectionEditor from "@/components/admin/sections/ReachTrustAboutSectionEditor";
 import PageHeroSectionEditor from "@/components/admin/sections/PageHeroSectionEditor";
+import PageHeroSimpleSectionEditor from "@/components/admin/sections/PageHeroSimpleSectionEditor";
 import PageClientsSectionEditor from "@/components/admin/sections/PageClientsSectionEditor";
 import AssetManagementSolutionSectionEditor from "@/components/admin/sections/AssetManagementSolutionSectionEditor";
 import PageFaqSectionEditor from "@/components/admin/sections/PageFaqSectionEditor";
@@ -37,6 +38,15 @@ import SoftwareModulesSectionSoftwareEditor from "@/components/admin/sections/So
 import SoftwareCtaSectionSoftwareEditor from "@/components/admin/sections/SoftwareCtaSectionSoftwareEditor";
 import ArticleBodySectionEditor from "@/components/admin/sections/ArticleBodySectionEditor";
 import RichTextSectionEditor from "@/components/admin/sections/RichTextSectionEditor";
+import ResourceBenefitsSectionEditor from "@/components/admin/sections/ResourceBenefitsSectionEditor";
+import ResourceHowItWorksSectionEditor from "@/components/admin/sections/ResourceHowItWorksSectionEditor";
+import ResourceToolWorkspaceSectionEditor from "@/components/admin/sections/ResourceToolWorkspaceSectionEditor";
+import FeatureCapabilitiesSectionEditor from "@/components/admin/sections/FeatureCapabilitiesSectionEditor";
+import FeatureWorkflowSectionEditor from "@/components/admin/sections/FeatureWorkflowSectionEditor";
+import FeatureOverviewSectionEditor from "@/components/admin/sections/FeatureOverviewSectionEditor";
+import FeatureUseCasesSectionEditor from "@/components/admin/sections/FeatureUseCasesSectionEditor";
+import FeatureOutcomesSectionEditor from "@/components/admin/sections/FeatureOutcomesSectionEditor";
+import CaseStudySectionEditor from "@/components/admin/sections/CaseStudySectionEditor";
 import { SECTION_TYPES } from "@/lib/sections";
 import type { PageSection } from "@/lib/api";
 
@@ -92,6 +102,7 @@ export default function SectionEditor({
   const isWhatWeDeliverAbout = section.section_type === "what_we_deliver_about";
   const isReachTrustAbout = section.section_type === "reach_trust_about";
   const isPageHero = section.section_type === "page_hero";
+  const isPageHeroSimple = section.section_type === "page_hero_simple";
   const isPageClients = section.section_type === "page_clients";
   const isAssetManagementSolution = section.section_type === "asset_management_solution";
   const isPageFaq = section.section_type === "page_faq";
@@ -115,6 +126,15 @@ export default function SectionEditor({
   const isSoftwareCtaSectionSoftware = section.section_type === "software_cta_section_software";
   const isArticleBody = section.section_type === "article_body";
   const isRichText = section.section_type === "rich_text";
+  const isResourceBenefits = section.section_type === "resource_benefits";
+  const isResourceHowItWorks = section.section_type === "resource_how_it_works";
+  const isResourceToolWorkspace = section.section_type === "resource_tool_workspace";
+  const isFeatureCapabilities = section.section_type === "feature_capabilities";
+  const isFeatureWorkflow = section.section_type === "feature_workflow";
+  const isFeatureOverview = section.section_type === "feature_overview";
+  const isFeatureUseCases = section.section_type === "feature_use_cases";
+  const isFeatureOutcomes = section.section_type === "feature_outcomes";
+  const isCaseStudy = section.section_type === "case_study";
   const hasFormEditor =
     isHero ||
     isClients ||
@@ -131,6 +151,7 @@ export default function SectionEditor({
     isWhatWeDeliverAbout ||
     isReachTrustAbout ||
     isPageHero ||
+    isPageHeroSimple ||
     isPageClients ||
     isAssetManagementSolution ||
     isPageFaq ||
@@ -150,7 +171,16 @@ export default function SectionEditor({
     isSoftwareModulesSectionSoftware ||
     isSoftwareCtaSectionSoftware ||
     isArticleBody ||
-    isRichText;
+    isRichText ||
+    isResourceBenefits ||
+    isResourceHowItWorks ||
+    isResourceToolWorkspace ||
+    isFeatureCapabilities ||
+    isFeatureWorkflow ||
+    isFeatureOverview ||
+    isFeatureUseCases ||
+    isFeatureOutcomes ||
+    isCaseStudy;
 
   async function handleJsonSave() {
     setError("");
@@ -314,6 +344,13 @@ export default function SectionEditor({
               onIsActiveChange={setIsActive}
               onSave={onSave}
             />
+          ) : isPageHeroSimple ? (
+            <PageHeroSimpleSectionEditor
+              initialData={section.data}
+              isActive={isActive}
+              onIsActiveChange={setIsActive}
+              onSave={onSave}
+            />
           ) : isPageClients ? (
             <PageClientsSectionEditor
               initialData={section.data}
@@ -449,6 +486,69 @@ export default function SectionEditor({
             />
           ) : isRichText ? (
             <RichTextSectionEditor
+              initialData={section.data}
+              isActive={isActive}
+              onIsActiveChange={setIsActive}
+              onSave={onSave}
+            />
+          ) : isResourceBenefits ? (
+            <ResourceBenefitsSectionEditor
+              initialData={section.data}
+              isActive={isActive}
+              onIsActiveChange={setIsActive}
+              onSave={onSave}
+            />
+          ) : isResourceHowItWorks ? (
+            <ResourceHowItWorksSectionEditor
+              initialData={section.data}
+              isActive={isActive}
+              onIsActiveChange={setIsActive}
+              onSave={onSave}
+            />
+          ) : isResourceToolWorkspace ? (
+            <ResourceToolWorkspaceSectionEditor
+              initialData={section.data}
+              isActive={isActive}
+              onIsActiveChange={setIsActive}
+              onSave={onSave}
+            />
+          ) : isFeatureCapabilities ? (
+            <FeatureCapabilitiesSectionEditor
+              initialData={section.data}
+              isActive={isActive}
+              onIsActiveChange={setIsActive}
+              onSave={onSave}
+            />
+          ) : isFeatureWorkflow ? (
+            <FeatureWorkflowSectionEditor
+              initialData={section.data}
+              isActive={isActive}
+              onIsActiveChange={setIsActive}
+              onSave={onSave}
+            />
+          ) : isFeatureOverview ? (
+            <FeatureOverviewSectionEditor
+              initialData={section.data}
+              isActive={isActive}
+              onIsActiveChange={setIsActive}
+              onSave={onSave}
+            />
+          ) : isFeatureUseCases ? (
+            <FeatureUseCasesSectionEditor
+              initialData={section.data}
+              isActive={isActive}
+              onIsActiveChange={setIsActive}
+              onSave={onSave}
+            />
+          ) : isFeatureOutcomes ? (
+            <FeatureOutcomesSectionEditor
+              initialData={section.data}
+              isActive={isActive}
+              onIsActiveChange={setIsActive}
+              onSave={onSave}
+            />
+          ) : isCaseStudy ? (
+            <CaseStudySectionEditor
               initialData={section.data}
               isActive={isActive}
               onIsActiveChange={setIsActive}
