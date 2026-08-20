@@ -848,14 +848,15 @@ router.get("/content/:pageType", async (req, res) => {
   }
 
   try {
+    // MySQL prepared statements reject bound LIMIT/OFFSET (ER_WRONG_ARGUMENTS).
     const result = await pool.query(
       `SELECT id, title, slug, page_type, status, excerpt, featured_image_id, published_at,
               author_name, client_name, industry, updated_at
        FROM pages
        WHERE page_type = ? AND status = 'published'
        ORDER BY COALESCE(published_at, updated_at) DESC, updated_at DESC
-       LIMIT ? OFFSET ?`,
-      [pageType, limit, offset]
+       LIMIT ${limit} OFFSET ${offset}`,
+      [pageType]
     );
 
     const rows = result.rows.map(parsePageRow);
