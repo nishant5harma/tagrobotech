@@ -63,6 +63,7 @@ backup_database() {
     --routines \
     --triggers \
     --events \
+    --no-tablespaces \
     --default-character-set=utf8mb4 \
     "${db_name}" | gzip -c > "${outfile}"; then
     echo "==> DB backup complete ($(du -h "${outfile}" | awk '{print $1}'))"
