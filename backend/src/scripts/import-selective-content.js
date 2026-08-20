@@ -91,7 +91,7 @@ async function importSelective(filePath) {
         row.status ?? "draft",
         row.excerpt ?? null,
         row.featured_image_id ?? null,
-        row.published_at ?? null,
+        toMysqlDateTime(row.published_at),
         row.author_name ?? null,
         row.client_name ?? null,
         row.industry ?? null,
