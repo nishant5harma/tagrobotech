@@ -1,23 +1,17 @@
 "use client";
 
 import { normalizeArticleBodySectionData } from "@/lib/article-body-section";
+import { sanitizeCmsHtml } from "@/lib/cms-html";
 
 type ArticleBodySectionProps = {
   data: unknown;
 };
 
-function sanitizeHtml(html: string) {
-  return html
-    .replace(/<script[\s\S]*?>[\s\S]*?<\/script>/gi, "")
-    .replace(/\son\w+="[^"]*"/gi, "")
-    .replace(/\son\w+='[^']*'/gi, "")
-    .replace(/javascript:/gi, "");
-}
-
 export default function ArticleBodySection({ data }: ArticleBodySectionProps) {
   const section = normalizeArticleBodySectionData(data);
+  const html = sanitizeCmsHtml(section.content);
 
-  if (!section.content.trim()) return null;
+  if (!html.trim()) return null;
 
   return (
     <section className="py-10 sm:py-12 lg:py-14">
@@ -29,8 +23,8 @@ export default function ArticleBodySection({ data }: ArticleBodySectionProps) {
         ) : null}
 
         <div
-          className="prose prose-neutral max-w-none text-[15px] leading-8 prose-headings:text-[#0f2744] prose-a:text-[#f97316] prose-img:rounded-2xl prose-img:shadow-sm"
-          dangerouslySetInnerHTML={{ __html: sanitizeHtml(section.content) }}
+          className="cms-rich-text max-w-none text-[15px] leading-8 text-neutral-700"
+          dangerouslySetInnerHTML={{ __html: html }}
         />
       </div>
     </section>

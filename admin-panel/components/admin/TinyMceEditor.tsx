@@ -4,6 +4,7 @@ import { useId } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import { getStoredToken } from "@/lib/auth";
 import { uploadMedia } from "@/lib/api";
+import { repairEscapedCmsHtml } from "@/lib/cms-html";
 
 type TinyMceEditorProps = {
   label: string;
@@ -56,7 +57,13 @@ export default function TinyMceEditor({
               "undo redo | blocks | bold italic underline | forecolor | alignleft aligncenter alignright | bullist numlist outdent indent | link image media table | blockquote code | removeformat",
             block_formats:
               "Paragraph=p; Heading 2=h2; Heading 3=h3; Heading 4=h4; Quote=blockquote",
-            // Enable local file upload in Insert/Edit Image dialog
+            paste_merge_formats: true,
+            paste_preprocess: (_editor, args) => {
+              const raw = String(args.content ?? "");
+              if (/&lt;\s*\/?\s*[a-zA-Z!]/.test(raw)) {
+                args.content = repairEscapedCmsHtml(raw);
+              }
+            },
             automatic_uploads: true,
             images_reuse_filename: true,
             file_picker_types: "image",
@@ -110,13 +117,13 @@ export default function TinyMceEditor({
               input.click();
             },
             content_style:
-              "body { font-family: Inter, system-ui, sans-serif; font-size: 15px; line-height: 1.7; padding: 16px; color: #0f2744; } p { margin: 0 0 1rem; } h2,h3,h4 { color: #0f2744; margin: 1.5rem 0 0.75rem; } a { color: #f97316; } img { max-width: 100%; height: auto; border-radius: 12px; } blockquote { border-left: 3px solid #f97316; margin: 1rem 0; padding-left: 1rem; color: #475569; }",
+              "body { font-family: Inter, system-ui, sans-serif; font-size: 15px; line-height: 1.7; padding: 16px; color: #0f2744; } p { margin: 0 0 1rem; } h2,h3,h4 { color: #0f2744; margin: 1.5rem 0 0.75rem; } a { color: #f97316; } img { max-width: 100%; height: auto; border-radius: 12px; } blockquote { border-left: 3px solid #f97316; margin: 1rem 0; padding-left: 1rem; color: #475569; } table { border-collapse: collapse; width: 100%; margin: 1rem 0; } th, td { border: 1px solid #d4d4d4; padding: 8px 10px; text-align: left; vertical-align: top; } th { background: #f8fafc; }",
           }}
         />
       </div>
       <p className="text-xs text-muted">
-        Tip: In Insert/Edit Image, use the Upload tab or browse button to upload from your computer.
-        Images are saved to Media Library.
+        Tip: Paste HTML from GPT/Gemini (or use Insert → Table). Escaped HTML source is auto-repaired.
+        Images: Insert/Edit Image → Upload.
       </p>
     </div>
   );

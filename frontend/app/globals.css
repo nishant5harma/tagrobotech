@@ -89,3 +89,137 @@ h6 {
 .animate-spotlight {
   animation: spotlight 2s ease 0.75s 1 forwards;
 }
+
+/* CMS article / rich-text body (blogs, pages) */
+.cms-rich-text {
+  color: #404040;
+}
+
+.cms-rich-text > *:first-child {
+  margin-top: 0;
+}
+
+.cms-rich-text h1,
+.cms-rich-text h2,
+.cms-rich-text h3,
+.cms-rich-text h4 {
+  color: #0f2744;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  margin: 1.75rem 0 0.85rem;
+}
+
+.cms-rich-text h1 {
+  font-size: 1.75rem;
+}
+
+.cms-rich-text h2 {
+  font-size: 1.45rem;
+}
+
+.cms-rich-text h3 {
+  font-size: 1.2rem;
+}
+
+.cms-rich-text h4 {
+  font-size: 1.05rem;
+}
+
+.cms-rich-text p {
+  margin: 0 0 1.15rem;
+}
+
+.cms-rich-text a {
+  color: #f97316;
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.cms-rich-text strong,
+.cms-rich-text b {
+  color: #0f2744;
+  font-weight: 600;
+}
+
+.cms-rich-text em {
+  font-style: italic;
+}
+
+.cms-rich-text ul,
+.cms-rich-text ol {
+  margin: 0 0 1.25rem;
+  padding-left: 1.5rem;
+}
+
+.cms-rich-text ul {
+  list-style: disc;
+}
+
+.cms-rich-text ol {
+  list-style: decimal;
+}
+
+.cms-rich-text li {
+  margin: 0.4rem 0;
+}
+
+.cms-rich-text li > p {
+  margin: 0.25rem 0;
+}
+
+.cms-rich-text blockquote {
+  border-left: 3px solid #f97316;
+  color: #525252;
+  margin: 1.25rem 0;
+  padding: 0.25rem 0 0.25rem 1rem;
+}
+
+.cms-rich-text img {
+  border-radius: 1rem;
+  display: block;
+  height: auto;
+  margin: 1.5rem 0;
+  max-width: 100%;
+}
+
+.cms-rich-text hr {
+  border: 0;
+  border-top: 1px solid #e5e5e5;
+  margin: 2rem 0;
+}
+
+.cms-rich-text {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.cms-rich-text table {
+  border-collapse: collapse;
+  display: table;
+  font-size: 0.92em;
+  line-height: 1.45;
+  margin: 1.5rem 0;
+  max-width: 100%;
+  min-width: min(100%, 36rem);
+  width: 100%;
+}
+
+.cms-rich-text thead th {
+  background: #f8fafc;
+  color: #0f2744;
+  font-weight: 650;
+}
+
+.cms-rich-text th,
+.cms-rich-text td {
+  border: 1px solid #d4d4d4;
+  padding: 0.7rem 0.85rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.cms-rich-text tbody tr:nth-child(even) {
+  background: #fafafa;
+}

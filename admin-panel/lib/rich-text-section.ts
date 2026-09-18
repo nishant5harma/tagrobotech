@@ -1,3 +1,5 @@
+import { repairEscapedCmsHtml } from "@/lib/cms-html";
+
 export type RichTextSectionData = {
   heading: string;
   content: string;
@@ -24,10 +26,15 @@ export function normalizeRichTextSectionData(raw: unknown): RichTextSectionData 
 
   return {
     heading: String(data.heading ?? DEFAULT_RICH_TEXT_SECTION.heading),
-    content: String(data.content ?? DEFAULT_RICH_TEXT_SECTION.content),
+    content: repairEscapedCmsHtml(
+      String(data.content ?? DEFAULT_RICH_TEXT_SECTION.content)
+    ),
   };
 }
 
 export function richTextSectionToPayload(data: RichTextSectionData): Record<string, unknown> {
-  return { ...data };
+  return {
+    heading: data.heading,
+    content: repairEscapedCmsHtml(data.content),
+  };
 }

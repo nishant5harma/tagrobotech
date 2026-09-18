@@ -1,3 +1,5 @@
+import { repairEscapedCmsHtml } from "@/lib/cms-html";
+
 export type ArticleBodySectionData = {
   heading: string;
   content: string;
@@ -24,12 +26,17 @@ export function normalizeArticleBodySectionData(raw: unknown): ArticleBodySectio
 
   return {
     heading: String(data.heading ?? DEFAULT_ARTICLE_BODY_SECTION.heading),
-    content: String(data.content ?? DEFAULT_ARTICLE_BODY_SECTION.content),
+    content: repairEscapedCmsHtml(
+      String(data.content ?? DEFAULT_ARTICLE_BODY_SECTION.content)
+    ),
   };
 }
 
 export function articleBodySectionToPayload(
   data: ArticleBodySectionData
 ): Record<string, unknown> {
-  return { ...data };
+  return {
+    heading: data.heading,
+    content: repairEscapedCmsHtml(data.content),
+  };
 }

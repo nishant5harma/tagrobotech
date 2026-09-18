@@ -1,5 +1,6 @@
 "use client";
 
+import { sanitizeCmsHtml } from "@/lib/cms-html";
 import {
   normalizeRichTextSectionData,
   richTextLooksLikeHtml,
@@ -12,10 +13,11 @@ type RichTextSectionProps = {
 
 export default function RichTextSection({ data }: RichTextSectionProps) {
   const section = normalizeRichTextSectionData(data);
-  const paragraphs = richTextToParagraphs(section.content);
-  const isHtml = richTextLooksLikeHtml(section.content);
+  const html = sanitizeCmsHtml(section.content);
+  const paragraphs = richTextToParagraphs(html);
+  const isHtml = richTextLooksLikeHtml(html);
 
-  if (!section.content.trim()) return null;
+  if (!html.trim()) return null;
 
   return (
     <section className="py-12 sm:py-16">
@@ -28,8 +30,8 @@ export default function RichTextSection({ data }: RichTextSectionProps) {
 
         {isHtml ? (
           <div
-            className="cms-rich-text max-w-none text-[17px] leading-9 text-neutral-600 sm:text-[18px] sm:leading-9 [&_a]:font-medium [&_a]:text-[#f97316] [&_li]:my-2 [&_p]:mb-5 [&_p]:last:mb-0 [&_strong]:font-semibold [&_strong]:text-[#0f2744] [&_ul]:my-5 [&_ul]:list-disc [&_ul]:space-y-2 [&_ul]:pl-6"
-            dangerouslySetInnerHTML={{ __html: section.content }}
+            className="cms-rich-text max-w-none text-[17px] leading-9 text-neutral-600 sm:text-[18px] sm:leading-9"
+            dangerouslySetInnerHTML={{ __html: html }}
           />
         ) : (
           <div className="space-y-5">

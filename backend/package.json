@@ -9,6 +9,7 @@
     "db:migrate": "node src/scripts/migrate.js",
     "db:seed": "node src/scripts/seed.js",
     "db:ensure-admin": "node src/scripts/ensure-admin.js",
+    "db:repair-html": "node src/scripts/repair-escaped-html.js",
     "db:export-content": "node src/scripts/export-content.js",
     "db:import-content": "node src/scripts/import-content.js",
     "db:import-selective": "node src/scripts/import-selective-content.js"

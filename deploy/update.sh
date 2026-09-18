@@ -53,6 +53,8 @@ cd "${APP_DIR}/backend"
 npm run db:migrate
 npm run db:ensure-admin
 # Never seed on update — production content must stay intact.
+# Safe idempotent fix for escaped HTML pastes (tables/headings) — does not truncate.
+npm run db:repair-html || echo "==> HTML repair skipped (non-fatal)"
 
 echo "==> Ensuring backend is up for CMS fetches during build..."
 sudo systemctl restart tagrobotech-backend || true

@@ -4,6 +4,7 @@ import pool from "../db/pool.js";
 import { requireAuth } from "../middleware/auth.js";
 import { normalizeSlug } from "../lib/slug.js";
 import { defaultSectionData } from "../lib/sections.js";
+import { sanitizeCmsHtml } from "../lib/cms-html.js";
 
 const router = Router();
 const PAGE_TYPES = new Set([
@@ -59,11 +60,7 @@ function sanitizePageType(value) {
 }
 
 function sanitizeHtmlContent(value) {
-  return String(value ?? "")
-    .replace(/<script[\s\S]*?>[\s\S]*?<\/script>/gi, "")
-    .replace(/\son\w+="[^"]*"/gi, "")
-    .replace(/\son\w+='[^']*'/gi, "")
-    .replace(/javascript:/gi, "");
+  return sanitizeCmsHtml(value);
 }
 
 function sanitizeSectionData(sectionType, data) {
