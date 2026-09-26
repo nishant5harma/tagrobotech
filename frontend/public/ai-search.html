@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SP-90909 · MRI gradient coils</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #ff6623;
+      --navy: #1e204d;
+      --muted: #5c5e7a;
+      --border: #e4e5ef;
+      --surface: #f7f7fb;
+      --ok: #1b7a4a;
+      --bad: #c62828;
+      --warn: #b45309;
+    }
+    * { box-sizing: border-box; }
+    html, body { width: 100%; overflow-x: hidden; }
+    body { margin: 0; background: var(--surface); color: var(--navy); font-family: Inter, ui-sans-serif, system-ui, sans-serif; }
+    .topbar {
+      width: 100%;
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px 20px;
+    }
+    .brand { display: flex; align-items: center; min-width: 0; }
+    .brand img { height: 52px; width: auto; max-width: min(280px, 62vw); object-fit: contain; display: block; }
+    .ai-search {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #f0f4ff;
+      border: 1px solid #d6e0ff;
+      color: var(--navy);
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.01em;
+      white-space: nowrap;
+    }
+    .ai-search .spark {
+      width: 22px; height: 22px; border-radius: 11px; background: var(--primary); color: #fff;
+      display: grid; place-items: center; flex-shrink: 0;
+    }
+    .passport { display: flex; align-items: flex-start; gap: 16px; width: 100%; }
+    .left { width: 380px; flex: 0 0 380px; min-width: 0; }
+    .right { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 16px; }
+    .card { background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 16px; }
+    .card h2 { margin: 0 0 12px; font-size: 15px; font-weight: 800; letter-spacing: -0.01em; }
+    .hero { height: 188px; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); background: #eef0f6; margin-bottom: 12px; }
+    .hero img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .ai { display: flex; align-items: flex-start; flex-wrap: wrap; gap: 10px; background: #f0f4ff; border: 1px solid #d6e0ff; border-radius: 12px; padding: 12px; margin-bottom: 8px; }
+    .ai > div { flex: 1 1 180px; min-width: 0; }
+    .ai b { display: block; font-size: 12px; }
+    .ai p { margin: 3px 0 0; color: var(--muted); font-size: 11px; line-height: 15px; font-weight: 500; }
+    .refresh { display: inline-flex; align-items: center; gap: 5px; background: var(--primary); color: #fff; border: 0; border-radius: 9px; padding: 8px 10px; font: 800 11px inherit; cursor: pointer; white-space: nowrap; }
+    .note { display: flex; gap: 6px; align-items: flex-start; color: var(--muted); font-size: 11px; line-height: 15px; margin: 4px 0 8px; font-weight: 500; }
+    .note svg { flex-shrink: 0; margin-top: 1px; }
+    .row { display: flex; gap: 10px; padding: 8px 0; border-top: 1px solid var(--border); }
+    .row em { width: 118px; flex-shrink: 0; font-style: normal; color: var(--muted); font-size: 12px; font-weight: 600; }
+    .row strong { flex: 1; min-width: 0; font-size: 12px; font-weight: 700; line-height: 16px; overflow-wrap: anywhere; }
+    .docs { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+    .doc, button.doc { display: inline-flex; align-items: center; gap: 5px; border: 1px solid var(--border); background: var(--surface); color: var(--navy); border-radius: 8px; padding: 8px 10px; font: 700 11px inherit; text-decoration: none; cursor: pointer; }
+    .doc.disabled { opacity: 0.45; pointer-events: none; }
+    .pair { display: flex; gap: 14px; }
+    .pair .card { flex: 1; min-width: 0; }
+    .stock { display: flex; align-items: center; justify-content: space-between; padding: 8px 0; border-top: 1px solid var(--border); }
+    .stock > span:first-child { color: var(--muted); font-size: 13px; font-weight: 600; }
+    .qty { min-width: 40px; height: 40px; border-radius: 20px; display: grid; place-items: center; background: rgba(27,122,74,.09); color: var(--ok); font-size: 16px; font-weight: 800; padding: 0 10px; }
+    .num { font-size: 18px; font-weight: 800; }
+    .num.warn { color: var(--primary); }
+    .pill { margin-top: 10px; display: inline-flex; align-items: center; gap: 6px; background: rgba(27,122,74,.08); color: var(--ok); border-radius: 20px; padding: 5px 10px; font-size: 12px; font-weight: 800; }
+    .pill i { width: 7px; height: 7px; border-radius: 4px; background: var(--ok); display: block; }
+    .use { display: flex; gap: 10px; margin-bottom: 12px; }
+    .use:last-child { margin-bottom: 0; }
+    .ico { width: 34px; height: 34px; border-radius: 10px; background: rgba(255,102,35,.12); color: var(--primary); display: grid; place-items: center; flex-shrink: 0; }
+    .use small { display: block; color: var(--muted); font-size: 11px; font-weight: 600; }
+    .use b { display: block; margin-top: 2px; font-size: 13px; line-height: 17px; }
+    .tabs { display: flex; gap: 6px; overflow-x: auto; margin: 0 -4px 12px; padding: 0 4px 2px; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+    .tabs::-webkit-scrollbar { display: none; }
+    .tab { border: 1px solid var(--border); background: var(--surface); color: var(--navy); border-radius: 8px; padding: 8px 12px; font: 700 12px inherit; cursor: pointer; white-space: nowrap; }
+    .tab.on { background: var(--navy); border-color: var(--navy); color: #fff; }
+    .panel { display: none; }
+    .panel.on { display: block; }
+    .summary { border: 1px solid var(--border); border-radius: 12px; padding: 12px; margin-bottom: 10px; }
+    .summary span { color: var(--primary); font-size: 10px; font-weight: 800; letter-spacing: .6px; }
+    .summary p { margin: 4px 0 0; font-size: 13px; line-height: 19px; font-weight: 600; }
+    .box { border: 1px solid; border-radius: 12px; padding: 12px; margin-bottom: 10px; }
+    .box.ok { background: rgba(27,122,74,.08); border-color: rgba(27,122,74,.2); }
+    .box.bad { background: rgba(198,40,40,.08); border-color: rgba(198,40,40,.2); }
+    .box.warn { background: rgba(180,83,9,.1); border-color: rgba(180,83,9,.22); }
+    .box h3 { margin: 0 0 8px; display: flex; align-items: center; gap: 6px; font-size: 13px; }
+    .box.ok h3 { color: var(--ok); }
+    .box.bad h3 { color: var(--bad); }
+    .box.warn h3 { color: var(--warn); }
+    .item { display: flex; gap: 8px; align-items: flex-start; margin-bottom: 6px; font-size: 13px; line-height: 18px; font-weight: 500; }
+    .bullet { width: 16px; height: 16px; border-radius: 8px; color: #fff; display: grid; place-items: center; flex-shrink: 0; margin-top: 2px; font-size: 10px; font-weight: 800; }
+    .ok .bullet { background: var(--ok); }
+    .bad .bullet { background: var(--bad); }
+    .warn .bullet { background: var(--warn); }
+    .src { border: 1px solid var(--border); border-radius: 12px; padding: 10px; }
+    .src b { display: block; color: var(--muted); font-size: 11px; margin-bottom: 4px; }
+    .src a { display: flex; gap: 6px; align-items: center; color: var(--primary); font-size: 12px; font-weight: 600; text-decoration: none; padding: 4px 0; }
+    .gallery { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 12px; margin-bottom: 16px; }
+    .gallery h3 { margin: 0; font-size: 14px; font-weight: 800; }
+    .gallery .sub { color: var(--muted); font-size: 12px; margin: 2px 0 10px; font-weight: 500; }
+    .ggrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(168px, 1fr)); gap: 10px; width: 100%; }
+    .cell { width: 100%; background: #fff; border: 2px solid transparent; border-radius: 10px; overflow: hidden; position: relative; cursor: pointer; }
+    .cell.on { border-color: var(--primary); }
+    .cell img { width: 100%; height: 110px; object-fit: cover; display: block; background: #eef0f6; }
+    .full { position: absolute; top: 6px; right: 6px; display: inline-flex; align-items: center; gap: 4px; background: rgba(18,20,45,.82); color: #fff; border: 0; border-radius: 8px; padding: 4px 8px; font: 800 11px inherit; cursor: pointer; }
+    .cap { color: var(--navy); font-size: 10px; font-weight: 600; line-height: 13px; padding: 6px; }
+    .oem { display: inline-flex; align-items: center; gap: 8px; color: var(--primary); font-weight: 700; font-size: 13px; text-decoration: none; }
+    .video { border: 1px solid var(--border); border-radius: 12px; padding: 12px; background: #fff; }
+    .video h3 { margin: 0; font-size: 14px; }
+    .video .sub { color: var(--muted); font-size: 12px; margin: 2px 0 0; }
+    iframe { width: 100%; aspect-ratio: 16 / 9; height: auto; min-height: 180px; border: 0; border-radius: 10px; margin-top: 8px; background: #0e1024; }
+    .more { margin-top: 10px; display: inline-flex; align-items: center; gap: 8px; background: #c62828; color: #fff; text-decoration: none; border-radius: 10px; padding: 8px 12px; font-weight: 800; font-size: 13px; }
+    .kicker { color: var(--muted); font-size: 11px; font-weight: 800; letter-spacing: .6px; text-transform: uppercase; margin: 0 0 6px; }
+    .empty { color: var(--muted); font-size: 12px; padding: 8px 0; border-top: 1px solid var(--border); }
+    .modal { display: none; position: fixed; inset: 0; background: rgba(10,12,28,.82); align-items: center; justify-content: center; padding: 20px; z-index: 20; }
+    .modal.show { display: flex; }
+    .modal-card { width: min(1100px, 100%); background: var(--navy); border-radius: 14px; overflow: hidden; }
+    .modal-top { display: flex; align-items: center; gap: 10px; padding: 10px 14px; color: #fff; font-weight: 700; font-size: 13px; }
+    .modal-top span { flex: 1; }
+    .x { width: 32px; height: 32px; border: 0; border-radius: 16px; background: rgba(255,255,255,.16); color: #fff; cursor: pointer; font-size: 18px; }
+    .modal img { width: 100%; height: min(72vh, 640px); object-fit: contain; background: #0e1024; display: block; }
+    img, iframe, video { max-width: 100%; }
+    @media (max-width: 1080px) {
+      .left { width: 320px; flex-basis: 320px; }
+    }
+    @media (max-width: 860px) {
+      .page { padding: 12px 12px 36px; }
+      .topbar { padding: 12px; flex-wrap: wrap; }
+      .brand img { height: 44px; }
+      .ai-search { font-size: 12px; padding: 7px 12px; }
+      .passport, .pair { flex-direction: column; }
+      .left, .right, .pair .card { width: 100%; flex: 1 1 auto; }
+      .hero { height: 220px; }
+      .docs { display: grid; grid-template-columns: 1fr; }
+      .doc, button.doc { justify-content: center; min-height: 40px; }
+      .tab { min-height: 40px; }
+      .refresh { min-height: 36px; }
+      .modal { padding: 10px; align-items: flex-end; }
+      .modal-card { width: 100%; border-radius: 14px 14px 0 0; }
+      .modal img { height: 62vh; }
+    }
+    @media (max-width: 520px) {
+      .row { flex-direction: column; gap: 2px; }
+      .row em { width: auto; }
+      .ggrid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+      .cell img { height: 96px; }
+      .card { padding: 12px; border-radius: 12px; }
+      .src a { overflow-wrap: anywhere; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="https://www.tagrobotech.com/" aria-label="Tag RoBo Tech">
+      <img src="/images/Tag-Robo-Tech.png" alt="Tag RoBo Tech — Transforming Tracking" />
+    </a>
+    <div class="ai-search" title="Guides, photos, and install video are researched with AI">
+      <span class="spark" aria-hidden="true">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l1.6 6.2L20 10l-6.4 1.8L12 18l-1.6-6.2L4 10l6.4-1.8z"/></svg>
+      </span>
+      AI Enabled Search
+    </div>
+  </header>
+  <main class="page">
+    <div class="passport">
+      <aside class="left">
+        <section class="card">
+          <h2>Part Details</h2>
+          <div class="hero"><img id="hero" alt="Gradient coil assembly" src="https://directmedimaging.com/wp-content/uploads/2025/03/siemens-mri-gradient-coil-install-scaled-e1631213999919.jpg" /></div>
+          <div class="ai">
+            <div>
+              <b>AI knowledge cached</b>
+              <p>MRI gradient coils are high-power, water-cooled electromagnetic sets that encode spatial location inside the scanner bore.</p>
+            </div>
+            <button class="refresh" type="button">Refresh</button>
+          </div>
+          <p class="note"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7h.01"/></svg> AI guides &amp; photos can be off sometimes — a quick cross-check with OEM docs is enough.</p>
+          <div class="row"><em>Part ID</em><strong>SP-90909</strong></div>
+          <div class="row"><em>Description</em><strong>MRI: gradient coils</strong></div>
+          <div class="row"><em>Category</em><strong>Electrical / Medical Equipment</strong></div>
+          <div class="row"><em>Machine</em><strong>MRI Machine (MC-909)</strong></div>
+          <div class="row"><em>Manufacturer</em><strong>MRI System OEM / Authorized Service Provider</strong></div>
+          <div class="row"><em>Criticality</em><strong>Critical</strong></div>
+          <div class="row"><em>Specification</em><strong>Electrical / Medical Equipment · Nos · MRI System OEM / Authorized Service Provider</strong></div>
+          <div class="row"><em>Lead Time</em><strong>2 weeks</strong></div>
+          <div class="row"><em>Unit Price</em><strong>₹ 1,00,000</strong></div>
+          <div class="row"><em>Current Stock</em><strong>5 Nos</strong></div>
+          <div class="row"><em>Min / Max Level</em><strong>4 / 6</strong></div>
+          <div class="row"><em>Location</em><strong>Goa-I Engineering / MRO Spare Store (ST-01)</strong></div>
+          <div class="row"><em>Sub Location</em><strong>MRI-CRITICAL-SPARES</strong></div>
+          <div class="row"><em>Supplier / OEM</em><strong>MRI System OEM / Authorized Service Provider</strong></div>
+          <div class="row"><em>Alternate parts</em><strong>—</strong></div>
+          <div class="row"><em>Last Movement</em><strong>—</strong></div>
+          <div class="docs">
+            <a class="doc" href="https://cds.ismrm.org/protected/13MProceedings/PDFfiles/ISMRM2013-007379.PDF" target="_blank" rel="noreferrer">View Data Sheet (PDF)</a>
+            <span class="doc disabled">View Drawing</span>
+            <button class="doc" type="button" data-tab="history">View History</button>
+          </div>
+        </section>
+      </aside>
+
+      <div class="right">
+        <div class="pair">
+          <section class="card">
+            <h2>Stock Position</h2>
+            <div class="stock"><span>Current Stock</span><span class="qty">5</span></div>
+            <div class="stock"><span>Max Level</span><span class="num">6</span></div>
+            <div class="stock"><span>Min Level</span><span class="num warn">4</span></div>
+            <div class="pill"><i></i> OK</div>
+          </section>
+          <section class="card">
+            <h2>Machine Usage</h2>
+            <div class="use"><div class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5h8v2"/></svg></div><div><small>Used In</small><b>MRI Machine (MC-909)</b></div></div>
+            <div class="use"><div class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg></div><div><small>Location</small><b>Goa-I — Active</b></div></div>
+            <div class="use"><div class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10l9-6 9 6v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 21V12h6v9"/></svg></div><div><small>Store</small><b>ST-01 · Goa-I Engineering / MRO Spare Store</b></div></div>
+          </section>
+        </div>
+
+        <section class="card">
+          <div class="tabs" id="tabs">
+            <button class="tab" type="button" data-tab="usage">Usage Guidelines</button>
+            <button class="tab" type="button" data-tab="dos">Do's &amp; Don'ts</button>
+            <button class="tab" type="button" data-tab="issues">Common Issues</button>
+            <button class="tab on" type="button" data-tab="photos">Photos</button>
+            <button class="tab" type="button" data-tab="video">Installation Video</button>
+            <button class="tab" type="button" data-tab="history">History</button>
+          </div>
+
+          <div class="panel" id="usage">
+            <p class="note"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7h.01"/></svg> AI install tips are a starting point — double-check against the OEM manual for your model if unsure.</p>
+            <div class="summary"><span>AI SUMMARY</span><p>MRI gradient coils are the spatial-encoding coil set inside the scanner bore that superimposes controlled magnetic field gradients on the main field. They are usually arranged as three orthogonal axes and are part of the gradient subsystem that also includes drive, cooling, and shielding components.</p></div>
+            <div class="box ok" data-items="Use only under OEM-authorized service procedures for the specific MRI platform.|Verify zero-energy/lockout, magnet safety, and field/service mode before any access or replacement.|Handle as a precision medical subsystem; preserve coil alignment, shielding, and cooling interfaces.|Document cable routing, connector indexing, and shim/gradient calibration data before removal."><h3>Usage guidelines</h3></div>
+            <div class="box warn" data-mark="!" data-items="Power down the scanner and apply full service lockout per OEM procedure.|Remove covers and document all connectors, harnesses, and cooling interfaces.|Disconnect the old gradient assembly or coil set carefully and preserve routing.|Install the replacement component with correct orientation and mechanical support.|Reconnect harnesses, cooling, shielding, and grounding exactly as documented.|Run OEM calibration, gradient test, and image-quality verification.|Record final fault status, calibration values, and service completion notes."><h3>Installation steps</h3></div>
+            <div class="src">
+              <b>Sources</b>
+              <a href="https://cds.ismrm.org/protected/13MProceedings/PDFfiles/ISMRM2013-007379.PDF" target="_blank" rel="noreferrer">The Gradient System.</a>
+              <a href="https://cds.ismrm.org/protected/13MProceedings/PDFfiles/ISMRM2013-007364.PDF" target="_blank" rel="noreferrer">Gradient Systems</a>
+              <a href="https://cds.ismrm.org/protected/15MProceedings/PDFfiles/ISMRM2015-008293.pdf" target="_blank" rel="noreferrer">Understanding gradients from an EM perspective</a>
+            </div>
+          </div>
+
+          <div class="panel" id="dos">
+            <div class="box ok" data-items="Do confirm the exact MRI model, gradient cabinet revision, and coil orientation before ordering or installation.|Do inspect for overheating, insulation damage, connector wear, and coolant-related issues during service.|Do follow OEM torque, alignment, and calibration procedures after installation or replacement.|Do test gradient linearity, slew performance, and error logs after service."><h3>Do's</h3></div>
+            <div class="box bad" data-mark="×" data-items="Don't energize or bench-test without OEM-compatible controls and cooling.|Don't swap coils or gradient assemblies between non-matching scanner models.|Don't bend, pinch, or cross-route harnesses, coolant lines, or shielded cables.|Don't use non-authorized parts or undocumented modifications on a critical MRI subsystem."><h3>Don'ts</h3></div>
+          </div>
+
+          <div class="panel" id="issues">
+            <div class="box warn" data-mark="!" data-items="Overheating or cooling flow problems can trigger gradient faults.|Connector, harness, or shielding damage can cause intermittent gradient errors.|Misalignment or incorrect installation can reduce field linearity and image quality.|Amplifier or subsystem faults may present as gradient shutdowns, alarms, or failed calibration."><h3>Typical Issues</h3></div>
+          </div>
+
+          <div class="panel on" id="photos">
+            <p class="note"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7h.01"/></svg> Photos may be similar web references, not always this exact part — glance once before relying on them.</p>
+            <div class="gallery"><h3>Machines</h3><div class="sub">MRI Machine · 5 photos</div><div class="ggrid" id="machines"></div></div>
+            <div class="gallery"><h3>Spare parts</h3><div class="sub">MRI: gradient coils · 6 photos</div><div class="ggrid" id="spares"></div></div>
+            <a class="oem" href="https://cds.ismrm.org/protected/13MProceedings/PDFfiles/ISMRM2013-007379.PDF" target="_blank" rel="noreferrer">OEM Manual / Datasheet</a>
+          </div>
+
+          <div class="panel" id="video">
+            <div class="video">
+              <h3>Installation video</h3>
+              <div class="sub">Most relevant guide for this part on this machine</div>
+              <iframe src="https://www.youtube.com/embed/ad_RuAlCA8I" title="Installation video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              <a class="more" href="https://www.youtube.com/results?search_query=MRI%20Machine%20gradient%20coils%20installation%20guide" target="_blank" rel="noreferrer">View more videos</a>
+            </div>
+          </div>
+
+          <div class="panel" id="history">
+            <p class="kicker">Recent movements</p>
+            <div class="empty">No stock movements yet.</div>
+            <p class="kicker" style="margin-top:16px">Audit history</p>
+            <div class="empty">Not counted in any audit yet.</div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <div class="modal" id="modal">
+    <div class="modal-card">
+      <div class="modal-top"><span id="modalTitle"></span><button class="x" type="button" id="close" aria-label="Close">×</button></div>
+      <img id="modalImg" alt="" />
+    </div>
+  </div>
+
+  <script>
+    document.querySelectorAll(".box[data-items]").forEach((box) => {
+      const mark = box.dataset.mark || "✓";
+      box.dataset.items.split("|").forEach((text) => {
+        const row = document.createElement("div");
+        row.className = "item";
+        row.innerHTML = '<span class="bullet"></span><span></span>';
+        row.querySelector(".bullet").textContent = mark;
+        row.querySelector("span:last-child").textContent = text;
+        box.appendChild(row);
+      });
+    });
+
+    const machines = [
+      ["https://img.freepik.com/premium-photo/mri-scan-machine-magnetic-resonance-imaging-scan-device_629685-7050.jpg?w=1200", "MRI scan machine or magnetic resonance imaging scan"],
+      ["https://www.hrh.ca/wp-content/uploads/2023/03/MRI.jpg", "MRI (Magnetic Resonance Imaging) — hospital scanner"],
+      ["https://cdn.lecturio.com/assets/Magnetic-resonance-imaging-MRI.jpg", "Magnetic Resonance Imaging (MRI)"],
+      ["https://metroradiology.com.au/wp-content/uploads/2019/02/MRI.jpg", "Magnetic Resonance Imaging scanner"],
+      ["https://thumbs.dreamstime.com/b/mri-magnetic-resonance-imaging-scan-machine-modern-hospital-mri-magnetic-resonance-imaging-scan-machine-modern-hospital-345948837.jpg", "MRI scan machine in a modern hospital"]
+    ];
+    const spares = [
+      ["https://www.amberusa.com/wp-content/uploads/2019/05/MRI.jpg", "Inside the MRI: Gradient Coils"],
+      ["https://directmedimaging.com/wp-content/uploads/2025/03/siemens-mri-gradient-coil-install-scaled-e1631213999919.jpg", "Gradient coils in an MRI scanner"],
+      ["https://www.researchgate.net/profile/Jason_Filos/publication/262494534/figure/download/fig1/AS:341699869069315@1458479005676/MR-Scanner-Gradient-Coils-Source-http-wwwmagnetfsuedu.png", "MR scanner gradient coils"],
+      ["https://vcresearch.berkeley.edu/sites/default/files/inline-images/wirecoils_Fig5.jpg", "Gradient coil winding"],
+      ["https://image.slidesharecdn.com/mricoils-wpsoffice-200628093251/75/Mri-coils-6-2048.jpg", "MRI coils"],
+      ["https://image.slideserve.com/1141504/gradient-coils-l.jpg", "Gradient coil construction"]
+    ];
+
+    function gallery(id, items, selected) {
+      const root = document.getElementById(id);
+      items.forEach(([url, title], i) => {
+        const cell = document.createElement("div");
+        cell.className = "cell" + (i === selected ? " on" : "");
+        cell.innerHTML = '<img alt=""/><button class="full" type="button">Full</button><div class="cap"></div>';
+        const img = cell.querySelector("img");
+        img.src = url;
+        img.alt = title;
+        cell.querySelector(".cap").textContent = title;
+        img.addEventListener("click", () => {
+          document.querySelectorAll(".cell").forEach((c) => c.classList.remove("on"));
+          cell.classList.add("on");
+          document.getElementById("hero").src = url;
+        });
+        cell.querySelector(".full").addEventListener("click", (e) => {
+          e.stopPropagation();
+          document.getElementById("modalImg").src = url;
+          document.getElementById("modalTitle").textContent = title;
+          document.getElementById("modal").classList.add("show");
+        });
+        root.appendChild(cell);
+      });
+    }
+    gallery("machines", machines, -1);
+    gallery("spares", spares, 1);
+
+    function showTab(name) {
+      document.querySelectorAll(".tab").forEach((t) => t.classList.toggle("on", t.dataset.tab === name));
+      document.querySelectorAll(".panel").forEach((p) => p.classList.toggle("on", p.id === name));
+    }
+    document.getElementById("tabs").addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-tab]");
+      if (btn) showTab(btn.dataset.tab);
+    });
+    document.querySelector(".docs").addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-tab]");
+      if (btn) showTab(btn.dataset.tab);
+    });
+    document.getElementById("close").addEventListener("click", () => document.getElementById("modal").classList.remove("show"));
+    document.getElementById("modal").addEventListener("click", (e) => {
+      if (e.target.id === "modal") document.getElementById("modal").classList.remove("show");
+    });
+  </script>
+</body>
+</html>
